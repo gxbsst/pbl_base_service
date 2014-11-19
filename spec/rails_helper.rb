@@ -14,8 +14,6 @@ RSpec.configure do |config|
 
   config.infer_spec_type_from_file_location!
 
-  config.include FactoryGirl::Syntax::Methods
-
   require 'database_cleaner'
 
   config.before(:suite) do
@@ -25,4 +23,7 @@ RSpec.configure do |config|
   config.before(:each) do
     DatabaseCleaner.clean
   end
+
+  config.include JsonSpec::Helpers
+
 end

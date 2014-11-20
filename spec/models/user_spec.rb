@@ -5,6 +5,6 @@ describe User do
   end
 
   describe '.create' do
-    let(:user) { User.create }
+    let(:user) { User.create(:first_name) }
   end
 end

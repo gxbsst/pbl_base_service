@@ -6,8 +6,6 @@ gem 'pg'
 
 gem 'versionist'
 
-gem 'activeuuid'
-
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'factory_girl_rails'
@@ -16,6 +14,12 @@ end
 group :development do
  gem 'spring'
  gem "spring-commands-rspec"
+ gem 'capistrano', '~> 3.0.1', :platforms => [:ruby, :jruby]
+ gem 'capistrano-rails', '~> 1.1.0', :platforms => [:ruby, :jruby]
+ gem 'capistrano3-puma', '~> 0.1.2', :platforms => [:ruby, :jruby]
+ gem 'capistrano-rvm', :platforms => [:ruby, :jruby]
+ gem 'capistrano-bundler', :platforms => [:ruby, :jruby]
+ gem 'capistrano-sidekiq'
 end
 
 group :test do
@@ -23,16 +27,9 @@ group :test do
   gem 'json_spec'
 end
 # To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.1.2'
+gem 'bcrypt-ruby', '~> 3.1.2'
 
 # To use Jbuilder templates for JSON
 gem 'jbuilder'
 
-# Use unicorn as the app server
-# gem 'unicorn'
 
-# Deploy with Capistrano
-# gem 'capistrano', :group => :development
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'

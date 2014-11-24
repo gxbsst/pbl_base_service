@@ -10,29 +10,45 @@ module V1
       @users = @users.where(age: params[:age]) if params[:age].present?
       @users = @users.where(gender: params[:gender]) if params[:gender].present?
       @users
+      if @users.blank?
+        head :not_found
+      end
     end
 
     def create
-      @user = User.create(user_params)
-      # render json: { id: user.id }, status: :created
-      render :show, status: :created
+      @user = User.new(user_params)
+      if @user.save
+        render :show, status: :created
+      else
+        head :unprocessable_entity
+      end
     end
 
     def update
       set_user
-      @user.update_attributes(user_params)
-      render json: { id: @user.id }, status: :ok
+      if @user.update_attributes(user_params)
+        render json: { id: @user.id }, status: :ok
+      else
+        head :unprocessable_entity
+      end
     end
 
     def show
-     set_user
+      set_user
+      if @user
+        render json: { message: 'Not Found'}, status: :not_found
+      end
     end
 
     def destroy
       set_user
-      @user.delete
+      return head :not_found if !@user
 
-      render json: { id: @user.id }, status: :ok
+      if @user.delete
+        render json: { id: @user.id }, status: :ok
+      else
+        head :unauthorized
+      end
     end
 
     private
@@ -42,7 +58,7 @@ module V1
     end
 
     def set_user
-     @user ||= User.find(params[:id])
+      @user ||= User.find(params[:id])
     end
 
   end

@@ -18,4 +18,16 @@ describe User do
       expect(User.authenticate("foobar", "secret2")).to be_nil
     end
   end
+
+  describe '#authenticate' do
+    let!(:user) { create(:user, :email => 'gxbsst@gmail.com', :password => 'secret')}
+
+    context 'be authenticated' do
+      it { expect(User.first.authenticate('secret')).to eq(User.first)}
+    end
+
+    context 'be not authenticated' do
+      it { expect(User.first.authenticate('error')).to be(false) }
+    end
+  end
 end

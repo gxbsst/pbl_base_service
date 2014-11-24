@@ -1,4 +1,4 @@
-set :application, 'mooc'
+set :application, 'pbl_base_service'
 #set :repo_url, 'git@124.202.141.250:xuhong/mooc.git'
 set :repo_url, 'git@10.10.31.46:pbl/pbl_base_service.git'
 

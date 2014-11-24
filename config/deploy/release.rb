@@ -41,7 +41,7 @@ server '172.172.172.120',
          #keys: %w(/home/user_name/.ssh/id_rsa),
          #forward_agent: true,
          auth_methods: %w(password),
-         password: 'wxh51448888'
+         password: '51448888'
        }
 # setting per server overrides global ssh_options
 

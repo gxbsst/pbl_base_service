@@ -13,7 +13,7 @@ module V1
     end
 
     def validate_on_error(errors)
-      render json: { message: errors}, status: :not_found
+      render json: {error: errors}, status: :not_found
     end
   end
 end

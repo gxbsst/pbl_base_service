@@ -32,4 +32,7 @@ gem 'bcrypt-ruby', '~> 3.1.2'
 # To use Jbuilder templates for JSON
 gem 'jbuilder'
 
-
+group :production do
+  gem 'rack-cache', :require => 'rack/cache'
+  gem 'puma'
+end

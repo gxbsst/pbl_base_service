@@ -81,7 +81,11 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
     pg (0.17.1)
+    puma (2.10.0)
+      rack (>= 1.1, < 2.0)
     rack (1.5.2)
+    rack-cache (1.2)
+      rack (>= 0.4)
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.1.7)
@@ -176,6 +180,8 @@ DEPENDENCIES
   jbuilder
   json_spec
   pg
+  puma
+  rack-cache
   rails (= 4.1.7)
   rails-api
   rspec-rails (~> 3.0.0)

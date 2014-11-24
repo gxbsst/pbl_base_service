@@ -20,7 +20,7 @@ module V1
       if @user.save
         render :show, status: :created
       else
-        head :unprocessable_entity
+        render json: { error: @user.errors }, status: :unprocessable_entity
       end
     end
 
@@ -29,14 +29,14 @@ module V1
       if @user.update_attributes(user_params)
         render json: { id: @user.id }, status: :ok
       else
-        head :unprocessable_entity
+        render json: {error: @user.errors }, status: :unprocessable_entity
       end
     end
 
     def show
       set_user
-      if @user
-        render json: { message: 'Not Found'}, status: :not_found
+      if !@user
+        head :not_found
       end
     end
 

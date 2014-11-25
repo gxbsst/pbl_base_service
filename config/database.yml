@@ -82,6 +82,15 @@ production:
   <<: *default
   adapter: postgresql
   jndi: jdbc/PostgreDS
-  database: pbl_production
-  username: pbl
+  database: pbl_base_service_production
+  username: postgres
+  password: <%= ENV['PBL_DATABASE_PASSWORD'] %>
+
+
+release:
+  <<: *default
+  adapter: postgresql
+  jndi: jdbc/PostgreDS
+  database: pbl_base_service_release
+  username: postgres
   password: <%= ENV['PBL_DATABASE_PASSWORD'] %>

@@ -89,6 +89,6 @@ production:
 release:
   <<: *default
   database: pbl_base_service_release
-  username: postgres
-  password: edutec
+  username: pbl
+  password: pbl
 #  password: <%= ENV['PBL_DATABASE_PASSWORD'] %>

@@ -81,12 +81,14 @@ test:
 production:
   <<: *default
   database: pbl_base_service_production
-  username: pbl
-  password: <%= ENV['PBL_DATABASE_PASSWORD'] %>
+  username: postgres
+  password: edutec
+#  password: <%= ENV['PBL_DATABASE_PASSWORD'] %>
 
 
 release:
   <<: *default
   database: pbl_base_service_release
-  username: pbl
-  password: <%= ENV['PBL_DATABASE_PASSWORD'] %>
+  username: postgres
+  password: edutec
+#  password: <%= ENV['PBL_DATABASE_PASSWORD'] %>

@@ -80,17 +80,13 @@ test:
 #
 production:
   <<: *default
-  adapter: postgresql
-  jndi: jdbc/PostgreDS
   database: pbl_base_service_production
-  username: postgres
+  username: pbl
   password: <%= ENV['PBL_DATABASE_PASSWORD'] %>
 
 
 release:
   <<: *default
-  adapter: postgresql
-  jndi: jdbc/PostgreDS
   database: pbl_base_service_release
-  username: postgres
+  username: pbl
   password: <%= ENV['PBL_DATABASE_PASSWORD'] %>

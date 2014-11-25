@@ -31,6 +31,7 @@ module Pbl
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    config.autoload_paths << Rails.root.join('lib/validators')
+    #config.autoload_paths << %W("#{config.root}/lib/validators  "#{config.root}/app/contexts)
+    config.autoload_paths << Rails.root.join('lib/validators') << Rails.root.join('app/contexts')
   end
 end

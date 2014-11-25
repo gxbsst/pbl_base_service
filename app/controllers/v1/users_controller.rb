@@ -36,7 +36,7 @@ module V1
     def show
       set_user
       if !@user
-        head :not_found
+        render json: {}, status: :not_found
       end
     end
 
@@ -58,7 +58,7 @@ module V1
     end
 
     def set_user
-      @user ||= User.find(params[:id])
+      @user ||= User.find(params[:id]) rescue nil
     end
 
   end

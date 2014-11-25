@@ -21,10 +21,24 @@ describe V1::UsersController, :type => :controller do
   end
 
   describe 'GET #Show' do
-    let(:user) { create :user }
-    subject!(:response) { get :show, id: user, format: :json }
-    it { expect(response).to render_template :show }
-    it { expect(assigns(:user)).to eq(User.first) }
+    let(:user) { create :user, username: 'username', email: 'gxbsst@gmail.com'}
+    context 'with id' do
+      subject!(:response) { get :show, id: user, format: :json }
+      it { expect(response).to render_template :show }
+      it { expect(assigns(:user)).to eq(User.first) }
+    end
+
+    context 'with username' do
+      subject!(:response) { get :show, id: 'username', format: :json }
+      it { expect(response).to render_template :show }
+      it { expect(assigns(:user)).to eq(User.first) }
+    end
+
+    context 'with email' do
+      subject!(:response) { get :show, id: 'gxbsst@gmail.com', format: :json }
+      it { expect(response).to render_template :show }
+      it { expect(assigns(:user)).to eq(User.first) }
+    end
   end
 
   describe 'DELETE #destory' do

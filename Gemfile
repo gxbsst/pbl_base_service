@@ -2,7 +2,9 @@ source 'http://ruby.taobao.org'
 
 gem 'rails', '4.1.7'
 gem 'rails-api'
-gem 'pg'
+gem 'pg', platform: :ruby
+
+gem 'activerecord-jdbc-adapter', platform: :jruby
 
 gem 'versionist'
 

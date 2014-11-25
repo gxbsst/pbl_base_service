@@ -60,7 +60,7 @@ module V1
     def set_user
 
       if /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/.match(params[:id])
-        @user ||= User.find(params[:id])
+        @user ||= User.find(params[:id]) rescue nil
       else
         @user ||= User.where(["username=:id OR email=:id", {id: params[:id]}]).try(:first) rescue nil
       end

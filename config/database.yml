@@ -88,7 +88,7 @@ production:
 
 release:
   <<: *default
-  database: pbl_base_service_release
+  database: pbl_base_release
   username: pbl
   password: pbl
 #  password: <%= ENV['PBL_DATABASE_PASSWORD'] %>

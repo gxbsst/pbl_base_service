@@ -12,7 +12,7 @@ set :scm, :git
 set :format, :pretty
 set :log_level, :debug
 set :pty, false
-set :rvm_ruby_version, 'jruby-1.7.13'
+set :rvm_ruby_version, 'jruby-1.7.16.1'
 set :default_shell, '/bin/bash -l'
 set :assets_roles, [:web, :app]
 set :whenever_roles, :app

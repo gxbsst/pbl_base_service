@@ -18,18 +18,47 @@ describe V1::UsersController, type: :request do
   end
 
   describe 'GET #Show' do
-    let!(:user) { create :user, first_name: 'first_name', last_name: 'last_name', age: 20, gender: 0 }
-    before(:each) do
-      get "/users/#{user.id}", {} , accept
-      @json = parse_json(response.body)
+    let!(:user) { create :user, username: 'user.namea@BC*&', email: 'gxbsst@gmail.com', first_name: 'first_name', last_name: 'last_name', age: 20, gender: 0 }
+
+    context 'with id' do
+      before(:each) do
+        get "/users/#{user.id}", {} , accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(response.status).to eq(200)}
+      it { expect(response.body).to have_json_type(Hash) }
+      it {expect(@json['first_name']).to eq('first_name')}
+      it {expect(@json['last_name']).to eq('last_name')}
+      it {expect(@json['age']).to eq(20)}
+      it {expect(@json['gender']).to eq(0)}
     end
 
-    it { expect(response.status).to eq(200)}
-    it { expect(response.body).to have_json_type(Hash) }
-    it {expect(@json['first_name']).to eq('first_name')}
-    it {expect(@json['last_name']).to eq('last_name')}
-    it {expect(@json['age']).to eq(20)}
-    it {expect(@json['gender']).to eq(0)}
+    context 'with email' do
+      before(:each) do
+        get "/users/#{user.email}", {} , accept
+        @json = parse_json(response.body)
+      end
+      it { expect(response.status).to eq(200)}
+      it { expect(response.body).to have_json_type(Hash) }
+      it {expect(@json['first_name']).to eq('first_name')}
+      it {expect(@json['last_name']).to eq('last_name')}
+      it {expect(@json['age']).to eq(20)}
+      it {expect(@json['gender']).to eq(0)}
+    end
+
+    context 'with username' do
+      before(:each) do
+        get "/users/#{user.username}", {} , accept
+        @json = parse_json(response.body)
+      end
+      it { expect(response.status).to eq(200)}
+      it { expect(response.body).to have_json_type(Hash) }
+      it {expect(@json['first_name']).to eq('first_name')}
+      it {expect(@json['last_name']).to eq('last_name')}
+      it {expect(@json['age']).to eq(20)}
+      it {expect(@json['gender']).to eq(0)}
+    end
   end
 
   describe 'DELETE #destory' do

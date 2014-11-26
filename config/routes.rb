@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   api_version(:module => "V1", :header => {:name => "Accept", :value => "application/vnd.ibridgebrige.com; version=1"}) do
-    resources :users, :defaults => { :format => 'json' }
+    resources :users, :defaults => { :format => 'json' }, :id => /.*/
     resources :sessions, defaults: { format: 'json'}, only: %w(create destroy)
   end
   # The priority is based upon order of creation: first created -> highest priority.

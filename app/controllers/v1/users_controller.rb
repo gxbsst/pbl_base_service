@@ -54,18 +54,11 @@ module V1
     private
 
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :age, :gender, :email, :password)
+      params.require(:user).permit(:first_name, :last_name, :age, :gender, :email, :password, :username)
     end
 
     def set_user
-
-      if /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/.match(params[:id])
-        @user ||= User.find(params[:id]) rescue nil
-      else
-        @user ||= User.where(["username=:id OR email=:id", {id: params[:id]}]).try(:first) rescue nil
-      end
-
-      puts @user.inspect
+      @user ||= User.find_by_login(params[:id])
     end
 
   end

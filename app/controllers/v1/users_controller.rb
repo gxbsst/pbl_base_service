@@ -29,7 +29,7 @@ module V1
       if @user.update_attributes(user_params)
         render json: { id: @user.id }, status: :ok
       else
-        render json: {error: @user.errors }, status: :unprocessable_entity
+        render json: {error: @user.errors}, status: :unprocessable_entity
       end
     end
 

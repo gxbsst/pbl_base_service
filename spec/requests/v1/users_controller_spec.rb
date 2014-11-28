@@ -35,29 +35,60 @@ describe V1::UsersController, type: :request do
     end
 
     context 'with email' do
-      before(:each) do
-        get "/users/#{user.email}", {} , accept
-        @json = parse_json(response.body)
+      context ' with collect email' do
+        before(:each) do
+          get "/users/#{user.email}", {} , accept
+          @json = parse_json(response.body)
+        end
+        it { expect(response.status).to eq(200)}
+        it { expect(response.body).to have_json_type(Hash) }
+        it {expect(@json['first_name']).to eq('first_name')}
+        it {expect(@json['last_name']).to eq('last_name')}
+        it {expect(@json['age']).to eq(20)}
+        it {expect(@json['gender']).to eq(0)}
       end
-      it { expect(response.status).to eq(200)}
-      it { expect(response.body).to have_json_type(Hash) }
-      it {expect(@json['first_name']).to eq('first_name')}
-      it {expect(@json['last_name']).to eq('last_name')}
-      it {expect(@json['age']).to eq(20)}
-      it {expect(@json['gender']).to eq(0)}
+
+      context 'with error email' do
+        before(:each) do
+          get "/users/#{user.email}1111", {} , accept
+          @json = parse_json(response.body)
+        end
+        it { expect(response.status).to_not eq(200)}
+        it { expect(response.body).to have_json_type(Hash) }
+        it {expect(@json['first_name']).to_not eq('first_name')}
+        it {expect(@json['last_name']).to_not eq('last_name')}
+        it {expect(@json['age']).to_not eq(20)}
+        it {expect(@json['gender']).to_not eq(0)}
+      end
     end
 
     context 'with username' do
-      before(:each) do
-        get "/users/#{user.username}", {} , accept
-        @json = parse_json(response.body)
+      context 'with collect username' do
+        before(:each) do
+          get "/users/#{user.username}", {} , accept
+          @json = parse_json(response.body)
+        end
+        it { expect(response.status).to eq(200)}
+        it { expect(response.body).to have_json_type(Hash) }
+        it {expect(@json['first_name']).to eq('first_name')}
+        it {expect(@json['last_name']).to eq('last_name')}
+        it {expect(@json['age']).to eq(20)}
+        it {expect(@json['gender']).to eq(0)}
       end
-      it { expect(response.status).to eq(200)}
-      it { expect(response.body).to have_json_type(Hash) }
-      it {expect(@json['first_name']).to eq('first_name')}
-      it {expect(@json['last_name']).to eq('last_name')}
-      it {expect(@json['age']).to eq(20)}
-      it {expect(@json['gender']).to eq(0)}
+
+
+      context 'with error username' do
+        before(:each) do
+          get "/users/#{user.username}1", {} , accept
+          @json = parse_json(response.body)
+        end
+        it { expect(response.status).to eq(404)}
+        it { expect(response.body).to have_json_type(Hash) }
+        it {expect(@json['first_name']).to_not eq('first_name')}
+        it {expect(@json['last_name']).to_not eq('last_name')}
+        it {expect(@json['age']).to_not eq(20)}
+        it {expect(@json['gender']).to_not eq(0)}
+      end
     end
   end
 

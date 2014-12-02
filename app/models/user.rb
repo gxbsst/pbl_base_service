@@ -1,5 +1,5 @@
 
-class User < ActiveRecord::Base
+class User < PgConnection
 
   validates_confirmation_of :password
   validates :email, :presence => true, :uniqueness => true, :email_format => true

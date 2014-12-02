@@ -1,3 +1,4 @@
+require 'rails_helper'
 
 describe ValidatingPassword do
  let!(:user)  { create :user, email: 'g@gmail.com', password: 'secret' }
@@ -12,7 +13,7 @@ describe ValidatingPassword do
 
  context 'error' do
   it  'validate password' do
-   expect(listener).to receive(:validate_on_error).with('authenticate failed')
+   expect(listener).to receive(:validate_on_error).with('Not Found')
    ValidatingPassword.validate(listener, 'g@gmail.com', 'error')
   end
  end

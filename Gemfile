@@ -3,13 +3,14 @@ source 'http://ruby.taobao.org'
 gem 'rails', '4.1.7'
 gem 'rails-api'
 gem 'pg', platform: :ruby
+gem 'mongoid', "~> 4.0.0"
 
 gem 'activerecord-jdbcpostgresql-adapter', platforms: [:jruby]
 
 gem 'versionist'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-rails'
   gem 'factory_girl_rails'
 end
 
@@ -26,11 +27,12 @@ group :development do
 end
 
 group :test do
+  gem 'mongoid-rspec'
   gem 'database_cleaner'
   gem 'json_spec'
 end
 # To use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.1.2'
+gem 'bcrypt-ruby', '~> 3.bu1.2'
 
 # To use Jbuilder templates for JSON
 gem 'jbuilder'

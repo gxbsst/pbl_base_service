@@ -2,6 +2,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'rails/mongoid'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
@@ -19,9 +20,10 @@ RSpec.configure do |config|
   config.include JsonSpec::Helpers
 
 
-  # require 'database_cleaner'
+  require 'database_cleaner'
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
+    # DatabaseCleaner.orm = 'mongoid'
   end
 
   config.before(:each) do
@@ -40,4 +42,5 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+  config.include Mongoid::Matchers, type: :model
 end

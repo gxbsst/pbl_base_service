@@ -110,4 +110,15 @@ describe V1::UsersController, type: :request do
 
     it {expect(@json['id']).to_not be_nil}
   end
+
+  describe 'errors' do
+    let(:user) { User.new }
+    before(:each) do
+      allow(User).to receive(:new).and_return(user)
+      post "/users", {user: attributes_for(:user) } , accept
+    end
+
+    it { expect(user.errors[:email]).to eq(['blank', 'email_format'])}
+
+  end
 end

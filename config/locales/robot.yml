@@ -1,0 +1,54 @@
+# encoding: utf-8
+# 错误信息: http://guides.rubyonrails.org/v2.3.8/i18n.html#error-message-interpolation
+# http://guides.rubyonrails.org/i18n.html
+# accepted
+# invalid
+# blank
+# validates_confirmation_of  –   :confirmation   -
+# validates_acceptance_of  –     :accepted   -
+# validates_presence_of  –       :blank  -
+# validates_length_of            :within, :in  :too_short  count
+# validates_length_of :within, :in  :too_long   count
+# validates_length_of  :is   :wrong_length   count
+# validates_length_of  :minimum  :too_short  count
+# validates_length_of  :maximum  :too_long   count
+# validates_uniqueness_of  –   :taken  -
+# validates_format_of  –   :invalid  -
+# validates_inclusion_of   –   :inclusion  -
+# validates_exclusion_of   –   :exclusion  -
+# validates_associated   –   :invalid  -
+# validates_numericality_of  –   :not_a_number   -
+# validates_numericality_of  :greater_than   :greater_than   count
+# validates_numericality_of  :greater_than_or_equal_to   :greater_than_or_equal_to   count
+# validates_numericality_of  :equal_to   :equal_to   count
+# validates_numericality_of  :less_than  :less_than  count
+# validates_numericality_of  :less_than_or_equal_to  :less_than_or_equal_to  count
+# validates_numericality_of  :odd  :odd  -
+# validates_numericality_of  :even   :even   -
+
+robot:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: 'record_invalid'
+        blank: 'blank'
+        confirmation: 'confirmation'
+        accepted: 'accepted'
+        present: 'present'
+        too_short: 'too_short'
+        too_long: 'too_long'
+        wrong_length: 'wrong_length'
+        taken: 'taken'
+        invalid: 'invalid'
+        inclusion: 'inclusion'
+        not_a_number: 'not_a_number'
+        greater_than: 'greater_than'
+        greater_than_or_equal_to: 'greater_than_or_equal_to'
+        equal_to: 'equal_to'
+        less_than: 'less_than'
+        less_than_or_equal_to: 'less_than_or_equal_to'
+        not_an_integer: 'not_an_integer'
+        odd: 'odd'
+        even: 'even'
+
+

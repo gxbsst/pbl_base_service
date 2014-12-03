@@ -25,7 +25,7 @@ module Pbl
 
     config.time_zone = 'Beijing'
     I18n.config.enforce_available_locales = true
-    config.i18n.available_locales = [:'zh-CN', :en]
+    config.i18n.available_locales = [:'zh-CN', :en, :robot]
     config.i18n.default_locale = :'en'
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]

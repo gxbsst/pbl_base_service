@@ -87,6 +87,9 @@ GEM
     json_spec (1.1.4)
       multi_json (~> 1.0)
       rspec (>= 2.0, < 4.0)
+    kaminari (0.16.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
@@ -100,6 +103,8 @@ GEM
       mongoid (>= 3.0.1)
       rake
       rspec (>= 2.14)
+    mongoid-tree (2.0.0)
+      mongoid (>= 4.0, <= 5.0)
     moped (2.0.2)
       bson (~> 2.2)
       connection_pool (~> 2.0)
@@ -219,8 +224,10 @@ DEPENDENCIES
   factory_girl_rails
   jbuilder
   json_spec
+  kaminari
   mongoid (~> 4.0.0)
   mongoid-rspec
+  mongoid-tree
   pg
   puma
   rack-cache

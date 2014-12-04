@@ -33,5 +33,8 @@ module Pbl
 
     #config.autoload_paths << %W("#{config.root}/lib/validators  "#{config.root}/app/contexts)
     config.autoload_paths << Rails.root.join('lib/validators') << Rails.root.join('app/contexts')
+    config.generators do |g|
+      g.orm :active_record
+    end
   end
 end

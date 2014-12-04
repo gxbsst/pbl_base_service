@@ -4,6 +4,8 @@ gem 'rails', '4.1.7'
 gem 'rails-api'
 gem 'pg', platform: :ruby
 gem 'mongoid', "~> 4.0.0"
+gem 'mongoid-tree', :require => 'mongoid/tree'
+gem 'kaminari'
 
 gem 'activerecord-jdbcpostgresql-adapter', platforms: [:jruby]
 

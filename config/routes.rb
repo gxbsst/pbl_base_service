@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :sessions, defaults: { format: 'json'}, only: %w(create destroy)
     resources :skills, defaults: { format: 'json'}
     namespace :skill do
-      resources :categories, defaults: {format: 'json'}, only: %w(show)
+      resources :categories, defaults: {format: 'json'}
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

@@ -26,7 +26,7 @@ describe V1::SessionsController, type: :request  do
           @json = parse_json(response.body)
         end
 
-        it { expect(@json['message']).to eq('Not Found')}
+        it { expect(@json['error']).to eq('Not Found')}
         it { expect(response.status).to eq(404) }
       end
 
@@ -36,7 +36,7 @@ describe V1::SessionsController, type: :request  do
           @json = parse_json(response.body)
         end
 
-        it { expect(@json['message']).to eq('Not Found')}
+        it { expect(@json['error']).to eq('Not Found')}
         it { expect(response.status).to eq(404) }
       end
     end

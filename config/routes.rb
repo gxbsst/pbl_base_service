@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     resources :users, :defaults => { :format => 'json' }, :id => /.*/
     resources :sessions, defaults: { format: 'json'}, only: %w(create destroy)
     resources :skills, defaults: { format: 'json'}
+    namespace :skill do
+      resources :categories, defaults: {format: 'json'}, only: %w(show)
+    end
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

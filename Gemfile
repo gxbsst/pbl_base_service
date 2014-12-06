@@ -3,8 +3,8 @@ source 'http://ruby.taobao.org'
 gem 'rails', '4.1.7'
 gem 'rails-api'
 gem 'pg', platform: :ruby
-gem 'mongoid', "~> 4.0.0"
-gem 'mongoid-tree', :require => 'mongoid/tree'
+# gem 'mongoid', "~> 4.0.0"
+# gem 'mongoid-tree', :require => 'mongoid/tree'
 gem 'kaminari'
 
 gem 'activerecord-jdbcpostgresql-adapter', platforms: [:jruby]
@@ -29,9 +29,10 @@ group :development do
 end
 
 group :test do
-  gem 'mongoid-rspec'
+  # gem 'mongoid-rspec'
   gem 'database_cleaner'
   gem 'json_spec'
+  gem 'shoulda-matchers', require: false
 end
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.bu1.2'

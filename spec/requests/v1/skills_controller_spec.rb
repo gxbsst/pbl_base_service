@@ -50,6 +50,16 @@ describe V1::SkillsController, type: :request do
 
     it { expect(@json['id']).to eq(skill.id.to_s) }
     it { expect(@json['title']).to eq('title') }
+
+    context 'with include' do
+      let!(:skill)  { create :skill_with_categories, categories_count: 10,  title: 'title'}
+      before(:each) do
+        get "/skills/#{skill.id.to_s}/?include=categories", {}, accept
+        @json = parse_json(response.body)
+      end
+      it { expect(@json['categories']).to  be_a Array }
+      it { expect(@json['categories'].size).to eq(10) }
+    end
   end
 
   describe 'POST #create' do

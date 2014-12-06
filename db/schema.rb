@@ -11,11 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204054757) do
+ActiveRecord::Schema.define(version: 20141205071523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "skill_categories", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string  "name"
+    t.uuid    "skill_id"
+    t.integer "position"
+  end
+
+  create_table "skill_techniques", force: true do |t|
+    t.string   "title"
+    t.integer  "position"
+    t.uuid     "category_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "description"
+  end
 
   create_table "skills", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "title"

@@ -54,7 +54,8 @@ module V1
     end
 
     def set_skill
-      @skill ||= Skill.find(params[:id]) rescue nil
+      include = params[:include] rescue nil
+      @skill ||= Skill.includes(include).find(params[:id]) rescue nil
     end
 
   end

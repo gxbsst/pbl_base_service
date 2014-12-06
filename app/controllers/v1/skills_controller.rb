@@ -4,9 +4,9 @@ module V1
       page = params[:page] || 1
       limit = params[:limit] || 10
 
-      @skills = Skill.order(created_at: :desc)
+      @skills = ::Skill.order(created_at: :desc)
       @skills = @skills.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
-      @skill = @skills.page(page).per(limit)
+      @skills = @skills.page(page).per(limit)
     end
 
     def show
@@ -17,7 +17,7 @@ module V1
     end
 
     def create
-      @skill = Skill.new(skill_params)
+      @skill = ::Skill.new(skill_params)
 
       if @skill.save
         render :show, status: :created
@@ -55,7 +55,7 @@ module V1
 
     def set_skill
       include = params[:include] rescue nil
-      @skill ||= Skill.includes(include).find(params[:id]) rescue nil
+      @skill ||= ::Skill.includes(include).find(params[:id]) rescue nil
     end
 
   end

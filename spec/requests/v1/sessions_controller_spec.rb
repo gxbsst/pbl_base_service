@@ -3,7 +3,6 @@ require 'rails_helper'
 describe V1::SessionsController, type: :request  do
 
   describe 'POST #create' do
-    let(:accept) { {'Accept' => 'application/vnd.ibridgebrige.com; version=1'} }
     let!(:user) { create :user, email: 'gxbsst@gmail.com', password: 'secret', first_name: 'first_name', last_name: 'last_name'}
 
     context 'success' do

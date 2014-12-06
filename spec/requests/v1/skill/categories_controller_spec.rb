@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe V1::Skill::CategoriesController do
-  let(:accept) { {'Accept' => 'application/vnd.ibridgebrige.com; version=1'} }
     describe 'GET #show' do
       let(:category) { create(:skill_category, name: 'name')}
       before(:each) do

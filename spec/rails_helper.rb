@@ -43,5 +43,6 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+  config.include AcceptMacros
   # config.include Mongoid::Matchers, type: :model
 end

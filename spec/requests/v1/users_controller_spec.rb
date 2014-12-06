@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe V1::UsersController, type: :request do
-  let(:accept) { {'Accept' => 'application/vnd.ibridgebrige.com; version=1'} }
   describe 'GET #Index' do
     let!(:user) { create :user, first_name: 'first_name', last_name: 'last_name', age: 20, gender: 0 }
     before(:each) do

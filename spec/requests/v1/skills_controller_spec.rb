@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe V1::SkillsController, type: :request do
-  let(:accept) { {'Accept' => 'application/vnd.ibridgebrige.com; version=1'} }
   describe 'GET #index' do
     let!(:skill_1)  { create :skill, title: 'title' }
     let!(:skill_2)  { create :skill, title: 'title2' }

@@ -4,15 +4,16 @@ FactoryGirl.define do
     sequence(:position) {|n| n}
 
     association :subject, factory: :curriculum_subject
-    # factory :skill_category_with_technique do
-    #   transient do
-    #     techniques_count 5
-    #   end
-    #
-    #   after(:create) do |category, evaluator|
-    #     create_list(:skill_technique, evaluator.techniques_count, category: category)
-    #   end
-    # end
+
+    factory :curriculum_phase_with_curriculums do
+      transient do
+        curriculums_count 5
+      end
+
+      after(:create) do |phase, evaluator|
+        create_list(:curriculum_curriculum_with_items, evaluator.curriculums_count, phase: phase)
+      end
+    end
 
   end
 end

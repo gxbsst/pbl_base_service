@@ -19,6 +19,10 @@ Rails.application.routes.draw do
       resources :subjects, defaults: {format: 'json'}
       resources :curriculums, defaults: {format: 'json'}
     end
+
+    namespace :pbl do
+      resources :projects, defaults: {format: 'json'}
+    end
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

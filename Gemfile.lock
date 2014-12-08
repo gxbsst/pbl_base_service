@@ -27,6 +27,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    acts-as-taggable-on (3.4.2)
+      activerecord (>= 3.2, < 5)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.9)
     bcrypt-ruby (3.1.5)
@@ -159,6 +161,7 @@ GEM
       colorize
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    state_machine (1.2.0)
     thin (1.6.3)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0)
@@ -181,6 +184,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-jdbcpostgresql-adapter
+  acts-as-taggable-on (~> 3.4)
   bcrypt-ruby (~> 3.bu1.2)
   capistrano (~> 3.0.1)
   capistrano-bundler
@@ -202,5 +206,6 @@ DEPENDENCIES
   shoulda-matchers
   spring
   spring-commands-rspec
+  state_machine
   thin
   versionist

@@ -4,7 +4,7 @@ FactoryGirl.define do
 
     association :phase, factory: :curriculum_phase
 
-    factory :curriculum_curriculum_with_curriculum_items do
+    factory :curriculum_curriculum_with_items do
       transient do
         curriculum_items_count 5
       end

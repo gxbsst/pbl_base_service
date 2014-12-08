@@ -6,10 +6,10 @@ gem 'pg', platform: :ruby
 # gem 'mongoid', "~> 4.0.0"
 # gem 'mongoid-tree', :require => 'mongoid/tree'
 gem 'kaminari'
-
 gem 'activerecord-jdbcpostgresql-adapter', platforms: [:jruby]
-
 gem 'versionist'
+gem 'acts-as-taggable-on', '~> 3.4'
+gem 'state_machine'
 
 group :development, :test do
   gem 'rspec-rails'

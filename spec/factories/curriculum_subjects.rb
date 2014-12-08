@@ -8,7 +8,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |subject, evaluator|
-        create_list(:curriculum_phase, evaluator.phases_count, subject: subject)
+        create_list(:curriculum_phase_with_curriculums, evaluator.phases_count, subject: subject)
       end
     end
   end

@@ -87,11 +87,4 @@ describe V1::SkillsController do
   it { expect(Skill.count).to eq(0)}
  end
 
- describe 'GET #find_by_ids' do
-  before(:each) do
-   
-  end
-
-  
- end
 end

@@ -11,11 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141205071523) do
+ActiveRecord::Schema.define(version: 20141206092550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "curriculum_curriculum_items", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "content"
+    t.integer  "position"
+    t.uuid     "curriculum_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "curriculum_curriculums", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "title"
+    t.integer  "position"
+    t.uuid     "phase_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "curriculum_phases", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "name"
+    t.integer  "position"
+    t.uuid     "subject_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "curriculum_subjects", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "name"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "skill_categories", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string  "name"

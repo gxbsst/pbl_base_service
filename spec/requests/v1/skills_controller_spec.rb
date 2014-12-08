@@ -22,7 +22,6 @@ describe V1::SkillsController, type: :request do
 
         it { expect(@json[0]['title']).to eq('title2')}
       end
-
     end
 
     context 'with ids' do

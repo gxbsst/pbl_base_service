@@ -68,7 +68,7 @@ module V1
     private
 
     def project_params
-      params.require(:project).permit!
+      params.fetch(:project, {}).permit!
       # (:name,
       #                                 :driven_issue,
       #                                 :standard_analysis,

@@ -3,11 +3,12 @@
 # 课标解读
 
 FactoryGirl.define do
-  factory :pbl_standard_decomposition, class: Pbls::StandardDecomposition do
+  factory :standard_decomposition, class: Pbls::StandardDecomposition do
     role 'role'
     verb 'verb'
     technique 'technique'
     noun 'noun'
     product_name 'product_name'
+    association :project, factory: :pbl_project
   end
 end

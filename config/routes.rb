@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
     namespace :pbl do
       resources :projects, defaults: {format: 'json'}
+      resources :standard_decompositions, defaults: { format: :json}
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

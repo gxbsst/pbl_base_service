@@ -21,7 +21,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |project, evaluator|
-        create_list(:pbl_standard_decomposition, evaluator.decompositions_count, project: project)
+        create_list(:standard_decomposition, evaluator.decompositions_count, project: project)
       end
     end
 

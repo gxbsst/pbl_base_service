@@ -40,7 +40,8 @@ describe V1::Pbl::ProjectsController, type: :request do
   end
 
   describe 'GET #show' do
-    let!(:project)  { create :pbl_project, name: 'name' }
+    let(:user) { create :user }
+    let!(:project)  { create :pbl_project, name: 'name', user_id: user.id }
     before(:each) do
       get "/pbl/projects/#{project.id.to_s}", {}, accept
       @json = parse_json(response.body)
@@ -48,6 +49,7 @@ describe V1::Pbl::ProjectsController, type: :request do
 
     it { expect(@json['id']).to eq(project.id.to_s) }
     it { expect(@json['name']).to eq('name') }
+    it { expect(@json['user_id']).to eq(user.id) }
 
     # context 'with include' do
     #   let!(:skill)  { create :skill_with_categories, categories_count: 10,  title: 'title'}

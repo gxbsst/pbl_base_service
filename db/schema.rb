@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20141210034805) do
     t.string   "limitation"
     t.integer  "location_id"
     t.string   "grade_id"
+    t.uuid     "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

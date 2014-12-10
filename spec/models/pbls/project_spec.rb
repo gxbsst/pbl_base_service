@@ -4,6 +4,7 @@ describe Pbls::Project do
 
  it { expect(described_class.new).to_not validate_presence_of(:name) }
  it { expect(described_class.new).to have_many(:standard_decompositions) }
+ it { expect(described_class.new).to belong_to(:user) }
 
  let(:project) { described_class.new(name: 'name', driven_issue: 'driven_issue')}
  it { expect(project).to be_valid }

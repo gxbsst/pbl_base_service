@@ -5,7 +5,8 @@ FactoryGirl.define do
     standard_analysis "standard_analysis"
     duration 1
     description 'description'
-    # state 'draft'
+    # state 'draft
+    user
 
     trait :public  do
       limitation 5

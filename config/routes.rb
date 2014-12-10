@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   api_version(:module => "V1", :header => {:name => "Accept", :value => "application/vnd.ibridgebrige.com; version=1"}) do
 
-    get "skills/:ids", to: "skills#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
+    get "skill/categories/:ids", to: "skill/categories#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
     get "curriculum/subjects/:ids", to: "curriculum/subjects#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
     get "pbl/projects/:ids", to: "pbl/projects#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
 
@@ -9,16 +9,16 @@ Rails.application.routes.draw do
     resources :sessions, defaults: { format: 'json'}, only: %w(create destroy)
 
     # Skill
-    resources :skills, defaults: { format: 'json'}
     namespace :skill do
-      resources :categories, defaults: {format: 'json'}
+      resources :categories, defaults: { format: 'json'}
+      resources :sub_categories, defaults: {format: 'json'}
     end
 
     # Curriculum
     namespace :curriculum do
       resources :phases, defaults: {format: 'json'}
       resources :subjects, defaults: {format: 'json'}
-      resources :curriculums, defaults: {format: 'json'}
+      resources :standards, defaults: {format: 'json'}
     end
 
     namespace :pbl do

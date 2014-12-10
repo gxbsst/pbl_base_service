@@ -11,29 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141209094901) do
+ActiveRecord::Schema.define(version: 20141210034805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
-  create_table "curriculum_curriculum_items", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.string   "content"
-    t.integer  "position"
-    t.uuid     "curriculum_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "curriculum_curriculums", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.string   "title"
-    t.integer  "position"
-    t.uuid     "phase_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "curriculum_phases", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+  create_table "curriculums_phases", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"
     t.integer  "position"
     t.uuid     "subject_id"
@@ -41,14 +25,37 @@ ActiveRecord::Schema.define(version: 20141209094901) do
     t.datetime "updated_at"
   end
 
-  create_table "curriculum_subjects", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+  create_table "curriculums_standard_items", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "content"
+    t.integer  "position"
+    t.uuid     "standard_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "curriculums_standards", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "title"
+    t.integer  "position"
+    t.uuid     "phase_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "curriculums_subjects", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "pbl_projects", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+  create_table "pbls_project_techniques", force: true do |t|
+    t.uuid     "project_id"
+    t.uuid     "technique_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pbls_projects", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"
     t.string   "state"
     t.text     "description"
@@ -63,7 +70,7 @@ ActiveRecord::Schema.define(version: 20141209094901) do
     t.datetime "updated_at"
   end
 
-  create_table "pbl_standard_decompositions", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+  create_table "pbls_standard_decompositions", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "role"
     t.string   "verb"
     t.string   "technique"
@@ -74,25 +81,28 @@ ActiveRecord::Schema.define(version: 20141209094901) do
     t.datetime "updated_at"
   end
 
-  create_table "skill_categories", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.string  "name"
-    t.uuid    "skill_id"
-    t.integer "position"
+  create_table "skills_categories", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "name"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "skill_techniques", force: true do |t|
+  create_table "skills_sub_categories", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "name"
+    t.uuid     "category_id"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "skills_techniques", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "title"
     t.integer  "position"
-    t.uuid     "category_id"
+    t.uuid     "sub_category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
-  end
-
-  create_table "skills", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "taggings", force: true do |t|

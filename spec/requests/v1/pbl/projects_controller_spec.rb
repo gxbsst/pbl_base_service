@@ -52,11 +52,11 @@ describe V1::Pbl::ProjectsController, type: :request do
     # context 'with include' do
     #   let!(:skill)  { create :skill_with_categories, categories_count: 10,  title: 'title'}
     #   before(:each) do
-    #     get "/skills/#{skill.id.to_s}/?include=categories", {}, accept
+    #     get "/categories/#{skill.id.to_s}/?include=sub_categories", {}, accept
     #     @json = parse_json(response.body)
     #   end
-    #   it { expect(@json['categories']).to  be_a Array }
-    #   it { expect(@json['categories'].size).to eq(10) }
+    #   it { expect(@json['sub_categories']).to  be_a Array }
+    #   it { expect(@json['sub_categories'].size).to eq(10) }
     # end
   end
 
@@ -68,6 +68,14 @@ describe V1::Pbl::ProjectsController, type: :request do
 
     it { expect(@json['name']).to eq('name') }
 
+    context 'without params[:project]' do
+      before(:each) do
+        post "/pbl/projects", {}, accept
+      end
+
+      it { expect( response.status ).to eq(201)}
+    end
+
     describe 'standard_decompositions' do
       before(:each) do
         post "/pbl/projects", {project: attributes_for(:pbl_project, standard_decompositions_attributes: [attributes_for(:pbl_standard_decomposition, role: 'admin')])}, accept
@@ -75,6 +83,18 @@ describe V1::Pbl::ProjectsController, type: :request do
       end
 
       it { expect(@json['standard_decompositions'][0]['role']).to eq('admin')}
+    end
+
+    describe 'categories' do
+      let!(:technique) { create :skill_technique }
+      before(:each) do
+        Pbls::Project.delete_all
+        post "/pbl/projects", {project: attributes_for(:pbl_project, project_techniques_attributes: [technique_id: technique.id])}, accept
+      end
+
+      it { expect(Pbls::ProjectTechnique.count).to be(1)}
+      it { expect(Pbls::ProjectTechnique.first.technique_id.to_s).to eq(technique.id.to_s)}
+      it { expect(Pbls::ProjectTechnique.first.project_id.to_s).to eq(Pbls::Project.last.id.to_s)}
     end
   end
 
@@ -108,6 +128,16 @@ describe V1::Pbl::ProjectsController, type: :request do
 
         it { expect(@json['standard_decompositions'].size).to eq(0) }
       end
+    end
+
+    describe 'skill_techniques' do
+      # let!(:technique) { create :skill_technique }
+      # let!(:project) { create :pbl_project, project_techniques_attributes: [technique_id: technique.id] }
+      # before(:each) do
+      #   patch "/pbl/projects/#{project.id}", {project: {project_techniques_attributes: [technique_id: technique.id, _destroy: true]}}, accept
+      # end
+      #
+      # it { expect(Pbls::ProjectTechnique.count).to be(0) }
     end
   end
 

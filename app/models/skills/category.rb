@@ -1,9 +1,4 @@
-module Skills
-  class Category < PgConnection
-    self.table_name = 'skill_categories'
-
-    belongs_to :skill
-    has_many :techniques, class_name: 'Skills::Technique', dependent: :destroy
-    validates :name, presence: true
-  end
+class Skills::Category < ActiveRecord::Base
+  validates :name, presence: true
+  has_many :sub_categories,-> {includes [:techniques]}, class_name: 'Skills::SubCategory', dependent: :destroy
 end

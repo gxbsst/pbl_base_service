@@ -50,8 +50,8 @@ describe V1::Pbl::ProjectsController do
         post :create, project: attributes_for(:pbl_project, name: ''), format: :json
       end
 
-      it { expect(response.status).to eq(422)}
-      it {expect(Pbls::Project.count).to eq(0) }
+      it { expect(response.status).to eq(201)}
+      it {expect(Pbls::Project.count).to eq(1) }
     end
   end
 
@@ -72,8 +72,8 @@ describe V1::Pbl::ProjectsController do
         patch :update, id: project, project: attributes_for(:pbl_project, name: ''), format: :json
       end
 
-      it { expect(response.status).to eq(422)}
-      it { expect(Pbls::Project.first.name).to eq('original name') }
+      it { expect(response.status).to eq(200)}
+      it { expect(Pbls::Project.first.name).to eq('') }
     end
   end
 

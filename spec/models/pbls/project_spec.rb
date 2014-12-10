@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Pbls::Project do
 
- it { expect(described_class.new).to validate_presence_of(:name) }
+ it { expect(described_class.new).to_not validate_presence_of(:name) }
  it { expect(described_class.new).to have_many(:standard_decompositions) }
 
  let(:project) { described_class.new(name: 'name', driven_issue: 'driven_issue')}

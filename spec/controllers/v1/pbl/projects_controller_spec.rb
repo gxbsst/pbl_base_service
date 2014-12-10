@@ -34,4 +34,55 @@ describe V1::Pbl::ProjectsController do
       it { expect(assigns(:project)).to be_nil }
     end
   end
+
+  describe 'POST #create' do
+    context 'with successful' do
+      before(:each) do
+        post :create, project: attributes_for(:pbl_project), format: :json
+      end
+
+      it { expect(response.status).to eq(201)}
+      it { expect(Pbls::Project.count).to eq(1) }
+    end
+
+    context 'with failed' do
+      before(:each) do
+        post :create, project: attributes_for(:pbl_project, name: ''), format: :json
+      end
+
+      it { expect(response.status).to eq(422)}
+      it {expect(Pbls::Project.count).to eq(0) }
+    end
+  end
+
+  describe 'PATCH #update' do
+    context 'with successful' do
+      let(:project) { create :pbl_project }
+      before(:each) do
+        patch :update, id: project, project: attributes_for(:pbl_project, name: 'name'), format: :json
+      end
+
+      it { expect(response.status).to eq(200)}
+      it { expect(Pbls::Project.first.name).to eq('name') }
+    end
+
+    context 'with failed' do
+      let(:project) { create :pbl_project, name: 'original name' }
+      before(:each) do
+        patch :update, id: project, project: attributes_for(:pbl_project, name: ''), format: :json
+      end
+
+      it { expect(response.status).to eq(422)}
+      it { expect(Pbls::Project.first.name).to eq('original name') }
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let(:project) { create :pbl_project }
+    before(:each) do
+      delete :destroy, id: project, format: :json
+    end
+    it { expect(response.status).to eq(200)}
+    it { expect(Pbls::Project.count).to eq(0)}
+  end
 end

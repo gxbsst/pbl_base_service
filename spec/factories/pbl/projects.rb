@@ -5,7 +5,7 @@ FactoryGirl.define do
     standard_analysis "standard_analysis"
     duration 1
     description 'description'
-    state 'draft'
+    # state 'draft'
 
     trait :public  do
       limitation 5
@@ -21,7 +21,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |project, evaluator|
-        create_list(:skill, evaluator.decompositions_count, project: project)
+        create_list(:pbl_standard_decomposition, evaluator.decompositions_count, project: project)
       end
     end
 

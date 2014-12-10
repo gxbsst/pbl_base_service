@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
     get "skills/:ids", to: "skills#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
     get "curriculum/subjects/:ids", to: "curriculum/subjects#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
+    get "pbl/projects/:ids", to: "pbl/projects#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
 
     resources :users, :defaults => { :format => 'json' }, :id => /.*/
     resources :sessions, defaults: { format: 'json'}, only: %w(create destroy)

@@ -17,6 +17,14 @@ module V1
       end
     end
 
+    # @param [Hash]
+    #  params = {
+    #   project: {
+    #     name: 'name',
+    #    standard_decompositions_attributes:  [{role: 'role', verb: 'verb'}]  # array
+    #   }
+    #  }
+    #
     def create
       @project= Pbls::Project.new(project_params)
 
@@ -27,11 +35,20 @@ module V1
       end
     end
 
+    # @param [Hash]
+    #  params = {
+    #   project: {
+    #     name: 'name',
+    #    standard_decompositions_attributes:  [{ id: 'id', role: 'role', verb: 'verb', _destroy: true}]  # array
+    #   }
+    #  }
+    #
+
     def update
       set_project
 
       if @project.update_attributes(project_params)
-        render json: { id: @project.id }, status: :ok
+        render :show, status: :ok
       else
         render json: {error: @project.errors}, status: :unprocessable_entity
       end
@@ -41,7 +58,7 @@ module V1
       set_project
       return head :not_found if !@project
 
-      if @project.delete
+      if @project.destroy
         render json: { id: @project.id }, status: :ok
       else
         head :unauthorized
@@ -51,14 +68,17 @@ module V1
     private
 
     def project_params
-      params.require(:project).permit(:name,
-                                      :driven_issue,
-                                      :stand_analysis,
-                                      :duration,
-                                      :limitation,
-                                      :location_id,
-                                      :location_id,
-                                      :grade_id)
+      params.require(:project).permit!
+      # (:name,
+      #                                 :driven_issue,
+      #                                 :standard_analysis,
+      #                                 :duration,
+      #                                 :limitation,
+      #                                 :location_id,
+      #                                 :location_id,
+      #                                 :grade_id,
+      #                                 :description,
+      #                                 standard_decompositions_attributes: [:id, :role, :verb, :technique, :noun, :product_name, :_destroy])
     end
 
     def set_project

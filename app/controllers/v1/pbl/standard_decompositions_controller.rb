@@ -24,6 +24,7 @@ class V1::Pbl::StandardDecompositionsController < ApplicationController
     end
   end
 
+
   private
 
   def standard_decomposition_params

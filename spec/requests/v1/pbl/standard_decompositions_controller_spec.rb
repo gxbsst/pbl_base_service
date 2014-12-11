@@ -25,7 +25,7 @@ RSpec.describe V1::Pbl::StandardDecompositionsController, :type => :request do
       end
 
       it { expect(response.status).to eq(422) }
-      it { expect(@json['error']['project']).to match_array(["can't be blank"])}
+      it { expect(@json['error']['project']).to be_a Array }
     end
   end
 
@@ -38,14 +38,4 @@ RSpec.describe V1::Pbl::StandardDecompositionsController, :type => :request do
     it { expect(Pbls::StandardDecomposition.count).to eq(0) }
   end
 
-  describe 'PATCH #update' do
-    let!(:project)  { create :pbl_project, name: 'name' }
-
-    before(:each) do
-      patch "/pbl/standard_decompositions/#{project.id.to_s}", {project: {name: 'skill update title'}}, accept
-      @json = parse_json(response.body)
-    end
-
-    it { expect(@json['id']).to eq(project.id.to_s) }
-    end
 end

@@ -6,7 +6,7 @@ FactoryGirl.define do
     duration 1
     description 'description'
     # state 'draft
-    user
+    association :user, factory: :user#, email: "#{Time.now.to_i}@gmail.com"
 
     trait :public  do
       limitation 5

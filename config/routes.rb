@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
     namespace :pbl do
       resources :projects, defaults: {format: 'json'}
+      resources :products, defaults: {format: 'json'}
       resources :standard_decompositions, defaults: { format: :json}
     end
   end

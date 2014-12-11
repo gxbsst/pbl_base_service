@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :pbl_product do
+  factory :pbl_product, class: Pbls::Product do
     sequence(:form) {|n| "product-form-#{n}"}
     description 'description'
 

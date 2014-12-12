@@ -8,6 +8,7 @@ module V1
       @projects = Pbls::Project.order(created_at: :desc)
       @projects = @projects.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
       @projects = @projects.page(page).per(limit)
+      # @total_pages = @projects.total_pages
     end
 
     def show

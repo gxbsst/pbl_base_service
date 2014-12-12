@@ -11,7 +11,6 @@ class CreatePblsProjects < ActiveRecord::Migration
       t.string :limitation
       t.integer :location_id
       t.string :grade_id
-      t.uuid :user_id, index: true
       t.timestamps
     end
   end

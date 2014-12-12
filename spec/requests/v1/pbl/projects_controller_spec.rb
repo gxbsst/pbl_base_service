@@ -24,6 +24,8 @@ end
         end
 
         it { expect(@json[0]['name']).to eq('name2')}
+        it { expect(assigns(:total_pages)).to eq(2)}
+
       end
     end
 

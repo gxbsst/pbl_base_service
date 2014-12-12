@@ -1,3 +1,3 @@
-json.extract! @phase, :id, :name, :curriculum_id
-json.curriculums @phase.curriculums if params[:include] == 'standards'
+json.extract! @phase, :id, :name, :subject_id
+json.standards @phase.standards if params[:include] == 'standards'
 

@@ -11,9 +11,23 @@ describe V1::GaugesController do
       @json = parse_json(response.body)
     end
 
-    it { expect(response.body).to have_json_type(Array) }
-    it { expect(@json[0]['level_2']).to eq('level_2') }
-    it { expect(@json[1]['level_1']).to eq('level_1') }
+    it { expect(response.body).to have_json_type(Hash) }
+    it { expect(@json['data'][0]['level_2']).to eq('level_2') }
+    it { expect(@json['data'][1]['level_1']).to eq('level_1') }
+
+    context 'with page' do
+      context 'page 1' do
+        before(:each) do
+          get 'gauges?page=1&limit=1', {}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(@json['meta']['total_pages']).to eq(2)}
+        it { expect(@json['meta']['current_page']).to eq(1)}
+        it { expect(@json['meta']['per_page']).to eq('1')}
+
+      end
+    end
   end
 
   describe 'GET #show' do

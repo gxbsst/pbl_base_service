@@ -9,9 +9,9 @@ describe V1::Skill::CategoriesController, type: :request do
       @json = parse_json(response.body)
     end
 
-    it { expect(response.body).to have_json_type(Array) }
-    it { expect(@json[0]['name']).to eq('title2') }
-    it { expect(@json[1]['name']).to eq('title') }
+    it { expect(response.body).to have_json_type(Hash) }
+    it { expect(@json['data'][0]['name']).to eq('title2') }
+    it { expect(@json['data'][1]['name']).to eq('title') }
 
     context 'with page' do
       context 'page 1' do
@@ -20,7 +20,9 @@ describe V1::Skill::CategoriesController, type: :request do
           @json = parse_json(response.body)
         end
 
-        it { expect(@json[0]['name']).to eq('title2')}
+        it { expect(@json['meta']['total_pages']).to eq(2)}
+        it { expect(@json['meta']['current_page']).to eq(1)}
+        it { expect(@json['meta']['per_page']).to eq('1')}
       end
     end
 
@@ -32,9 +34,9 @@ describe V1::Skill::CategoriesController, type: :request do
         @json = parse_json(response.body)
       end
 
-      it { expect(@json.size).to eq(2)}
-      it { expect(@json[0]['name']).to eq('title4') }
-      it { expect(@json[1]['name']).to eq('title3') }
+      it { expect(@json['data'].size).to eq(2)}
+      it { expect(@json['data'][0]['name']).to eq('title4') }
+      it { expect(@json['data'][1]['name']).to eq('title3') }
     end
 
   end

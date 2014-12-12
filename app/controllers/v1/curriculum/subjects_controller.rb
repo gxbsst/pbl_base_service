@@ -2,11 +2,11 @@ module V1
   class Curriculum::SubjectsController < BaseController
     def index
       page = params[:page] || 1
-      limit = params[:limit] || 10
+      @limit = params[:limit] || 10
 
       @subjects = Curriculums::Subject.order(created_at: :desc)
       @subjects = @subjects.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
-      @subjectss = @subjects.page(page).per(limit)
+      @subjects = @subjects.page(page).per(@limit)
     end
 
     def show

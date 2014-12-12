@@ -3,13 +3,16 @@ module V1
     respond_to :json
 
     def index
+      page = params[:page] || 1
+      @limit = params[:limit] || 10
+
       @users = User.order(created_at: :desc)
       @users = @users.where(id: params[:id]) if params[:id].present?
       @users = @users.where('first_name like ?', params[:first_name]) if params[:first_name].present?
       @users = @users.where('last_name like ?', params[:last_name]) if params[:last_name].present?
       @users = @users.where(age: params[:age]) if params[:age].present?
       @users = @users.where(gender: params[:gender]) if params[:gender].present?
-      @users
+      @users = @gauges.page(page).per(@limit)
       if @users.blank?
         head :not_found
       end

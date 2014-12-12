@@ -11,9 +11,23 @@ describe V1::Pbl::ProductsController do
    @json = parse_json(response.body)
   end
 
-  it { expect(response.body).to have_json_type(Array) }
-  it { expect(@json[0]['form']).to eq('form2') }
-  it { expect(@json[1]['form']).to eq('form') }
+  it { expect(response.body).to have_json_type(Hash) }
+  it { expect(@json['data'][0]['form']).to eq('form2') }
+  it { expect(@json['data'][1]['form']).to eq('form') }
+
+  context 'with page' do
+   context 'page 1' do
+    before(:each) do
+     get '/pbl/products?page=1&limit=1', {project_id: project.id}, accept
+     @json = parse_json(response.body)
+    end
+
+    it { expect(@json['meta']['total_pages']).to eq(2)}
+    it { expect(@json['meta']['current_page']).to eq(1)}
+    it { expect(@json['meta']['per_page']).to eq('1')}
+
+   end
+  end
  end
 
  describe 'GET #show' do

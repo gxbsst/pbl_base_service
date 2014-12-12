@@ -2,11 +2,11 @@ module V1
   class GaugesController < BaseController
     def index
       page = params[:page] || 1
-      limit = params[:limit] || 10
+      @limit = params[:limit] || 10
 
       @gauges = Gauge.order(created_at: :desc)
       @gauges = @gauges.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
-      @gauges = @gauges.page(page).per(limit)
+      @gauges = @gauges.page(page).per(@limit)
     end
 
     def show

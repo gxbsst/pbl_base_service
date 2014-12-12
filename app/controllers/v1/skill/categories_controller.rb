@@ -2,11 +2,11 @@ module V1
   class Skill::CategoriesController < BaseController
     def index
       page = params[:page] || 1
-      limit = params[:limit] || 10
+      @limit = params[:limit] || 10
 
       @categories = Skills::Category.order(created_at: :desc)
       @categories = @categories.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
-      @categories = @categories.page(page).per(limit)
+      @categories = @categories.page(page).per(@limit)
     end
 
     def show

@@ -1,14 +1,12 @@
 module V1
   class Pbl::ProjectsController < BaseController
-
     def index
       page = params[:page] || 1
-      limit = params[:limit] || 10
+      @limit = params[:limit] || 10
 
       @projects = Pbls::Project.order(created_at: :desc)
       @projects = @projects.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
-      @projects = @projects.page(page).per(limit)
-      # @total_pages = @projects.total_pages
+      @projects = @projects.page(page).per(@limit)
     end
 
     def show

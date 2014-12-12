@@ -4,11 +4,11 @@ module V1
     def index
       set_project
       page = params[:page] || 1
-      limit = params[:limit] || 10
+      @limit = params[:limit] || 10
 
       @products = @project.products.order(created_at: :desc)
       @products = @products.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
-      @products = @products.page(page).per(limit)
+      @products = @products.page(page).per(@limit)
     end
 
     def show

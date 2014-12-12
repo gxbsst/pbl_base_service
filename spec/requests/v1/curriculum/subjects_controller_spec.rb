@@ -9,9 +9,9 @@ describe V1::Curriculum::SubjectsController do
       @json = parse_json(response.body)
     end
 
-    it { expect(response.body).to have_json_type(Array) }
-    it { expect(@json[0]['name']).to eq('name2') }
-    it { expect(@json[1]['name']).to eq('name1') }
+    it { expect(response.body).to have_json_type(Hash) }
+    it { expect(@json['data'][0]['name']).to eq('name2') }
+    it { expect(@json['data'][1]['name']).to eq('name1') }
 
     context 'with page' do
       context 'page 1' do
@@ -20,7 +20,10 @@ describe V1::Curriculum::SubjectsController do
           @json = parse_json(response.body)
         end
 
-        it { expect(@json[0]['name']).to eq('name2')}
+        it { expect(@json['data'][0]['name']).to eq('name2')}
+        it { expect(@json['meta']['total_pages']).to eq(2)}
+        it { expect(@json['meta']['current_page']).to eq(1)}
+        it { expect(@json['meta']['per_page']).to eq('1')}
       end
     end
 
@@ -33,8 +36,8 @@ describe V1::Curriculum::SubjectsController do
       end
 
       it { expect(@json.size).to eq(2)}
-      it { expect(@json[0]['name']).to eq('name4') }
-      it { expect(@json[1]['name']).to eq('name3') }
+      it { expect(@json['data'][0]['name']).to eq('name4') }
+      it { expect(@json['data'][1]['name']).to eq('name3') }
     end
   end
 

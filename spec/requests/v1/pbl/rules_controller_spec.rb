@@ -45,9 +45,8 @@ describe V1::Pbl::RulesController do
    it { expect(@json['level_3']).to eq('level_3') }
    it { expect(@json['level_4']).to eq('level_4') }
    it { expect(@json['level_5']).to eq('level_5') }
-   it { expect(@json['level_6']).to eq('level_6') }
-   it { expect(@json['level_7']).to eq('level_7') }
    it { expect(@json['weight']).to eq('weight') }
+   it { expect(@json['standard']).to eq('standard') }
    it { expect(@json['project_id']).to eq(project.id) }
    it { expect(@json['technique_id']).to_not be_nil }
    it { expect(@json['gauge_id']).to_not be_nil }

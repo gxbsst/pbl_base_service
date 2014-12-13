@@ -1,1 +1,1 @@
-json.extract! @rule, :id, :project_id, :technique_id, :gauge_id, :weight, :level_1, :level_2, :level_3, :level_4, :level_5, :level_6, :level_7
+json.extract! @rule, :id, :project_id, :technique_id, :gauge_id, :weight, :standard, :level_1, :level_2, :level_3, :level_4, :level_5

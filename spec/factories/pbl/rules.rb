@@ -8,6 +8,7 @@ FactoryGirl.define do
   level_6 "level_6"
   level_7 "level_7"
   weight "weight"
+  standard "standard"
 
   association :technique, factory: :skill_technique
   association :project, factory: :pbl_project

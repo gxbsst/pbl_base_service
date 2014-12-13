@@ -5,6 +5,7 @@ class CreatePblsRules < ActiveRecord::Migration
       t.uuid :project_id, index: true
       t.uuid :gauge_id, index: true
       t.string :weight
+      t.string :standard
       t.string :level_1
       t.string :level_2
       t.string :level_3

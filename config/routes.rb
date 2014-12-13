@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       resources :projects, defaults: {format: 'json'}
       resources :products, defaults: {format: 'json'}
       resources :standard_decompositions, defaults: { format: :json}
+      resources :rules, defaults: { format: :json}
     end
 
     resources :gauges, defaults: { format: :json}

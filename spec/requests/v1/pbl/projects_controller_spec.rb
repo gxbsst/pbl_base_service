@@ -57,16 +57,8 @@ end
     it { expect(@json['id']).to eq(project.id.to_s) }
     it { expect(@json['name']).to eq('name') }
     it { expect(@json['user_id']).to eq(user.id) }
-
-    # context 'with include' do
-    #   let!(:skill)  { create :skill_with_categories, categories_count: 10,  title: 'title'}
-    #   before(:each) do
-    #     get "/categories/#{skill.id.to_s}/?include=sub_categories", {}, accept
-    #     @json = parse_json(response.body)
-    #   end
-    #   it { expect(@json['sub_categories']).to  be_a Array }
-    #   it { expect(@json['sub_categories'].size).to eq(10) }
-    # end
+    it { expect(@json['rule_head']).to eq('rule_head') }
+    it { expect(@json['rule_template']).to eq('rule_template') }
   end
 
   describe 'POST #create' do

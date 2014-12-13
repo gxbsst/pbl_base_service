@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141212054514) do
+ActiveRecord::Schema.define(version: 20141213075437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20141212054514) do
     t.uuid     "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
   end
 
   create_table "pbls_project_techniques", force: true do |t|
@@ -91,6 +92,24 @@ ActiveRecord::Schema.define(version: 20141212054514) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.uuid     "user_id"
+    t.string   "rule_head"
+    t.string   "rule_template"
+  end
+
+  create_table "pbls_rules", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "technique_id"
+    t.uuid     "project_id"
+    t.uuid     "gauge_id"
+    t.string   "weight"
+    t.string   "level_1"
+    t.string   "level_2"
+    t.string   "level_3"
+    t.string   "level_4"
+    t.string   "level_5"
+    t.string   "level_6"
+    t.string   "level_7"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "pbls_standard_decompositions", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

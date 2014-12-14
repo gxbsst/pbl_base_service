@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   api_version(:module => "V1", :header => {:name => "Accept", :value => "application/vnd.ibridgebrige.com; version=1"}) do
 
     get "skill/categories/:ids", to: "skill/categories#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
+    get "skill/sub_categories/:ids", to: "skill/sub_categories#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
     get "curriculum/subjects/:ids", to: "curriculum/subjects#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
+    get "curriculum/phases/:ids", to: "curriculum/phases#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
     get "pbl/projects/:ids", to: "pbl/projects#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
 
     resources :users, :defaults => { :format => 'json' }, :id => /.*/

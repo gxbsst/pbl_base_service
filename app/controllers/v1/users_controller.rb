@@ -12,7 +12,8 @@ module V1
       @users = @users.where('last_name like ?', params[:last_name]) if params[:last_name].present?
       @users = @users.where(age: params[:age]) if params[:age].present?
       @users = @users.where(gender: params[:gender]) if params[:gender].present?
-      @users = @gauges.page(page).per(@limit)
+      @users = @users.page(page).per(@limit)
+
       if @users.blank?
         head :not_found
       end

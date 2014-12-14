@@ -64,4 +64,14 @@ describe V1::Skill::SubCategoriesController do
     it { expect(Skills::SubCategory.count).to eq(0)}
   end
 
+  describe 'GET #index' do
+    let!(:sub_category) { create :skill_sub_category }
+    before(:each) do
+      get :index, format: :json
+    end
+
+    it { expect(response).to render_template :index }
+    it { expect(response.status).to eq(200) }
+    it { expect(assigns(:sub_categories)).to match_array([sub_category])}
+  end
 end

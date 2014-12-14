@@ -6,11 +6,11 @@ FactoryGirl.define do
 
     factory :curriculum_standard_with_items do
       transient do
-        curriculum_items_count 5
+        standard_items_count 5
       end
 
       after(:create) do |standard, evaluator|
-        create_list(:curriculum_item, evaluator.curriculum_items_count, standard: standard)
+        create_list(:curriculum_item, evaluator.standard_items_count, standard: standard)
       end
     end
   end

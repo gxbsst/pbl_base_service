@@ -1,6 +1,19 @@
 module V1
   class Curriculum::PhasesController <  BaseController
 
+    def index
+      page = params[:page] || 1
+      @limit = params[:limit] || 10
+
+      @phases = Curriculums::Phase.order(created_at: :desc)
+      @phases = @phases.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
+      @phases = @phases.where(subject_id: params[:subject_id]) if params[:subject_id].present?
+      @phases = @phases.page(page).per(@limit)
+      if @phases.blank?
+        head :not_found
+      end
+    end
+
     def show
       set_phase
       render json: {}, status: :not_found unless @phase

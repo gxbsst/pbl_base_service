@@ -3,7 +3,7 @@ class RolifyCreateRoles < ActiveRecord::Migration
     create_table(:roles, id: :uuid) do |t|
       t.string :name
       t.uuid :resource_id
-      t.uuid :resource_type
+      t.string :resource_type
 
       t.timestamps
     end

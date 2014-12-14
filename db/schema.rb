@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 20141213090808) do
   create_table "roles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"
     t.uuid     "resource_id"
-    t.uuid     "resource_type"
+    t.string   "resource_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

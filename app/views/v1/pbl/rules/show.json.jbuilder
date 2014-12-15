@@ -1,1 +1,1 @@
-json.extract! @rule, :id, :project_id, :technique_id, :gauge_id, :weight, :standard, :level_1, :level_2, :level_3, :level_4, :level_5
+json.extract! @clazz_instance, :id, :project_id, :technique_id, :gauge_id, :weight, :standard, :level_1, :level_2, :level_3, :level_4, :level_5

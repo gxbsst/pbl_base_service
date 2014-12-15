@@ -11,7 +11,7 @@ describe V1::Pbl::RulesController do
     end
 
     it { expect(response).to render_template :index }
-    it { expect(assigns(:rules)).to match_array([rule])}
+    it { expect(assigns(:collections)).to match_array([rule])}
   end
 
   describe 'GET #show' do
@@ -24,7 +24,7 @@ describe V1::Pbl::RulesController do
 
       it { expect(response.status).to  eq(200) }
       it { expect(response).to render_template :show}
-      it { expect(assigns(:rule)).to eq(rule)}
+      it { expect(assigns(:clazz_instance)).to eq(rule)}
     end
 
     context 'with not found' do
@@ -35,7 +35,7 @@ describe V1::Pbl::RulesController do
 
       it { expect(response.status).to  eq(404) }
       it { expect(response).to_not render_template :show}
-      it { expect(assigns(:rule)).to be_nil }
+      it { expect(assigns(:clazz_instance)).to be_nil }
     end
   end
 

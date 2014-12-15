@@ -1,0 +1,1 @@
+Curriculums::Subject.find_or_create_by(name: '计算机')

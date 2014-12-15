@@ -168,6 +168,7 @@ GEM
       rspec-mocks (~> 3.1.0)
       rspec-support (~> 3.1.0)
     rspec-support (3.1.2)
+    seedbank (0.3.0)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
     sidekiq (3.3.0)
@@ -239,6 +240,7 @@ DEPENDENCIES
   rails-api
   rolify
   rspec-rails
+  seedbank
   shoulda-matchers
   spring
   spring-commands-rspec

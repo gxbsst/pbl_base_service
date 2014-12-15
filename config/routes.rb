@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     namespace :skill do
       resources :categories, defaults: { format: 'json'}
       resources :sub_categories, defaults: {format: 'json'}
+      resources :techniques, defaults: {format: 'json'}
     end
 
     # Curriculum

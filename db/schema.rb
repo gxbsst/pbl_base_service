@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141215103657) do
+ActiveRecord::Schema.define(version: 20141215123041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20141215103657) do
     t.uuid     "user_id"
     t.string   "rule_head"
     t.string   "rule_template"
+    t.string   "duration_unit"
   end
 
   create_table "pbls_rules", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

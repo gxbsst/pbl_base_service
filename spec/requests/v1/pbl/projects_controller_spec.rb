@@ -134,11 +134,13 @@ describe V1::Pbl::ProjectsController, type: :request do
 
   describe 'POST #create' do
     before(:each) do
-      post "/pbl/projects", {project: {name: 'name'}}, accept
+      post "/pbl/projects", {project: attributes_for(:pbl_project, name: 'name', tag_list: 'a,b,c', duration_unit: '1')}, accept
       @json = parse_json(response.body)
     end
 
     it { expect(@json['name']).to eq('name') }
+    it { expect(@json['tag_list']).to match_array(['a', 'b', 'c']) }
+    it { expect(@json['duration_unit']).to eq('1') }
 
     context 'without params[:project]' do
       before(:each) do

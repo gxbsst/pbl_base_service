@@ -79,4 +79,15 @@ describe V1::Curriculum::StandardsController do
     it { expect(Curriculums::Standard.count).to eq(0)}
   end
 
+  describe 'GET #Index' do
+    let!(:standard) { create :curriculum_standard }
+    before(:each) do
+      get :index, format: :json
+    end
+
+    it { expect(response).to render_template :index }
+    it { expect(response.status).to eq(200) }
+    it { expect(assigns(:standards)).to match_array([standard])}
+  end
+
 end

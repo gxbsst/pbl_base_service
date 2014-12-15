@@ -7,6 +7,9 @@ module V1
       @subjects = Curriculums::Subject.order(created_at: :desc)
       @subjects = @subjects.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
       @subjects = @subjects.page(page).per(@limit)
+      if @subjects.blank?
+        head :not_found
+      end
     end
 
     def show

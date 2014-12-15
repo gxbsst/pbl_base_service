@@ -1,6 +1,20 @@
 module V1
   class Curriculum::StandardsController <  BaseController
 
+    def index
+      page = params[:page] || 1
+      @limit = params[:limit] || 10
+
+      @standards = Curriculums::Standard.order(created_at: :desc)
+      @standards = @standards.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
+      @standards = @standards.where(phase_id: params[:phase_id]) if params[:phase_id].present?
+      @standards = @standards.page(page).per(@limit)
+
+      if @standards.blank?
+        head :not_found
+      end
+    end
+
     def show
       set_standard
       render json: {}, status: :not_found unless @standard

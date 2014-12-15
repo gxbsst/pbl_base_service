@@ -9,11 +9,11 @@ describe V1::UsersController, type: :request do
     end
 
     it { expect(response.status).to eq(200)}
-    it { expect(response.body).to have_json_type(Array) }
-    it {expect(@json[0]['first_name']).to eq('first_name')}
-    it {expect(@json[0]['last_name']).to eq('last_name')}
-    it {expect(@json[0]['age']).to eq(20)}
-    it {expect(@json[0]['gender']).to eq(0)}
+    it { expect(response.body).to have_json_type(Hash) }
+    it {expect(@json['data'][0]['first_name']).to eq('first_name')}
+    it {expect(@json['data'][0]['last_name']).to eq('last_name')}
+    it {expect(@json['data'][0]['age']).to eq(20)}
+    it {expect(@json['data'][0]['gender']).to eq(0)}
   end
 
   describe 'GET #Show' do

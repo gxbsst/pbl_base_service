@@ -1,5 +1,20 @@
 module V1
  class Skill::SubCategoriesController <  BaseController
+
+  def index
+   page = params[:page] || 1
+   @limit = params[:limit] || 10
+
+   @sub_categories = Skills::SubCategory.order(created_at: :desc)
+   @sub_categories = @sub_categories.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
+   @sub_categories = @sub_categories.where(category_id: params[:category_id]) if params[:category_id].present?
+   @sub_categories = @sub_categories.page(page).per(@limit)
+
+   if @sub_categories.blank?
+    head :not_found
+   end
+  end
+
   def show
    set_sub_category
    render json: {}, status: :not_found unless @sub_category

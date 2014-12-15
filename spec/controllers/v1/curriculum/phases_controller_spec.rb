@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe V1::Curriculum::PhasesController do
+describe V1::Curriculum::PhasesController, type: :controller do
 
   describe 'GET #show' do
     let(:phase) { create(:curriculum_phase, name: 'name')}
@@ -64,4 +64,14 @@ describe V1::Curriculum::PhasesController do
     it { expect(Curriculums::Phase.count).to eq(0)}
   end
 
+  describe 'GET #Index' do
+    let!(:phase) { create :curriculum_phase }
+    before(:each) do
+      get :index, format: :json
+    end
+
+    it { expect(response).to render_template :index }
+    it { expect(response.status).to eq(200) }
+    it { expect(assigns(:phases)).to match_array([phase])}
+  end
 end

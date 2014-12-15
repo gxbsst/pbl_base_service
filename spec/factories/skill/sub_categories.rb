@@ -4,7 +4,7 @@ FactoryGirl.define do
     sequence(:position) {|n| n}
     association :category, factory: :skill_category
 
-    factory :skill_sub_category_with_technique do
+    factory :skill_sub_category_with_techniques do
       transient do
         techniques_count 5
       end

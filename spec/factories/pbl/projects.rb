@@ -5,6 +5,8 @@ FactoryGirl.define do
     standard_analysis "standard_analysis"
     duration 1
     description 'description'
+    rule_head 'rule_head'
+    rule_template 'rule_template'
     # state 'draft
     association :user, factory: :user#, email: "#{Time.now.to_i}@gmail.com"
 

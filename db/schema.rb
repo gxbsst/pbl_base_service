@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 20141213081806) do
     t.uuid     "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
   end
 
   create_table "pbls_project_techniques", force: true do |t|
@@ -98,6 +99,25 @@ ActiveRecord::Schema.define(version: 20141213081806) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.uuid     "user_id"
+    t.string   "rule_head"
+    t.string   "rule_template"
+  end
+
+  create_table "pbls_rules", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "technique_id"
+    t.uuid     "project_id"
+    t.uuid     "gauge_id"
+    t.string   "weight"
+    t.string   "standard"
+    t.string   "level_1"
+    t.string   "level_2"
+    t.string   "level_3"
+    t.string   "level_4"
+    t.string   "level_5"
+    t.string   "level_6"
+    t.string   "level_7"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "pbls_standard_decompositions", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -110,6 +130,17 @@ ActiveRecord::Schema.define(version: 20141213081806) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "roles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "name"
+    t.uuid     "resource_id"
+    t.string   "resource_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
+  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "skills_categories", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"
@@ -166,5 +197,12 @@ ActiveRecord::Schema.define(version: 20141213081806) do
     t.string   "email"
     t.string   "username"
   end
+
+  create_table "users_roles", id: false, force: true do |t|
+    t.uuid "user_id"
+    t.uuid "role_id"
+  end
+
+  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
 end

@@ -59,6 +59,57 @@ end
     it { expect(@json['user_id']).to eq(user.id) }
     it { expect(@json['rule_head']).to eq('rule_head') }
     it { expect(@json['rule_template']).to eq('rule_template') }
+
+    context 'with include techniques' do
+      let!(:project)  { create :pbl_project_with_techniques, name: 'name', user_id: user.id, techniques_count: 5}
+      before(:each) do
+        get "/pbl/projects/#{project.id.to_s}?include=techniques", {}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(assigns(:include_techniques)).to eq(true)}
+      it { expect(@json['techniques'].size).to eq(5) }
+      it { expect(@json['techniques'][0]['project_id']).to eq(project.id) }
+    end
+
+    context 'with include standard_items' do
+      let!(:project)  { create :pbl_project_with_standard_items, name: 'name', user_id: user.id, standard_items_count: 5}
+      before(:each) do
+        get "/pbl/projects/#{project.id.to_s}?include=standard_items", {}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(assigns(:include_standard_items)).to eq(true)}
+      it { expect(@json['standard_items'].size).to eq(5) }
+      it { expect(@json['standard_items'][0]['project_id']).to eq(project.id) }
+    end
+
+    context 'with include rules' do
+      let!(:project)  { create :pbl_project_with_rules, name: 'name', user_id: user.id, rules_count: 5}
+      before(:each) do
+        get "/pbl/projects/#{project.id.to_s}?include=rules", {}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(assigns(:include_rules)).to eq(true)}
+      it { expect(@json['rules'].size).to eq(5) }
+      it { expect(@json['rules'][0]['project_id']).to eq(project.id) }
+    end
+
+    context 'with include standard_items & techniques' do
+      let!(:project)  { create :pbl_project_with_standard_items_and_techniques, name: 'name', user_id: user.id, standard_items_and_techniques_count: 5}
+      before(:each) do
+        get "/pbl/projects/#{project.id.to_s}?include=standard_items,techniques", {}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(assigns(:include_techniques)).to eq(true)}
+      it { expect(assigns(:include_standard_items)).to eq(true)}
+      it { expect(@json['standard_items'].size).to eq(5) }
+      it { expect(@json['standard_items'][0]['project_id']).to eq(project.id) }
+      it { expect(@json['techniques'].size).to eq(5) }
+      it { expect(@json['techniques'][0]['project_id']).to eq(project.id) }
+    end
   end
 
   describe 'POST #create' do

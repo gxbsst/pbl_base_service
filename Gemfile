@@ -27,6 +27,9 @@ group :development do
   gem 'capistrano-rvm', :platforms => [:ruby, :jruby]
   gem 'capistrano-bundler', :platforms => [:ruby, :jruby]
   gem 'capistrano-sidekiq'
+end
+
+group :development, :release do
   gem 'seedbank'
 end
 

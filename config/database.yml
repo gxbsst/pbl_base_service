@@ -88,6 +88,7 @@ production:
 
 release:
   <<: *default
+  host: 172.172.172.120
   database: pbl_base_release
   username: pbl
   password: pbl

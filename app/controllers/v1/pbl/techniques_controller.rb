@@ -1,5 +1,5 @@
 module V1
-  class Pbl::RulesController < BaseController
+  class Pbl::TechniquesController < BaseController
 
     private
 
@@ -7,17 +7,17 @@ module V1
       {
         have_parent_resource: true,
         parent_resource_clazz: Pbls::Project,
-        clazz: Pbls::Rule,
-        clazz_resource_name: 'rules'
+        clazz: Pbls::Technique,
+        clazz_resource_name: 'techniques'
       }
     end
 
     def clazz_params
-      params.fetch(:rule, {}).permit!
+      params.fetch(:technique, {}).permit!
     end
 
     def parent_resource_id
-      params[:project_id] || params[:rule][:project_id]
+      params[:project_id] || params[:technique][:project_id]
     rescue
       nil
     end

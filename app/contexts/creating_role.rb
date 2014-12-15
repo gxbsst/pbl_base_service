@@ -15,6 +15,19 @@ class CreatingRole
   end
 
   def create
-    Role.create(params)
+    case params.class
+    when Array
+      params.each do |param|
+        user_id = param.delete(:user_id)
+        create_one(param)
+      end
+    when Hash
+      user_id = params.delete(:user_id)
+      create_one(params)
+    end
+
+    def create_one(params)
+      
+    end
   end
 end

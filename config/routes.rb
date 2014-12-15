@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     get "curriculum/subjects/:ids", to: "curriculum/subjects#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
     get "curriculum/phases/:ids", to: "curriculum/phases#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
     get "pbl/projects/:ids", to: "pbl/projects#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
+    get "product_forms/:ids", to: "product_forms#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
 
     resources :users, :defaults => { :format => 'json' }, :id => /.*/
     resources :sessions, defaults: { format: 'json'}, only: %w(create destroy)

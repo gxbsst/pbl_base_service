@@ -23,8 +23,18 @@ describe V1::ProductFormsController do
     it { expect(@json['meta']['total_pages']).to eq(2)}
     it { expect(@json['meta']['current_page']).to eq(1)}
     it { expect(@json['meta']['per_page']).to eq('1')}
-
    end
+  end
+
+  context 'with ids' do
+   before(:each) do
+    get "/product_forms/#{clazz_instance_1.id.to_s},#{clazz_instance_2.id.to_s}", {}, accept
+    @json = parse_json(response.body)
+   end
+
+   it { expect(@json['data'].size).to eq(2)}
+   it { expect(@json['data'][0]['name']).to eq('name_2') }
+   it { expect(@json['data'][1]['name']).to eq('name_1') }
   end
  end
 

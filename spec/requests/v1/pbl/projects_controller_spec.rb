@@ -8,10 +8,6 @@ describe V1::Pbl::ProjectsController, type: :request do
       get '/pbl/projects', {}, accept
       @json = parse_json(response.body)
     end
-it do
-  p = create :pbl_project, name: 'name'
-  puts p.errors
-end
     it { expect(response.body).to have_json_type(Hash) }
     it { expect(@json['data'][0]['name']).to eq('name2') }
     it { expect(@json['data'][1]['name']).to eq('name') }

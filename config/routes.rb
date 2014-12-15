@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       resources :products, defaults: {format: 'json'}
       resources :standard_decompositions, defaults: { format: :json}
       resources :rules, defaults: { format: :json}
+      resources :knowledge, defaults: {format: 'json'}
       resources :techniques, defaults: { format: :json }, only: %w(index destroy create show)
     end
 

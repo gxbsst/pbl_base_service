@@ -69,7 +69,19 @@ end
 
       it { expect(assigns(:include_techniques)).to eq(true)}
       it { expect(@json['techniques'].size).to eq(5) }
-      it { expect(@json['techniques'][0]['project_id']).to eq(project.id) }
+      it { expect(@json['techniques']).to match_array(project.techniques.map(&:id)) }
+
+      context 'with include techniques without data' do
+        let!(:project)  { create :pbl_project, name: 'name', user_id: user.id}
+        before(:each) do
+          get "/pbl/projects/#{project.id.to_s}?include=techniques", {}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(assigns(:include_techniques)).to eq(true)}
+        it { expect(@json['techniques'].size).to eq(0) }
+        it { expect(@json['techniques']).to match_array(project.techniques.map(&:id)) }
+      end
     end
 
     context 'with include standard_items' do
@@ -81,7 +93,7 @@ end
 
       it { expect(assigns(:include_standard_items)).to eq(true)}
       it { expect(@json['standard_items'].size).to eq(5) }
-      it { expect(@json['standard_items'][0]['project_id']).to eq(project.id) }
+      it { expect(@json['standard_items']).to match_array(project.standard_items.map(&:id)) }
     end
 
     context 'with include rules' do
@@ -93,7 +105,19 @@ end
 
       it { expect(assigns(:include_rules)).to eq(true)}
       it { expect(@json['rules'].size).to eq(5) }
-      it { expect(@json['rules'][0]['project_id']).to eq(project.id) }
+      it { expect(@json['rules']).to match_array(project.rules.map(&:id)) }
+    end
+
+    context 'with include standard_decompositions' do
+      let!(:project)  { create :pbl_project_with_standard_decompositions, name: 'name', user_id: user.id, decompositions_count: 5}
+      before(:each) do
+        get "/pbl/projects/#{project.id.to_s}?include=standard_decompositions", {}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(assigns(:include_standard_decompositions)).to eq(true)}
+      it { expect(@json['standard_decompositions'].size).to eq(5) }
+      it { expect(@json['standard_decompositions'][0]['project_id']).to eq(project.id) }
     end
 
     context 'with include standard_items & techniques' do
@@ -106,9 +130,9 @@ end
       it { expect(assigns(:include_techniques)).to eq(true)}
       it { expect(assigns(:include_standard_items)).to eq(true)}
       it { expect(@json['standard_items'].size).to eq(5) }
-      it { expect(@json['standard_items'][0]['project_id']).to eq(project.id) }
+      it { expect(@json['standard_items']).to match_array(project.standard_items.map(&:id)) }
       it { expect(@json['techniques'].size).to eq(5) }
-      it { expect(@json['techniques'][0]['project_id']).to eq(project.id) }
+      it { expect(@json['techniques']).to match_array(project.techniques.map(&:id)) }
     end
   end
 

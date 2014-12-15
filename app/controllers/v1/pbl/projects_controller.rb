@@ -87,6 +87,7 @@ module V1
         @include_techniques = include.include? 'techniques'
         @include_standard_items = include.include? 'standard_items'
         @include_rules = include.include? 'rules'
+        @include_standard_decompositions = include.include? 'standard_decompositions'
       end
       @project ||= Pbls::Project.includes(include).find(params[:id]) rescue nil
     end

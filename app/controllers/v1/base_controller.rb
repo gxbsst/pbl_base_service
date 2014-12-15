@@ -10,7 +10,7 @@ module V1
       page = params[:page] || 1
       @limit = params[:limit] || 10
 
-      check_parent_resource_id
+      check_parent_resource_id if configures[:have_parent_resource]
       top_collections
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
       @collections = @collections.page(page).per(@limit)
@@ -25,7 +25,7 @@ module V1
     end
 
     def create
-      check_parent_resource_id
+      check_parent_resource_id if configures[:have_parent_resource]
       @clazz_instance = configures[:clazz].new(clazz_params)
 
       if @clazz_instance.save
@@ -68,6 +68,18 @@ module V1
       #   clazz: Pbls::Rule,
       #   resource_name: rules
       # }
+    end
+
+    def clazz_params
+      fail 'implement the method e.g as below'
+      #  params.fetch(:rule, {}).permit!
+    end
+
+    def parent_resource_id
+      fail 'implement the method e.g as below'
+      #   params[:project_id] || params[:rule][:project_id]
+      # rescue
+      #   nil
     end
 
     def top_collections

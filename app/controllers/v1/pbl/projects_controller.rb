@@ -82,6 +82,12 @@ module V1
 
     def set_project
       include = params[:include] rescue nil
+      if include
+        include = include.split(',')
+        @include_techniques = include.include? 'techniques'
+        @include_standard_items = include.include? 'standard_items'
+        @include_rules = include.include? 'rules'
+      end
       @project ||= Pbls::Project.includes(include).find(params[:id]) rescue nil
     end
   end

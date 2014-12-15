@@ -28,23 +28,47 @@ FactoryGirl.define do
       end
     end
 
-    factory :pbl_project_with_skills do
+    factory :pbl_project_with_techniques do
       transient do
-        skills_count 5
+        techniques_count 5
       end
 
       after(:create) do |project, evaluator|
-        create_list(:skill, evaluator.skills_count, project: project)
+        create_list(:pbl_technique, evaluator.techniques_count, project: project)
       end
     end
 
-    factory :pbl_project_with_curriculums do
+    factory :pbl_project_with_rules do
       transient do
-        curriculums_count 5
+        rules_count 5
       end
 
       after(:create) do |project, evaluator|
-        create_list(:curriculum_subject, evaluator.categories_count, project: project)
+        create_list(:pbl_rule, evaluator.rules_count, project: project)
+      end
+    end
+
+    factory :pbl_project_with_standard_items do
+      transient do
+        standard_items_count 5
+      end
+
+      after(:create) do |project, evaluator|
+        create_list(:pbl_standard_item, evaluator.standard_items_count, project: project)
+      end
+    end
+
+    factory :pbl_project_with_standard_items_and_techniques do
+      transient do
+        standard_items_and_techniques_count 5
+      end
+
+      after(:create) do |project, evaluator|
+        create_list(:pbl_standard_item, evaluator.standard_items_and_techniques_count, project: project)
+      end
+
+      after(:create) do |project, evaluator|
+        create_list(:pbl_technique, evaluator.standard_items_and_techniques_count, project: project)
       end
     end
   end

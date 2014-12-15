@@ -9,6 +9,7 @@ module Pbls
     has_many :standard_decompositions, class_name: 'Pbls::StandardDecomposition', dependent: :destroy
     has_many :project_techniques, class_name: 'Pbls::ProjectTechnique'
     has_many :products
+    has_many :knowledge
     has_many :rules
     has_many :techniques
     has_many :standard_items

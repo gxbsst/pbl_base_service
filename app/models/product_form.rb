@@ -1,0 +1,2 @@
+class ProductForm < PgConnection
+end

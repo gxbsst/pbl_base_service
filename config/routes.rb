@@ -35,8 +35,8 @@ Rails.application.routes.draw do
     end
 
     resources :gauges, defaults: { format: :json}
-
     resources :roles, defaults: { format: :json}
+    resources :product_forms, defaults: { format: :json}
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

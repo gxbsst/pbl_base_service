@@ -1,6 +1,6 @@
 class CreatePblsTasks < ActiveRecord::Migration
   def change
-    create_table :pbls_tasks do |t|
+    create_table :pbls_tasks, id: :uuid do |t|
       t.uuid :project_id, index: true
       t.string :title
       t.text :description

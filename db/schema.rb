@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141215094633) do
+ActiveRecord::Schema.define(version: 20141215123041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,6 +140,23 @@ ActiveRecord::Schema.define(version: 20141215094633) do
     t.datetime "updated_at"
   end
 
+  create_table "pbls_tasks", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "project_id"
+    t.string   "title"
+    t.text     "description"
+    t.string   "teacher_tools"
+    t.string   "student_tools"
+    t.string   "task_type"
+    t.uuid     "discipline_id"
+    t.integer  "evaluation_duration"
+    t.integer  "evaluation_cycle"
+    t.integer  "product_id"
+    t.integer  "event_duration"
+    t.integer  "event_cycle"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "pbls_techniques", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "project_id"
     t.uuid     "technique_id"
@@ -157,7 +174,7 @@ ActiveRecord::Schema.define(version: 20141215094633) do
   create_table "roles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"
     t.uuid     "resource_id"
-    t.uuid     "resource_type"
+    t.string   "resource_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

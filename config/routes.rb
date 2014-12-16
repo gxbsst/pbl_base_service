@@ -1,12 +1,21 @@
+def get_ids(controller_name, *args)
+  get "#{controller_name}/:ids", to: "#{controller_name}#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
+end
+
+def delete_ids(controller_name, *args)
+  delete "#{controller_name}/:ids", to: "#{controller_name}#destroy", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
+end
+
 Rails.application.routes.draw do
   api_version(:module => "V1", :header => {:name => "Accept", :value => "application/vnd.ibridgebrige.com; version=1"}) do
 
-    get "skill/categories/:ids", to: "skill/categories#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
-    get "skill/sub_categories/:ids", to: "skill/sub_categories#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
-    get "curriculum/subjects/:ids", to: "curriculum/subjects#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
-    get "curriculum/phases/:ids", to: "curriculum/phases#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
-    get "pbl/projects/:ids", to: "pbl/projects#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
-    get "product_forms/:ids", to: "product_forms#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
+    %w(skill/categories skill/sub_categories curriculum/subjects curriculum/phases pbl/projects product_forms).each do |controller_name|
+      get_ids(controller_name)
+    end
+
+    %w(users_roles).each do |controller_name|
+      delete_ids(controller_name)
+    end
 
     resources :users, :defaults => { :format => 'json' }, :id => /.*/
     resources :sessions, defaults: { format: 'json'}, only: %w(create destroy)
@@ -38,6 +47,7 @@ Rails.application.routes.draw do
     resources :gauges, defaults: { format: :json}
     resources :roles, defaults: { format: :json}
     resources :product_forms, defaults: { format: :json}
+    resources :users_roles, defaults: { format: :json}, only: %w(create destroy)
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

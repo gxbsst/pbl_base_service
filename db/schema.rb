@@ -157,7 +157,7 @@ ActiveRecord::Schema.define(version: 20141215123041) do
   create_table "roles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"
     t.uuid     "resource_id"
-    t.uuid     "resource_type"
+    t.string   "resource_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -221,9 +221,11 @@ ActiveRecord::Schema.define(version: 20141215123041) do
     t.string   "username"
   end
 
-  create_table "users_roles", id: false, force: true do |t|
-    t.uuid "user_id"
-    t.uuid "role_id"
+  create_table "users_roles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "user_id"
+    t.uuid     "role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree

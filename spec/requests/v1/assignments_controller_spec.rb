@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe V1::UsersRolesController do
+describe V1::AssignmentsController do
 
   describe 'POST #create' do
     let(:user) { create :user }
@@ -12,7 +12,7 @@ describe V1::UsersRolesController do
         resource_type: resource.class.name.demodulize,
         resource_id: resource.id
       }
-      post "/users_roles", {users_role: params}, accept
+      post "/assignments", {assignment: params}, accept
     end
 
     it { expect(UsersRole.count).to eq(1)}
@@ -35,7 +35,7 @@ describe V1::UsersRolesController do
             resource_id: resource_1.id
           }
         ]
-        post "/users_roles", {users_role: params}, accept
+        post "/assignments", {assignment: params}, accept
         @json = parse_json(response.body)
       end
 
@@ -50,17 +50,21 @@ describe V1::UsersRolesController do
       let(:users_role_2) { create :users_role }
 
       before(:each) do
-        delete "/users_roles/#{users_role_1.id},#{users_role_2.id}", {}, accept
+        delete "/assignments/#{users_role_1.id},#{users_role_2.id}", {}, accept
       end
 
       it { expect(UsersRole.count).to eq(0)}
     end
 
     context 'with id' do
-      let(:users_role) { create :users_role }
+
+      let(:user) { create :user }
+      let(:resource) { create :pbl_project }
+      let(:role) { create :role, name: 'teacher', resource_id: resource.id, resource_type: 'Project' }
+      let!(:users_role) { create :users_role, user_id: user.id, role_id: role.id  }
 
       before(:each) do
-        delete "/users_roles/#{users_role.id}", {}, accept
+        delete "/assignments/#{users_role.id}", {}, accept
       end
 
       it { expect(UsersRole.count).to eq(0)}

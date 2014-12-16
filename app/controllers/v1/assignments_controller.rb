@@ -1,5 +1,5 @@
 module V1
-  class UsersRolesController < BaseController
+  class AssignmentsController < BaseController
     # === examples
     # @params
     # users_role: {
@@ -19,7 +19,7 @@ module V1
     #  }
     # ]
     def create
-      CreatingUsersRole.create(self, params[:users_role])
+      CreatingAssignment.create(self, params[:assignment])
     end
 
     def destroy

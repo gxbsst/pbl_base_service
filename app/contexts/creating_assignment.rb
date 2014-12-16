@@ -1,4 +1,4 @@
-class CreatingUsersRole
+class CreatingAssignment
   def self.create(listener, params = {})
     self.new(listener, params).create
   end

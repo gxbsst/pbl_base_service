@@ -10,6 +10,7 @@ module Pbls
     has_many :project_techniques, class_name: 'Pbls::ProjectTechnique'
     has_many :products
     has_many :knowledge
+    has_many :tasks
     has_many :rules
     has_many :techniques
     has_many :standard_items

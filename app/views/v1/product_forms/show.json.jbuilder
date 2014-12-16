@@ -1,0 +1,1 @@
+json.extract! @clazz_instance, :id, :name, :description

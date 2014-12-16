@@ -16,4 +16,14 @@ describe Pbls::Project do
  it { expect(project).to be_valid }
  it { expect(project.name).to eq('name') }
  it { expect(project.driven_issue).to eq('driven_issue') }
+
+ it { expect(described_class.new).to respond_to(:tags) }
+
+ it "create a project with tags" do
+  project = Pbls::Project.create
+  project.tag_list = 'a,b,c'
+  project.save!
+  project.reload
+  expect(project.tags.collect(&:name)).to match_array(['a','b','c'])
+ end
 end

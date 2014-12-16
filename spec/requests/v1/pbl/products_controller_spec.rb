@@ -33,7 +33,8 @@ describe V1::Pbl::ProductsController do
  describe 'GET #show' do
   context 'with found' do
    let!(:project) { create :pbl_project }
-   let!(:product) { create :pbl_product, form: 'form', project_id: project.id }
+   let!(:product_form) { create :product_form }
+   let!(:product) { create :pbl_product, form: 'form', project_id: project.id, product_form_id: product_form.id }
    before(:each) do
     get "/pbl/products/#{product.id}", {}, accept
     @json = parse_json(response.body)
@@ -43,6 +44,20 @@ describe V1::Pbl::ProductsController do
    it { expect(@json['form']).to eq('form') }
    it { expect(@json['project_id']).to eq(project.id) }
    it { expect(@json['description']).to eq('description') }
+   it { expect(@json['product_form_id']).to eq(product_form.id) }
+
+   context 'with include product_form' do
+    let(:product_form) { create :product_form }
+    let!(:product)  { create :pbl_product, product_form_id: product_form.id, project_id: project.id}
+    before(:each) do
+     get "/pbl/products/#{product.id.to_s}?include=product_form", {project_id: project.id}, accept
+     @json = parse_json(response.body)
+    end
+
+    it { expect(assigns(:include_product_form)).to eq(true)}
+    it { expect(@json['product_form']).to be_a String }
+    it { expect(@json['product_form']).to eq(product.product_form.id) }
+   end
   end
 
   context 'with not found' do

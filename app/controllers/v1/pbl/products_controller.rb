@@ -59,6 +59,10 @@ module V1
 
     def set_product
       include = params[:include] rescue nil
+      if include
+        include = include.split(',')
+        @include_product_form = include.include? 'product_form'
+      end
       @product ||= Pbls::Product.includes(include).find(params[:id]) rescue nil
     end
 

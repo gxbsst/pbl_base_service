@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20141215094633) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
+    t.uuid     "product_form_id"
   end
 
   create_table "pbls_project_techniques", force: true do |t|
@@ -101,6 +102,7 @@ ActiveRecord::Schema.define(version: 20141215094633) do
     t.uuid     "user_id"
     t.string   "rule_head"
     t.string   "rule_template"
+    t.string   "duration_unit"
   end
 
   create_table "pbls_rules", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -138,23 +140,6 @@ ActiveRecord::Schema.define(version: 20141215094633) do
     t.datetime "updated_at"
   end
 
-  create_table "pbls_tasks", force: true do |t|
-    t.uuid     "project_id"
-    t.string   "title"
-    t.text     "description"
-    t.string   "teacher_tools"
-    t.string   "student_tools"
-    t.string   "task_type"
-    t.uuid     "discipline_id"
-    t.integer  "evaluation_duration"
-    t.integer  "evaluation_cycle"
-    t.integer  "product_id"
-    t.integer  "event_duration"
-    t.integer  "event_cycle"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "pbls_techniques", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "project_id"
     t.uuid     "technique_id"
@@ -162,10 +147,17 @@ ActiveRecord::Schema.define(version: 20141215094633) do
     t.datetime "updated_at"
   end
 
+  create_table "product_forms", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "roles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"
     t.uuid     "resource_id"
-    t.string   "resource_type"
+    t.uuid     "resource_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

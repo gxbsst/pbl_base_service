@@ -63,7 +63,7 @@ describe V1::Pbl::StandardItemsController do
   end
 
   context 'with failed' do
-    it { expect {post '/pbl/standard_items', { standard_item: attributes_for(:pbl_standard_item) }, accept }.to raise_error(RuntimeError) }
+    it { expect {post '/pbl/standard_items', { standard_item: attributes_for(:pbl_standard_item) }, accept }.to_not raise_error() }
   end
  end
 

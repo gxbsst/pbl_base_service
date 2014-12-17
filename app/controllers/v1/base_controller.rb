@@ -95,7 +95,7 @@ module V1
     end
 
     def check_parent_resource_id
-      fail 'No Parent Resource Id' unless parent_resource_id
+      # fail 'No Parent Resource Id' unless parent_resource_id
       parent_resource_id
     end
 

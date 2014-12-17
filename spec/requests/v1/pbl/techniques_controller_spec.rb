@@ -63,7 +63,7 @@ describe V1::Pbl::TechniquesController do
   end
 
   context 'with failed' do
-    it { expect {post '/pbl/techniques', { technique: attributes_for(:pbl_technique) }, accept }.to raise_error(RuntimeError) }
+    it { expect {post '/pbl/techniques', { technique: attributes_for(:pbl_technique) }, accept }.to_not raise_error() }
   end
  end
 

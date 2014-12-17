@@ -71,7 +71,7 @@ describe V1::Curriculum::StandardItemsController do
     end
 
     context 'with failed' do
-      it { expect {post '/curriculum/standard_items', { standard_item: attributes_for(:curriculum_item) }, accept }.to raise_error(RuntimeError) }
+      it { expect {post '/curriculum/standard_items', { standard_item: attributes_for(:curriculum_item) }, accept }.to_not raise_error() }
     end
   end
 

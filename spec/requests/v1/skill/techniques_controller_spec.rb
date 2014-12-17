@@ -63,7 +63,7 @@ describe V1::Skill::TechniquesController do
   end
 
   context 'with failed' do
-    it { expect {post '/skill/techniques', { technique: attributes_for(:skill_technique) }, accept }.to raise_error(RuntimeError) }
+    it { expect {post '/skill/techniques', { technique: attributes_for(:skill_technique) }, accept }.to_not raise_error() }
   end
  end
 

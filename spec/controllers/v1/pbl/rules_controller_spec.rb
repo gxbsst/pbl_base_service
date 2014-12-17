@@ -53,7 +53,7 @@ describe V1::Pbl::RulesController do
     end
 
     context 'with failed' do
-      it { expect{post :create, rule: attributes_for(:pbl_rule), format: :json}.to raise_error(RuntimeError) }
+      it { expect{post :create, rule: attributes_for(:pbl_rule), format: :json}.to_not raise_error() }
     end
   end
 

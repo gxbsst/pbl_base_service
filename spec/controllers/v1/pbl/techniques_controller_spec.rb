@@ -50,7 +50,7 @@ describe V1::Pbl::TechniquesController do
     end
 
     context 'with failed' do
-      it { expect{post :create, technique: attributes_for(:pbl_technique), format: :json}.to raise_error(RuntimeError) }
+      it { expect{post :create, technique: attributes_for(:pbl_technique), format: :json}.to_not raise_error() }
     end
   end
 

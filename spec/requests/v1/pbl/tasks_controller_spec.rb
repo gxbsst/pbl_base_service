@@ -62,7 +62,7 @@ describe V1::Pbl::TasksController do
     end
 
     context 'with failed' do
-      it { expect {post '/pbl/tasks', { task: attributes_for(:pbl_task) }, accept }.to raise_error(RuntimeError) }
+      it { expect {post '/pbl/tasks', { task: attributes_for(:pbl_task) }, accept }.to_not raise_error() }
     end
   end
 

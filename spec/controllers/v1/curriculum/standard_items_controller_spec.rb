@@ -48,7 +48,7 @@ describe V1::Curriculum::StandardItemsController do
     end
 
     context 'with failed' do
-      it { expect{post :create, standard_item: attributes_for(:curriculum_item), format: :json}.to raise_error(RuntimeError) }
+      it { expect{post :create, standard_item: attributes_for(:curriculum_item), format: :json}.to_not raise_error() }
     end
   end
 

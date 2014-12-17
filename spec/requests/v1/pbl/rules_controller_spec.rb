@@ -73,7 +73,7 @@ describe V1::Pbl::RulesController do
   end
 
   context 'with failed' do
-    it { expect {post '/pbl/rules', { rule: attributes_for(:pbl_rule) }, accept }.to raise_error(RuntimeError) }
+    it { expect {post '/pbl/rules', { rule: attributes_for(:pbl_rule) }, accept }.to_not raise_error() }
   end
  end
 
@@ -94,7 +94,7 @@ describe V1::Pbl::RulesController do
     patch "/pbl/rules/#{rule.id}", {rule: attributes_for(:pbl_rule)}, accept
    end
 
-   it { expect {post '/pbl/rules', { rule: attributes_for(:pbl_rule) }, accept }.to raise_error(RuntimeError) }
+   it { expect {post '/pbl/rules', { rule: attributes_for(:pbl_rule) }, accept }.to_not raise_error() }
   end
  end
 

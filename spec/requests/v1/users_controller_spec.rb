@@ -14,6 +14,10 @@ describe V1::UsersController, type: :request do
     it {expect(@json['data'][0]['last_name']).to eq('last_name')}
     it {expect(@json['data'][0]['age']).to eq(20)}
     it {expect(@json['data'][0]['gender']).to eq(0)}
+
+    context 'with role_name, role_resource_type, role_resource_id' do
+      let(:user) { create :user }
+    end
   end
 
   describe 'GET #Show' do

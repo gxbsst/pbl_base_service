@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe CreatingUsersRole do
+describe CreatingAssignment do
   let(:clazz) { described_class }
   let(:user) { create :user }
   let(:resource) { create :pbl_project }

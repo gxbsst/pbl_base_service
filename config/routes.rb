@@ -1,34 +1,58 @@
-def get_ids(controller_name, *args)
-  get "#{controller_name}/:ids", to: "#{controller_name}#index", constraints: {ids: /.+[,].+/}, defaults: { format: 'json' }
-end
-
 Rails.application.routes.draw do
   api_version(:module => "V1", :header => {:name => "Accept", :value => "application/vnd.ibridgebrige.com; version=1"}) do
-
-    %w(skill/categories skill/sub_categories curriculum/subjects curriculum/phases pbl/projects product_forms).each do |controller_name|
-      get_ids(controller_name)
-    end
 
     resources :users, :defaults => { :format => 'json' }, :id => /.*/
     resources :sessions, defaults: { format: 'json'}, only: %w(create destroy)
 
     # Skill
     namespace :skill do
-      resources :categories, defaults: { format: 'json'}
-      resources :sub_categories, defaults: {format: 'json'}
-      resources :techniques, defaults: {format: 'json'}
+      resources :categories, defaults: { format: 'json'} do
+        collection do
+          get ":ids", to: "categories#index", constraints: {ids: /.+[,].+/}
+        end
+      end
+      resources :sub_categories, defaults: {format: 'json'} do
+        collection do
+          get ":ids", to: "sub_categories#index", constraints: {ids: /.+[,].+/}
+        end
+      end
+      resources :techniques, defaults: {format: 'json'} do
+        collection do
+          get ":ids", to: "techniques#index", constraints: {ids: /.+[,].+/}
+        end
+      end
     end
 
     # Curriculum
     namespace :curriculum do
-      resources :phases, defaults: {format: 'json'}
-      resources :subjects, defaults: {format: 'json'}
-      resources :standards, defaults: {format: 'json'}
-      resources :standard_items, defaults: {format: 'json'}
+      resources :phases, defaults: {format: 'json'} do
+        collection do
+          get ":ids", to: "phases#index", constraints: {ids: /.+[,].+/}
+        end
+      end
+      resources :subjects, defaults: {format: 'json'} do
+        collection do
+          get ":ids", to: "subjects#index", constraints: {ids: /.+[,].+/}
+        end
+      end
+      resources :standards, defaults: {format: 'json'} do
+        collection do
+          get ":ids", to: "standards#index", constraints: {ids: /.+[,].+/}
+        end
+      end
+      resources :standard_items, defaults: {format: 'json'} do
+        collection do
+          get ":ids", to: "standard_items#index", constraints: {ids: /.+[,].+/}
+        end
+      end
     end
 
     namespace :pbl do
-      resources :projects, defaults: {format: 'json'}
+      resources :projects, defaults: {format: 'json'} do
+        collection do
+          get ":ids", to: "projects#index", constraints: {ids: /.+[,].+/}
+        end
+      end
       resources :products, defaults: {format: 'json'}
       resources :standard_decompositions, defaults: { format: :json}
       resources :rules, defaults: { format: :json}
@@ -50,7 +74,11 @@ Rails.application.routes.draw do
       end
     end
     resources :roles, defaults: { format: :json}
-    resources :product_forms, defaults: { format: :json}
+    resources :product_forms, defaults: { format: :json} do
+      collection do
+        get ":ids", to: "product_forms#index", constraints: {ids: /.+[,].+/}
+      end
+    end
     resources :assignments, defaults: { format: :json}, only: %w(create destroy index) do
       collection do
         delete ":ids", to: "assignments#destroy", constraints: {ids: /.+[,].+/}

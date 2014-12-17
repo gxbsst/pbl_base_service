@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       resources :phases, defaults: {format: 'json'}
       resources :subjects, defaults: {format: 'json'}
       resources :standards, defaults: {format: 'json'}
+      resources :standard_items, defaults: {format: 'json'}
     end
 
     namespace :pbl do
@@ -46,6 +47,7 @@ Rails.application.routes.draw do
         delete ":ids", to: "assignments#destroy", constraints: {ids: /.+[,].+/}
       end
     end
+    resources :resources, defaults: { format: :json}
   end
 
 end

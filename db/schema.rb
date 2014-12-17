@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20141217052719) do
     t.uuid     "technique_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "reference_count"
   end
 
   create_table "pbls_disciplines", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -176,6 +177,26 @@ ActiveRecord::Schema.define(version: 20141217052719) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "resources", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "name"
+    t.string   "owner_id"
+    t.string   "owner_type"
+    t.string   "size"
+    t.string   "ext"
+    t.string   "mime_type"
+    t.string   "md5"
+    t.string   "key"
+    t.text     "exif"
+    t.text     "image_info"
+    t.string   "image_ave"
+    t.string   "persistent_id"
+    t.text     "avinfo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "resources", ["owner_id", "owner_type", "md5"], name: "index_resources_on_owner_id_and_owner_type_and_md5", using: :btree
 
   create_table "roles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"

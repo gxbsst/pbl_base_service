@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     resources :gauges, defaults: { format: :json}
     resources :roles, defaults: { format: :json}
     resources :product_forms, defaults: { format: :json}
-    resources :assignments, defaults: { format: :json}, only: %w(create destroy) do
+    resources :assignments, defaults: { format: :json}, only: %w(create destroy index) do
       collection do
         delete ":ids", to: "assignments#destroy", constraints: {ids: /.+[,].+/}
       end

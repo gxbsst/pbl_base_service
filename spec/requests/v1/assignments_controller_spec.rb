@@ -2,6 +2,31 @@ require 'rails_helper'
 
 describe V1::AssignmentsController do
 
+  describe 'GET #index' do
+    let!(:resource) { create :pbl_project }
+    let!(:role) { create :user_with_assignments, name: 'teacher', resource_id: resource.id, resource_type: 'Project', assignments_count: 5}
+    before(:each) do
+      get "/assignments?resource_type=Project&name=teacher&resource_id=#{resource.id}", {}, accept
+      @json = parse_json(response.body)
+    end
+
+    it { expect(response.body).to have_json_type(Hash)}
+    it { expect(@json['data'].size).to eq(5)}
+    it { expect(@json['data'][0]['role_id']).to eq(role.id)}
+    it { expect(@json['data'][0]['user_id']).to_not be_nil}
+    it { expect(@json['data'][0]['id']).to_not be_nil}
+
+    context 'with include user' do
+      before(:each) do
+        get "/assignments?resource_type=Project&name=teacher&resource_id=#{resource.id}&include=user", {}, accept
+        @json = parse_json(response.body)
+      end
+      it { expect(@json['data'][0]['user']).to be_a Hash}
+      it { expect(@json['data'][0]['user']['username']).to_not be_nil }
+      it { expect(@json['data'][0]['user']['email']).to_not be_nil }
+    end
+  end
+
   describe 'POST #create' do
     let(:user) { create :user }
     let(:resource) { create :pbl_project }

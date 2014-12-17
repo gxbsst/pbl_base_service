@@ -65,7 +65,7 @@ describe V1::Pbl::ProjectsController, type: :request do
 
       it { expect(assigns(:include_techniques)).to eq(true)}
       it { expect(@json['techniques'].size).to eq(5) }
-      it { expect(@json['techniques']).to match_array(project.techniques.map(&:id)) }
+      it { expect(@json['techniques']).to match_array(project.techniques.map(&:technique_id)) }
 
       context 'with include techniques without data' do
         let!(:project)  { create :pbl_project, name: 'name', user_id: user.id}
@@ -89,7 +89,7 @@ describe V1::Pbl::ProjectsController, type: :request do
 
       it { expect(assigns(:include_standard_items)).to eq(true)}
       it { expect(@json['standard_items'].size).to eq(5) }
-      it { expect(@json['standard_items']).to match_array(project.standard_items.map(&:id)) }
+      it { expect(@json['standard_items']).to match_array(project.standard_items.map(&:standard_item_id)) }
     end
 
     context 'with include rules' do
@@ -101,7 +101,7 @@ describe V1::Pbl::ProjectsController, type: :request do
 
       it { expect(assigns(:include_rules)).to eq(true)}
       it { expect(@json['rules'].size).to eq(5) }
-      it { expect(@json['rules']).to match_array(project.rules.map(&:id)) }
+      it { expect(@json['rules']).to match_array(project.rules.map(&:gauge_id)) }
     end
 
     context 'with include standard_decompositions' do
@@ -126,10 +126,44 @@ describe V1::Pbl::ProjectsController, type: :request do
       it { expect(assigns(:include_techniques)).to eq(true)}
       it { expect(assigns(:include_standard_items)).to eq(true)}
       it { expect(@json['standard_items'].size).to eq(5) }
-      it { expect(@json['standard_items']).to match_array(project.standard_items.map(&:id)) }
+      it { expect(@json['standard_items']).to match_array(project.standard_items.map(&:standard_item_id)) }
       it { expect(@json['techniques'].size).to eq(5) }
-      it { expect(@json['techniques']).to match_array(project.techniques.map(&:id)) }
+      it { expect(@json['techniques']).to match_array(project.techniques.map(&:technique_id)) }
     end
+
+    context 'with include knowledge' do
+      let!(:project)  { create :pbl_project_with_knowledge, name: 'name', user_id: user.id, knowledge_count: 5}
+      before(:each) do
+        get "/pbl/projects/#{project.id.to_s}?include=knowledge", {}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(assigns(:include_knowledge)).to eq(true)}
+      it { expect(@json['knowledge'].size).to eq(5) }
+      it { expect(@json['knowledge'][0]['project_id']).to eq(project.id) }
+    end
+
+    context 'with include tasks' do
+      let!(:project)  { create :pbl_project_with_tasks, name: 'name', user_id: user.id, tasks_count: 5}
+      before(:each) do
+        get "/pbl/projects/#{project.id.to_s}?include=tasks", {}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(assigns(:include_tasks)).to eq(true)}
+      it { expect(@json['tasks'].size).to eq(5) }
+      it { expect(@json['tasks'][0]['project_id']).to eq(project.id) }
+
+      context 'with include tasks and tasks_count with 0' do
+        let!(:project)  { create :pbl_project_with_tasks, name: 'name', user_id: user.id, tasks_count: 0}
+        before(:each) do
+          get "/pbl/projects/#{project.id.to_s}?include=tasks", {}, accept
+          @json = parse_json(response.body)
+        end
+        it { expect(@json['tasks']).to be_a Array }
+      end
+    end
+
   end
 
   describe 'POST #create' do

@@ -156,12 +156,13 @@ ActiveRecord::Schema.define(version: 20141217114401) do
     t.string   "task_type"
     t.uuid     "discipline_id"
     t.integer  "evaluation_duration"
-    t.integer  "evaluation_cycle"
+    t.string   "evaluation_cycle"
     t.integer  "product_id"
     t.integer  "event_duration"
-    t.integer  "event_cycle"
+    t.string   "event_cycle"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "site"
   end
 
   create_table "pbls_techniques", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

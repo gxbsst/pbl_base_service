@@ -83,7 +83,7 @@ module V1
     end
 
     def top_collections
-      if configures[:have_parent_resource]
+      if configures[:have_parent_resource] && parent_resource_id.present?
         @collections = set_parent_resource_instance.send(:"#{configures[:clazz_resource_name]}").order(created_at: :desc)
       else
         @collections = configures[:clazz].order(created_at: :desc)

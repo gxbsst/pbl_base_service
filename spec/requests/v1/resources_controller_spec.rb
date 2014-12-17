@@ -18,13 +18,13 @@ describe V1::ResourcesController do
     context 'with page' do
       context 'page 1' do
         before(:each) do
-          get 'gauges?page=1&limit=1', {}, accept
+          get 'resources?page=1&limit=1', {owner_type: owner.class.name, owner_id: owner.id}, accept
           @json = parse_json(response.body)
         end
 
-        # it { expect(@json['meta']['total_pages']).to eq(2)}
-        # it { expect(@json['meta']['current_page']).to eq(1)}
-        # it { expect(@json['meta']['per_page']).to eq('1')}
+        it { expect(@json['meta']['total_pages']).to eq(2)}
+        it { expect(@json['meta']['current_page']).to eq(1)}
+        it { expect(@json['meta']['per_page']).to eq('1')}
 
       end
     end
@@ -32,21 +32,26 @@ describe V1::ResourcesController do
 
   describe 'GET #show' do
     context 'with found' do
-      let!(:gauge) { create :gauge, level_1: 'level_1', technique_id: technique.id }
+      let!(:resource)  { create :resource, owner_type: owner.class.name, owner_id: owner.id, name: 'name 1' }
       before(:each) do
-        get "/gauges/#{gauge.id}", {}, accept
+        get "/resources/#{resources.id}", {}, accept
         @json = parse_json(response.body)
       end
 
       it { expect(@json['id']).to eq(gauge.id.to_s) }
-      it { expect(@json['level_1']).to eq('level_1') }
-      it { expect(@json['level_2']).to eq('level_2') }
-      it { expect(@json['level_3']).to eq('level_3') }
-      it { expect(@json['level_4']).to eq('level_4') }
-      it { expect(@json['level_5']).to eq('level_5') }
-      it { expect(@json['level_6']).to eq('level_6') }
-      it { expect(@json['level_7']).to eq('level_7') }
-      it { expect(@json['technique_id']).to eq(technique.id) }
+      it { expect(@json['name']).to eq('name 1') }
+      it { expect(@json['owner_id']).to eq('level_2') }
+      it { expect(@json['owner_type']).to eq('level_3') }
+      it { expect(@json['size']).to eq('level_4') }
+      it { expect(@json['ext']).to eq('level_5') }
+      it { expect(@json['mime_type']).to eq('level_6') }
+      it { expect(@json['md5']).to eq('level_7') }
+      it { expect(@json['key']).to eq('key') }
+      it { expect(@json['exif']).to eq('key') }
+      it { expect(@json['image_info']).to eq('image_infoy') }
+      it { expect(@json['image_ave']).to eq('image_ave') }
+      it { expect(@json['persistent_id']).to eq('persistent_id') }
+      it { expect(@json['avinfo']).to eq('avinfo') }
     end
 
     context 'with not found' do

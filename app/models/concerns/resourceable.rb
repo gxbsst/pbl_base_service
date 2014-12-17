@@ -1,10 +1,8 @@
-module ResourceAble
+module Resourceable
   extend ActiveSupport::Concern
 
-  included(base) do
-   base.class_eval do
+  included do
      has_many :resources, as: :owner
-   end
   end
 
   module ClassMethods

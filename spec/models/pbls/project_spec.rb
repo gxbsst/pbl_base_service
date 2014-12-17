@@ -26,4 +26,16 @@ describe Pbls::Project do
   project.reload
   expect(project.tags.collect(&:name)).to match_array(['a','b','c'])
  end
+
+ describe 'with include Resourceable' do
+   it { expect(described_class.new).to respond_to(:resources) }
+
+  it 'create a resource' do
+   p = described_class.new
+   p.resources.build(name: 'name')
+   p.save!
+
+   expect(Resource.first.owner).to eq(p)
+  end
+ end
 end

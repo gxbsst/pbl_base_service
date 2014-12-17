@@ -61,7 +61,7 @@ module V1
     end
 
     def parent_resource_id
-      Role.find_by(resource_id: params[:resource_id], resource_type: params[:resource_type].capitalize, name: params[:name]).id
+      Role.find_by(resource_id: params[:resource_id], resource_type: params[:resource_type], name: params[:name]).id
     rescue
       nil
     end

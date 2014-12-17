@@ -4,9 +4,9 @@ describe V1::AssignmentsController do
 
   describe 'GET #index' do
     let!(:resource) { create :pbl_project }
-    let!(:role) { create :user_with_assignments, name: 'teacher', resource_id: resource.id, resource_type: 'Project', assignments_count: 5}
+    let!(:role) { create :user_with_assignments, name: 'teacher', resource_id: resource.id, resource_type: 'project', assignments_count: 5}
     before(:each) do
-      get "/assignments?resource_type=Project&name=teacher&resource_id=#{resource.id}", {}, accept
+      get "/assignments?resource_type=project&name=teacher&resource_id=#{resource.id}", {}, accept
       @json = parse_json(response.body)
     end
 
@@ -18,7 +18,7 @@ describe V1::AssignmentsController do
 
     context 'with include user' do
       before(:each) do
-        get "/assignments?resource_type=Project&name=teacher&resource_id=#{resource.id}&include=user", {}, accept
+        get "/assignments?resource_type=project&name=teacher&resource_id=#{resource.id}&include=user", {}, accept
         @json = parse_json(response.body)
       end
       it { expect(@json['data'][0]['user']).to be_a Hash}
@@ -70,9 +70,10 @@ describe V1::AssignmentsController do
   end
 
   describe 'DELETE #destroy' do
+    let(:role) { create :role, name: 'teacher'}
     context 'with ids' do
-      let(:users_role_1) { create :users_role }
-      let(:users_role_2) { create :users_role }
+      let(:users_role_1) { create :users_role, role_id: role.id }
+      let(:users_role_2) { create :users_role, role_id: role.id }
 
       before(:each) do
         delete "/assignments/#{users_role_1.id},#{users_role_2.id}", {}, accept

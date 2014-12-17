@@ -16,17 +16,25 @@ describe V1::ResourcesController do
     it { expect(@json['data'][1]['name']).to eq('name 1') }
 
     context 'with page' do
-      context 'page 1' do
-        before(:each) do
-          get 'resources?page=1&limit=1', {owner_type: owner.class.name, owner_id: owner.id}, accept
-          @json = parse_json(response.body)
-        end
-
-        it { expect(@json['meta']['total_pages']).to eq(2)}
-        it { expect(@json['meta']['current_page']).to eq(1)}
-        it { expect(@json['meta']['per_page']).to eq('1')}
-
+      before(:each) do
+        get 'resources?page=1&limit=1', {owner_type: owner.class.name, owner_id: owner.id}, accept
+        @json = parse_json(response.body)
       end
+
+      it { expect(@json['meta']['total_pages']).to eq(2)}
+      it { expect(@json['meta']['current_page']).to eq(1)}
+      it { expect(@json['meta']['per_page']).to eq('1')}
+    end
+
+    context 'with include owner' do
+      before(:each) do
+        get 'resources?include=owner', {owner_type: owner.class.name, owner_id: owner.id}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'][0]['owner']).to be_a Array }
+      it { expect(@json['data'][0]['owner'][0]['owner_type']).to eq(owner.class.name) }
+      it { expect(@json['data'][0]['owner'][0]['owner_id']).to eq(owner.id) }
     end
   end
 

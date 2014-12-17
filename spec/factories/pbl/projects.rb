@@ -16,7 +16,6 @@ FactoryGirl.define do
       grade_id 1
     end
 
-    factory :pbl_project_with_tasks
 
     factory :pbl_project_with_standard_decompositions do
       transient do
@@ -69,6 +68,26 @@ FactoryGirl.define do
 
       after(:create) do |project, evaluator|
         create_list(:pbl_technique, evaluator.standard_items_and_techniques_count, project: project)
+      end
+    end
+
+    factory :pbl_project_with_knowledge do
+      transient do
+        knowledge_count 5
+      end
+
+      after(:create) do |project, evaluator|
+        create_list(:pbl_knowledge, evaluator.knowledge_count, project: project)
+      end
+    end
+
+    factory :pbl_project_with_tasks do
+      transient do
+        tasks_count 5
+      end
+
+      after(:create) do |project, evaluator|
+        create_list(:pbl_task, evaluator.tasks_count, project: project)
       end
     end
   end

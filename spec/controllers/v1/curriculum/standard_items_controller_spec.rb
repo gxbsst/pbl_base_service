@@ -3,9 +3,9 @@ require 'rails_helper'
 describe V1::Curriculum::StandardItemsController do
   let(:parent_resource) { create :curriculum_standard }
   describe 'GET #index' do
-    let!(:clazz_instance) { create :curriculum_item, standard_id: standard.id }
+    let!(:clazz_instance) { create :curriculum_item, standard_id: parent_resource.id }
     before(:each) do
-      get :index, standard_id: standard.id, format: :json
+      get :index, standard_id: parent_resource.id, format: :json
     end
 
     it { expect(response).to render_template :index }

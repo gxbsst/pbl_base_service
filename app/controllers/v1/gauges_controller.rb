@@ -48,6 +48,48 @@ module V1
       end
     end
 
+    def increase
+      if params[:ids].present?
+        ids = params[:ids].split(',')
+        if Gauge.increment_counter(:reference_count, ids)
+          render json: { id: ids }, status: :ok
+        else
+          head :unauthorized
+        end
+      end
+
+      if params[:id].present?
+        gauge = Gauge.find(params[:id])
+        gauge.increment(:reference_count, 1)
+        if gauge.save
+          render json: { id: params[:id] }, status: :ok
+        else
+          head :unauthorized
+        end
+      end
+    end
+
+    def decrease
+      if params[:ids].present?
+        ids = params[:ids].split(',')
+        if Gauge.decrement_counter(:reference_count, ids)
+          render json: { id: ids }, status: :ok
+        else
+          head :unauthorized
+        end
+      end
+
+      if params[:id].present?
+        gauge = Gauge.find(params[:id])
+        gauge.decrement(:reference_count, 1)
+        if gauge.save
+          render json: { id: params[:id] }, status: :ok
+        else
+          head :unauthorized
+        end
+      end
+    end
+
     private
     def set_gauge
       include = params[:include] rescue nil

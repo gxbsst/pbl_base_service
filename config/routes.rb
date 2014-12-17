@@ -46,7 +46,16 @@ Rails.application.routes.draw do
       resources :standard_items, defaults: { format: :json }, only: %w(index destroy create show)
     end
 
-    resources :gauges, defaults: { format: :json}
+    resources :gauges, defaults: { format: :json} do
+      collection do
+        put ":ids/actions/increase", to: "gauges#increase", constraints: {ids: /.+[,].+/}
+        put ":ids/actions/decrease", to: "gauges#decrease", constraints: {ids: /.+[,].+/}
+      end
+      member do
+        put "actions/increase", to: "gauges#increase"
+        put "actions/decrease", to: "gauges#decrease"
+      end
+    end
     resources :roles, defaults: { format: :json}
     resources :product_forms, defaults: { format: :json}
     resources :users_roles, defaults: { format: :json}, only: %w(create destroy)

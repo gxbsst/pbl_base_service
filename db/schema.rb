@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141216083926) do
+ActiveRecord::Schema.define(version: 20141216100056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20141216083926) do
     t.uuid     "technique_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "reference_count"
   end
 
   create_table "pbls_disciplines", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -245,11 +246,9 @@ ActiveRecord::Schema.define(version: 20141216083926) do
   end
 
   create_table "users_roles", id: false, force: true do |t|
-    t.uuid     "user_id"
-    t.uuid     "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.uuid     "id"
+    t.uuid "user_id"
+    t.uuid "role_id"
+    t.uuid "id"
   end
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree

@@ -84,7 +84,11 @@ Rails.application.routes.draw do
         delete ":ids", to: "assignments#destroy", constraints: {ids: /.+[,].+/}
       end
     end
-    resources :resources, defaults: { format: :json}
+    resources :resources, defaults: { format: :json} do
+      collection do
+        get ":owner_type/:owner_id", to: "resources#index"
+      end
+    end
   end
 
 end

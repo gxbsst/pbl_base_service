@@ -6,14 +6,26 @@ describe V1::ResourcesController do
     let!(:resource_1)  { create :resource, owner_type: owner.class.name, owner_id: owner.id, name: 'name 1' }
     let!(:resource_2)  { create :resource, owner_type: owner.class.name, owner_id: owner.id, name: 'name 2' }
 
-    before(:each) do
-      get '/resources', {owner_type: owner.class.name, owner_id: owner.id}, accept
-      @json = parse_json(response.body)
+    context 'get resources' do
+      before(:each) do
+        get '/resources', {owner_type: owner.class.name, owner_id: owner.id}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(response.body).to have_json_type(Hash) }
+      it { expect(@json['data'][0]['name']).to eq('name 2') }
+      it { expect(@json['data'][1]['name']).to eq('name 1') }
     end
 
-    it { expect(response.body).to have_json_type(Hash) }
-    it { expect(@json['data'][0]['name']).to eq('name 2') }
-    it { expect(@json['data'][1]['name']).to eq('name 1') }
+    context 'with override uri' do
+      let(:owner) { create :pbl_project }
+      let!(:resource)  { create :resource, owner_type: 'project_product', owner_id: owner.id, name: 'name 1' }
+      before(:each) do
+        get "/resources/project_product/#{owner.id}", {}, accept
+        @json = parse_json(response.body)
+      end
+      it { expect(@json['data'].size).to eq(1) }
+    end
 
     context 'with page' do
       before(:each) do

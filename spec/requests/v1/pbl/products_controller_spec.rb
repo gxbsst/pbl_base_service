@@ -23,8 +23,46 @@ describe V1::Pbl::ProductsController do
     it { expect(@json['meta']['total_pages']).to eq(2)}
     it { expect(@json['meta']['current_page']).to eq(1)}
     it { expect(@json['meta']['per_page']).to eq('1')}
-
    end
+  end
+
+  context 'with include product_form' do
+   let!(:product_form) { create :product_form }
+   let!(:product) { create :pbl_product, project_id: project.id, product_form_id: product_form.id}
+   before(:each) do
+    get '/pbl/products', {project_id: project.id, include: 'product_form'}, accept
+    @json = parse_json(response.body)
+   end
+
+   it { expect(@json['data'][0]['product_form']).to be_a Hash}
+   it { expect(@json['data'][0]['product_form']['product_form_id']).to eq(product_form.id)}
+   it { expect(@json['data'][0]['product_form']['product_form_uri']).to eq("/product_forms/#{product_form.id}")}
+  end
+
+  context 'with include resources' do
+   let!(:product) { create :pbl_product_with_resources, project_id: project.id, resources_count: 5}
+   before(:each) do
+    get '/pbl/products', {project_id: project.id, include: 'resources'}, accept
+    @json = parse_json(response.body)
+   end
+
+   it { expect(@json['data'][0]['resources']).to be_a Hash}
+   it { expect(@json['data'][0]['resources']['owner_type']).to eq('project_product')}
+   it { expect(@json['data'][0]['resources']['owner_id']).to eq(product.id)}
+   it { expect(@json['data'][0]['resources']['resource_uri']).to eq("/resources/project_product/#{product.id}")}
+  end
+
+  context 'with include product_form & resources' do
+   let!(:product_form) { create :product_form }
+   let!(:product) { create :pbl_product_with_resources, project_id: project.id, resources_count: 5, product_form_id: product_form.id}
+   before(:each) do
+    get '/pbl/products', {project_id: project.id, include: 'resources,product_form'}, accept
+    @json = parse_json(response.body)
+   end
+   it { expect(@json['data'][0]['product_form']['product_form_id']).to eq(product_form.id)}
+   it { expect(@json['data'][0]['resources']['owner_type']).to eq('project_product')}
+   it { expect(@json['data'][0]['resources']).to be_a Hash}
+   it { expect(@json['data'][0]['product_form']).to be_a Hash}
   end
  end
 
@@ -80,7 +118,7 @@ describe V1::Pbl::ProductsController do
   end
 
   context 'with failed' do
-    it { expect {post '/pbl/products', { product: attributes_for(:pbl_product) }, accept }.to raise_error(RuntimeError) }
+   it { expect {post '/pbl/products', { product: attributes_for(:pbl_product) }, accept }.to raise_error(RuntimeError) }
   end
  end
 

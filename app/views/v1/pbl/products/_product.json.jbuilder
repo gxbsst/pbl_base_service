@@ -1,0 +1,1 @@
+json.extract! product, :id, :description, :project_id, :product_form_id

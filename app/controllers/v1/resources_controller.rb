@@ -8,7 +8,6 @@ module V1
       check_parent_resource_id if configures[:have_parent_resource]
       @collections = Resource.order(created_at: :desc)
       @collections = @collections.where(["owner_id = ? AND owner_type = ?", params[:owner_id], params[:owner_type]]) if params[:owner_type] && params[:owner_id]
-
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
       @collections = @collections.page(page).per(@limit)
     end

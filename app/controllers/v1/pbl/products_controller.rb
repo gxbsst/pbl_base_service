@@ -1,8 +1,8 @@
 module V1
   class Pbl::ProductsController < BaseController
-
     def index
       set_project
+      parse_includes
       page = params[:page] || 1
       @limit = params[:limit] || 10
 
@@ -58,12 +58,8 @@ module V1
     end
 
     def set_product
-      include = params[:include] rescue nil
-      if include
-        include = include.split(',')
-        @include_product_form = include.include? 'product_form'
-      end
-      @product ||= Pbls::Product.includes(include).find(params[:id]) rescue nil
+      parse_includes
+      @product ||= Pbls::Product.includes(@include).find(params[:id]) rescue nil
     end
 
     def set_project
@@ -74,6 +70,15 @@ module V1
       project_id = params[:project_id] || params[:product][:project_id] rescue nil
       fail 'No Project Id' unless project_id
       project_id
+    end
+
+    def parse_includes
+      include = params[:include] rescue nil
+      if include
+        @include = include.split(',')
+        @include_product_form = include.include? 'product_form'
+        @include_resources = include.include? 'resources'
+      end
     end
   end
 end

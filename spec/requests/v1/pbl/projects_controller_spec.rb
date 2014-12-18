@@ -55,6 +55,7 @@ describe V1::Pbl::ProjectsController, type: :request do
     it { expect(@json['user_id']).to eq(user.id) }
     it { expect(@json['rule_head']).to eq('rule_head') }
     it { expect(@json['rule_template']).to eq('rule_template') }
+    it { expect(@json['public']).to  be_falsey}
 
     context 'with include techniques' do
       let!(:project)  { create :pbl_project_with_techniques, name: 'name', user_id: user.id, techniques_count: 5}

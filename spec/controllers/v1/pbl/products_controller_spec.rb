@@ -15,7 +15,7 @@ describe V1::Pbl::ProductsController do
  describe 'GET #show' do
   context 'with found' do
    let!(:project) { create :pbl_project }
-   let!(:product) { create :pbl_product, form: 'form', project_id: project.id }
+   let!(:product) { create :pbl_product, project_id: project.id }
    before(:each) do
     get :show, id: product, format: :json
    end
@@ -52,7 +52,7 @@ describe V1::Pbl::ProductsController do
 
   context 'with failed' do
    before(:each) do
-    post :create, product: attributes_for(:pbl_product, form: '', project_id: project.id), format: :json
+    post :create, product: attributes_for(:pbl_product, project_id: project.id), format: :json
    end
 
    it { expect(response.status).to eq(201)}
@@ -65,22 +65,20 @@ describe V1::Pbl::ProductsController do
    let!(:project) { create :pbl_project }
    let!(:product) { create :pbl_product, project_id: project.id }
    before(:each) do
-    patch :update, id: product, product: attributes_for(:pbl_product, form: 'form', project_id: project.id), format: :json
+    patch :update, id: product, product: attributes_for(:pbl_product, project_id: project.id), format: :json
    end
 
    it { expect(response.status).to eq(200)}
-   it { expect(Pbls::Product.first.form).to eq('form') }
   end
 
   context 'with failed' do
    let!(:project) { create :pbl_project }
-   let!(:product) { create :pbl_product, form: 'original name', project_id: project.id }
+   let!(:product) { create :pbl_product, project_id: project.id }
    before(:each) do
-    patch :update, id: product, product: attributes_for(:pbl_product, form: '', project_id: project.id), format: :json
+    patch :update, id: product, product: attributes_for(:pbl_product, project_id: project.id), format: :json
    end
 
    it { expect(response.status).to eq(200)}
-   it { expect(Pbls::Product.first.form).to eq('') }
   end
  end
 

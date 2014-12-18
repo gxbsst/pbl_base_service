@@ -3,8 +3,8 @@ require 'rails_helper'
 describe V1::Pbl::ProductsController do
  describe 'GET #index' do
   let(:project) { create :pbl_project }
-  let!(:product_1)  { create :pbl_product, form: 'form', project_id: project.id }
-  let!(:product_2)  { create :pbl_product, form: 'form2', project_id: project.id }
+  let!(:product_1)  { create :pbl_product, project_id: project.id }
+  let!(:product_2)  { create :pbl_product, project_id: project.id }
 
   before(:each) do
    get '/pbl/products', {project_id: project.id}, accept
@@ -12,8 +12,6 @@ describe V1::Pbl::ProductsController do
   end
 
   it { expect(response.body).to have_json_type(Hash) }
-  it { expect(@json['data'][0]['form']).to eq('form2') }
-  it { expect(@json['data'][1]['form']).to eq('form') }
 
   context 'with page' do
    context 'page 1' do
@@ -34,14 +32,13 @@ describe V1::Pbl::ProductsController do
   context 'with found' do
    let!(:project) { create :pbl_project }
    let!(:product_form) { create :product_form }
-   let!(:product) { create :pbl_product, form: 'form', project_id: project.id, product_form_id: product_form.id }
+   let!(:product) { create :pbl_product, project_id: project.id, product_form_id: product_form.id }
    before(:each) do
     get "/pbl/products/#{product.id}", {}, accept
     @json = parse_json(response.body)
    end
 
    it { expect(@json['id']).to eq(product.id.to_s) }
-   it { expect(@json['form']).to eq('form') }
    it { expect(@json['project_id']).to eq(project.id) }
    it { expect(@json['description']).to eq('description') }
    it { expect(@json['product_form_id']).to eq(product_form.id) }
@@ -76,11 +73,10 @@ describe V1::Pbl::ProductsController do
   context 'with successful' do
 
    before(:each) do
-    post '/pbl/products', { product: attributes_for(:pbl_product, project_id: project.id, form: 'form') }, accept
+    post '/pbl/products', { product: attributes_for(:pbl_product, project_id: project.id) }, accept
     @json = parse_json(response.body)
    end
 
-   it { expect(@json['form']).to eq('form') }
   end
 
   context 'with failed' do
@@ -93,7 +89,7 @@ describe V1::Pbl::ProductsController do
    let!(:project) { create :pbl_project }
    let!(:product) { create :pbl_product, project_id: project.id }
    before(:each) do
-    patch "/pbl/products/#{product.id}", {product: attributes_for(:pbl_product, form: 'form', project_id: project.id)}, accept
+    patch "/pbl/products/#{product.id}", {product: attributes_for(:pbl_product, project_id: project.id)}, accept
     @json = parse_json(response.body)
    end
 
@@ -102,9 +98,9 @@ describe V1::Pbl::ProductsController do
 
   context 'with failed' do
    let!(:project) { create :pbl_project }
-   let!(:product) { create :pbl_product, form: 'original name', project_id: project.id }
+   let!(:product) { create :pbl_product, project_id: project.id }
    before(:each) do
-    patch "/pbl/products/#{product.id}", {product: attributes_for(:pbl_product, form: 'form')}, accept
+    patch "/pbl/products/#{product.id}", {product: attributes_for(:pbl_product)}, accept
    end
 
    it { expect {post '/pbl/products', { product: attributes_for(:pbl_product) }, accept }.to raise_error(RuntimeError) }

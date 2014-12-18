@@ -10,8 +10,6 @@ gem 'versionist'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'state_machine'
 
-gem 'rolify'
-
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'

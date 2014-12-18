@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141217114401) do
+ActiveRecord::Schema.define(version: 20141218063021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,7 +76,6 @@ ActiveRecord::Schema.define(version: 20141217114401) do
   end
 
   create_table "pbls_products", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.string   "form"
     t.text     "description"
     t.boolean  "is_final"
     t.uuid     "project_id"
@@ -100,7 +99,7 @@ ActiveRecord::Schema.define(version: 20141217114401) do
     t.text     "driven_issue"
     t.text     "standard_analysis"
     t.integer  "duration"
-    t.boolean  "public"
+    t.boolean  "public",            default: false
     t.string   "limitation"
     t.integer  "location_id"
     t.string   "grade_id"

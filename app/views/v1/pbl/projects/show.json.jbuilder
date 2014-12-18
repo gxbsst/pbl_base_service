@@ -1,4 +1,4 @@
-json.extract! @project, :id, :name, :driven_issue, :standard_analysis, :duration, :description, :limitation, :location_id, :grade_id, :user_id, :rule_head, :rule_template, :tag_list, :duration_unit
+json.extract! @project, :id, :name, :driven_issue, :standard_analysis, :duration, :description, :limitation, :location_id, :grade_id, :user_id, :rule_head, :rule_template, :tag_list, :duration_unit, :public
 
 if @include_techniques
   proc = lambda {|i| {id: i.id, technique_id: i.technique_id}}

@@ -147,7 +147,6 @@ GEM
     redis (3.1.0)
     redis-namespace (1.5.1)
       redis (~> 3.0, >= 3.0.4)
-    rolify (3.4.1)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -238,7 +237,6 @@ DEPENDENCIES
   rack-cache
   rails (= 4.1.7)
   rails-api
-  rolify
   rspec-rails
   seedbank
   shoulda-matchers

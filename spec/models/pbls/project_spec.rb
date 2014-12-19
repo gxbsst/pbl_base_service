@@ -38,4 +38,9 @@ describe Pbls::Project do
    expect(Resource.first.owner).to eq(p)
   end
  end
+
+ describe "#limitation" do
+  let(:project) { Pbls::Project.create(:limitation => "1")}
+  it { expect(project.limitation).to eq(1)}
+ end
 end

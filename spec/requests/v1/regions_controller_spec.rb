@@ -40,6 +40,28 @@ describe V1::RegionsController do
       it { expect(@json['data'][0]['type']).to eq('City') }
       it { expect(@json['data'][0]['id']).to eq(city.id) }
     end
+
+    context 'with type country' do
+      before(:each) do
+        get '/regions', {type: 'country' }, accept
+        @json = parse_json(response.body)
+      end
+      it { expect(@json['data'].size).to eq(1) }
+      it { expect(@json['data'][0]['name']).to eq('country') }
+      it { expect(@json['data'][0]['type']).to eq('Country') }
+      it { expect(@json['data'][0]['id']).to eq(country.id) }
+    end
+
+    context 'with type province' do
+      before(:each) do
+        get '/regions', {type: 'province' }, accept
+        @json = parse_json(response.body)
+      end
+      it { expect(@json['data'].size).to eq(1) }
+      it { expect(@json['data'][0]['name']).to eq('province') }
+      it { expect(@json['data'][0]['type']).to eq('Province') }
+      it { expect(@json['data'][0]['id']).to eq(province.id) }
+    end
   end
 
   describe 'GET #show' do

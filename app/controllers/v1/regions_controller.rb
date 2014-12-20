@@ -9,6 +9,7 @@ module V1
       top_collections
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
       @collections = @collections.find(params[:parent_id]).children if params[:parent_id].present?
+      @collections = @collections.where(type: params[:type].classify) if params[:type].present?
       @collections = @collections.page(page).per(@limit) if @collections
     end
 

@@ -57,7 +57,9 @@ describe V1::Curriculum::PhasesController do
           get "/curriculum/phases/?subject_id=16720e7f-74d4-4c8f-afda-9657e659b432", {} , accept
           @json = parse_json(response.body)
         end
-        it { expect(response.status).to_not eq(200)}
+        it { expect(response.status).to eq(200)}
+        it { expect(@json['data']).to be_a Array }
+        it { expect(@json['meta']).to be_a Hash}
       end
     end
   end

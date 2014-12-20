@@ -1,7 +1,5 @@
 json.data do
-  json.array! @collections do |project|
-    json.partial! 'project', project: project
-  end
+  json.array! @collections
 end
 
 json.meta do

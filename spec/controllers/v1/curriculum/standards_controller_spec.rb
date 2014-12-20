@@ -11,7 +11,7 @@ describe V1::Curriculum::StandardsController do
 
       it { expect(response.status).to  eq(200) }
       it { expect(response).to render_template :show}
-      it { expect(assigns(:standard)).to eq(standard)}
+      it { expect(assigns(:clazz_instance)).to eq(standard)}
     end
 
     context 'with not found' do
@@ -87,7 +87,7 @@ describe V1::Curriculum::StandardsController do
 
     it { expect(response).to render_template :index }
     it { expect(response.status).to eq(200) }
-    it { expect(assigns(:standards)).to match_array([standard])}
+    it { expect(assigns(:collections)).to match_array([standard])}
   end
 
 end

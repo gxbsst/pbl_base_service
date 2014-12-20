@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141218114658) do
+ActiveRecord::Schema.define(version: 20141219095153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,8 @@ ActiveRecord::Schema.define(version: 20141218114658) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "reference_count"
+    t.string   "standard"
+    t.string   "weight"
   end
 
   create_table "pbls_disciplines", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -109,6 +111,7 @@ ActiveRecord::Schema.define(version: 20141218114658) do
     t.string   "rule_template"
     t.string   "duration_unit"
     t.string   "grade"
+    t.uuid     "region_id"
   end
 
   create_table "pbls_rules", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -177,6 +180,27 @@ ActiveRecord::Schema.define(version: 20141218114658) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "region_hierarchies", id: false, force: true do |t|
+    t.uuid    "ancestor_id",   null: false
+    t.uuid    "descendant_id", null: false
+    t.integer "generations",   null: false
+  end
+
+  add_index "region_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "anc_desc_idx", unique: true, using: :btree
+  add_index "region_hierarchies", ["descendant_id"], name: "desc_idx", using: :btree
+
+  create_table "regions", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.uuid     "parent_id"
+    t.string   "pinyin"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "regions", ["parent_id", "pinyin"], name: "index_regions_on_parent_id_and_pinyin", using: :btree
 
   create_table "resources", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"

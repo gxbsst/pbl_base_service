@@ -1,3 +1,3 @@
-json.extract! @phase, :id, :name, :subject_id
-json.standards @phase.standards if params[:include] == 'standards'
+json.extract! @clazz_instance, :id, :name, :subject_id
+json.standards @clazz_instance.standards if params[:include] == 'standards'
 

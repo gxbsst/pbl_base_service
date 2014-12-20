@@ -13,7 +13,7 @@ module V1
       check_parent_resource_id if configures[:have_parent_resource]
       top_collections
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
-      @collections = @collections.page(page).per(@limit)
+      @collections = @collections.page(page).per(@limit) if @collections
     end
 
     def show
@@ -84,7 +84,11 @@ module V1
 
     def top_collections
       if configures[:have_parent_resource] && parent_resource_id.present?
-        @collections = set_parent_resource_instance.send(:"#{configures[:clazz_resource_name]}").order(created_at: :desc)
+        set_parent_resource_instance
+        unless @parent_resource_instance
+          return render json: {data: [], meta: {}}
+        end
+        @collections = @parent_resource_instance.send(:"#{configures[:clazz_resource_name]}").order(created_at: :desc)
       else
         @collections = configures[:clazz].order(created_at: :desc)
       end
@@ -101,7 +105,7 @@ module V1
 
     def set_clazz_instance
       include = params[:include] rescue nil
-      @clazz_instance ||= configures[:clazz].includes(include).find(params[:id]) rescue nil
+      @clazz_instance ||= configures[:clazz].includes(include || @include).find(params[:id]) rescue nil
     end
 
     def set_locale

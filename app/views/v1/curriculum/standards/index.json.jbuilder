@@ -1,5 +1,5 @@
 json.data do
-  json.array! @standards do |standard|
+  json.array! @collections do |standard|
 
     json.id standard.id
     json.title standard.title
@@ -17,8 +17,8 @@ json.data do
 end
 
 json.meta do
-  json.total_count @standards.count
-  json.total_pages @standards.total_pages
-  json.current_page @standards.current_page
+  json.total_count @collections.count
+  json.total_pages @collections.total_pages
+  json.current_page @collections.current_page
   json.per_page @limit
 end

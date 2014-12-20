@@ -9,7 +9,7 @@ describe V1::Curriculum::SubjectsController do
     end
 
     it { expect(response).to render_template :index }
-    it { expect(assigns(:subjects)).to match_array([subject])}
+    it { expect(assigns(:collections)).to match_array([subject])}
   end
 
   describe 'GET #show' do
@@ -21,7 +21,7 @@ describe V1::Curriculum::SubjectsController do
 
       it { expect(response.status).to  eq(200) }
       it { expect(response).to render_template :show}
-      it { expect(assigns(:subject)).to eq(subject)}
+      it { expect(assigns(:clazz_instance)).to eq(subject)}
     end
 
     context 'with not found' do

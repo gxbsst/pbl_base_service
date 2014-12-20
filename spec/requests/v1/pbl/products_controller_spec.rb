@@ -118,7 +118,7 @@ describe V1::Pbl::ProductsController do
   end
 
   context 'with failed' do
-   it { expect {post '/pbl/products', { product: attributes_for(:pbl_product) }, accept }.to raise_error(RuntimeError) }
+   it { expect {post '/pbl/products', { product: attributes_for(:pbl_product) }, accept }.to_not raise_error() }
   end
  end
 
@@ -141,7 +141,7 @@ describe V1::Pbl::ProductsController do
     patch "/pbl/products/#{product.id}", {product: attributes_for(:pbl_product)}, accept
    end
 
-   it { expect {post '/pbl/products', { product: attributes_for(:pbl_product) }, accept }.to raise_error(RuntimeError) }
+   it { expect {post '/pbl/products', { product: attributes_for(:pbl_product) }, accept }.to_not raise_error() }
   end
  end
 

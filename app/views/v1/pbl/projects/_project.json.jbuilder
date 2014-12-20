@@ -13,4 +13,5 @@ json.extract! project,
               :tag_list,
               :duration_unit,
               :public,
-              :grade
+              :grade,
+              :region_id

@@ -1,0 +1,1 @@
+json.extract! region, :id, :name, :parent_id, :pinyin, :type

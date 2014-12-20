@@ -7,10 +7,12 @@ describe Pbls::Project do
  it { expect(described_class.new).to have_many(:techniques) }
  it { expect(described_class.new).to have_many(:standard_items) }
  it { expect(described_class.new).to belong_to(:user) }
+ it { expect(described_class.new).to belong_to(:region) }
  it { expect(described_class.new).to have_many(:rules) }
 
  it { expect(described_class.new).to respond_to(:rule_head) }
  it { expect(described_class.new).to respond_to(:rule_template) }
+ it { expect(described_class.new).to respond_to(:region_id) }
 
  let(:project) { described_class.new(name: 'name', driven_issue: 'driven_issue')}
  it { expect(project).to be_valid }

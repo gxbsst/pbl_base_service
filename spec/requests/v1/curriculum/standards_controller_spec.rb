@@ -4,14 +4,28 @@ describe V1::Curriculum::StandardsController do
   describe 'GET #index' do
     let!(:standard_1) { create :curriculum_standard, title: 'name1'}
     let!(:standard_2) { create :curriculum_standard, title: 'name2'}
-    before(:each) do
-      get '/curriculum/standards/', {}, accept
-      @json = parse_json(response.body)
+
+    context 'with data' do
+      before(:each) do
+        get '/curriculum/standards/', {}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(response.body).to have_json_type(Hash) }
+      it { expect(@json['data'][0]['title']).to eq('name2') }
+      it { expect(@json['data'][1]['title']).to eq('name1') }
     end
 
-    it { expect(response.body).to have_json_type(Hash) }
-    it { expect(@json['data'][0]['title']).to eq('name2') }
-    it { expect(@json['data'][1]['title']).to eq('name1') }
+    context 'with empty' do
+      before(:each) do
+        Curriculums::Standard.destroy_all
+        get '/curriculum/standards/', {}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(response.body).to have_json_type(Hash) }
+      it { expect(@json['data']).to eq([])}
+    end
 
     context 'with page' do
       context 'page 1' do
@@ -52,12 +66,16 @@ describe V1::Curriculum::StandardsController do
         it { expect(response.body).to have_json_type(Hash) }
         it {expect(@json['data'][0]['id']).to eq(standard.id)}
       end
+
       context 'with error phase_id' do
         before(:each) do
           get '/curriculum/standards/?phase_id=16720e7f-74d4-4c8f-afda-9657e659b432', {} , accept
           @json = parse_json(response.body)
         end
-        it { expect(response.status).to eq(404)}
+
+        it { expect(response.status).to eq(200)}
+        it { expect(@json['data']).to be_a Array }
+        it { expect(@json['meta']).to be_a Hash}
       end
     end
 
@@ -82,7 +100,6 @@ describe V1::Curriculum::StandardsController do
 
         it { expect(response.status).to eq(200)}
         it {expect(@json['data'][0]['items'].size).to eq(0)}
-
       end
     end
 

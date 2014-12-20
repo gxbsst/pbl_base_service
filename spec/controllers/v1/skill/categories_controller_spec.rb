@@ -9,7 +9,7 @@ describe V1::Skill::CategoriesController do
   end
 
   it { expect(response).to render_template :index }
-  it { expect(assigns(:categories)).to match_array([category])}
+  it { expect(assigns(:collections)).to match_array([category])}
  end
 
  describe 'GET #show' do
@@ -21,7 +21,7 @@ describe V1::Skill::CategoriesController do
 
    it { expect(response.status).to  eq(200) }
    it { expect(response).to render_template :show}
-   it { expect(assigns(:category)).to eq(category)}
+   it { expect(assigns(:clazz_instance)).to eq(category)}
   end
 
   context 'with not found' do

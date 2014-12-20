@@ -9,6 +9,7 @@ gem 'activerecord-jdbcpostgresql-adapter', platforms: [:jruby]
 gem 'versionist'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'state_machine'
+gem 'closure_tree'
 
 group :development, :test do
   gem 'rspec-rails'

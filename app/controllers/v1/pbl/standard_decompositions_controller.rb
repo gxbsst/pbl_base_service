@@ -1,37 +1,26 @@
-class V1::Pbl::StandardDecompositionsController < ApplicationController
-  def create
-    @standard_decomposition = Pbls::StandardDecomposition.new(standard_decomposition_params)
+module V1
+  class Pbl::StandardDecompositionsController < BaseController
 
-    if @standard_decomposition.save
-      render :show, status: :created
-    else
-      render json: { error: @standard_decomposition.errors }, status: :unprocessable_entity
+    private
+
+    def configures
+      {
+        have_parent_resource: true,
+        parent_resource_clazz: Pbls::Project,
+        clazz: Pbls::StandardDecomposition,
+        clazz_resource_name: 'standard_decompositions'
+      }
     end
-  end
 
-  def show
-    set_standard_decomposition
-  end
-
-  def destroy
-    set_standard_decomposition
-    return head :not_found unless @standard_decomposition
-
-    if @standard_decomposition.delete
-      render json: { id: @standard_decomposition.id }, status: :ok
-    else
-      head :unauthorized
+    def clazz_params
+      params.fetch(:standard_decomposition, {}).permit!
     end
-  end
 
+    def parent_resource_id
+      params[:project_id] || params[:standard_decomposition][:project_id]
+    rescue
+      nil
+    end
 
-  private
-
-  def standard_decomposition_params
-    params.fetch(:standard_decomposition, {}).permit!
-  end
-
-  def set_standard_decomposition
-    @standard_decomposition ||= Pbls::StandardDecomposition.find(params[:id]) rescue nil
   end
 end

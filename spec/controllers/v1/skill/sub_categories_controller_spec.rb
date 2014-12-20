@@ -9,7 +9,7 @@ describe V1::Skill::SubCategoriesController do
     end
 
     it { expect(response).to render_template :show}
-    it { expect(assigns(:sub_category)).to eq(sub_category)}
+    it { expect(assigns(:clazz_instance)).to eq(sub_category)}
   end
 
   describe 'POST #create' do
@@ -72,6 +72,6 @@ describe V1::Skill::SubCategoriesController do
 
     it { expect(response).to render_template :index }
     it { expect(response.status).to eq(200) }
-    it { expect(assigns(:sub_categories)).to match_array([sub_category])}
+    it { expect(assigns(:collections)).to match_array([sub_category])}
   end
 end

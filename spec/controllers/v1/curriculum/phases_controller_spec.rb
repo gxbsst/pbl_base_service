@@ -9,7 +9,7 @@ describe V1::Curriculum::PhasesController, type: :controller do
     end
 
     it { expect(response).to render_template :show}
-    it { expect(assigns(:phase)).to eq(phase)}
+    it { expect(assigns(:clazz_instance)).to eq(phase)}
   end
 
   describe 'POST #create' do
@@ -72,6 +72,6 @@ describe V1::Curriculum::PhasesController, type: :controller do
 
     it { expect(response).to render_template :index }
     it { expect(response.status).to eq(200) }
-    it { expect(assigns(:phases)).to match_array([phase])}
+    it { expect(assigns(:collections)).to match_array([phase])}
   end
 end

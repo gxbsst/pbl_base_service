@@ -1,6 +1,6 @@
 json.data do
-  json.array! @collections do |project|
-    json.partial! 'project', project: project
+  json.array! @collections do  |region|
+    json.partial! 'region', region: region
   end
 end
 

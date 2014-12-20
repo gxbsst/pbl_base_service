@@ -9,7 +9,7 @@ describe V1::Pbl::ProductsController do
   end
 
   it { expect(response).to render_template :index }
-  it { expect(assigns(:products)).to match_array([product])}
+  it { expect(assigns(:collections)).to match_array([product])}
  end
 
  describe 'GET #show' do
@@ -22,7 +22,7 @@ describe V1::Pbl::ProductsController do
 
    it { expect(response.status).to  eq(200) }
    it { expect(response).to render_template :show}
-   it { expect(assigns(:product)).to eq(product)}
+   it { expect(assigns(:clazz_instance)).to eq(product)}
   end
 
   context 'with not found' do

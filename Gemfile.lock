@@ -64,6 +64,9 @@ GEM
       capistrano (~> 3.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    closure_tree (5.1.1)
+      activerecord (>= 3.2.0)
+      with_advisory_lock (>= 3.0.0)
     colorize (0.7.3)
     connection_pool (2.1.0)
     daemons (1.1.9)
@@ -209,6 +212,9 @@ GEM
       activesupport (>= 3)
       railties (>= 3)
       yard (~> 0.7)
+    with_advisory_lock (3.0.0)
+      activerecord (>= 3.2)
+      thread_safe
     yard (0.8.7.6)
 
 PLATFORMS
@@ -225,6 +231,7 @@ DEPENDENCIES
   capistrano-rvm
   capistrano-sidekiq
   capistrano3-puma (~> 0.1.2)
+  closure_tree
   database_cleaner
   factory_girl_rails
   jbuilder

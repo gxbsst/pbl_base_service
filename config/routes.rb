@@ -67,6 +67,7 @@ Rails.application.routes.draw do
       collection do
         put ":ids/actions/increase", to: "gauges#increase", constraints: {ids: /.+[,].+/}
         put ":ids/actions/decrease", to: "gauges#decrease", constraints: {ids: /.+[,].+/}
+        get ":ids", to: "gauges#index", constraints: {ids: /.+[,].+/}
       end
       member do
         put "actions/increase", to: "gauges#increase"
@@ -89,6 +90,7 @@ Rails.application.routes.draw do
         get ":owner_type/:owner_id", to: "resources#index"
       end
     end
+    resources :regions, defaults: { format: :json}
   end
 
 end

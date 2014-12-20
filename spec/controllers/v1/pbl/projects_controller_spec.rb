@@ -8,7 +8,7 @@ describe V1::Pbl::ProjectsController do
     end
 
     it { expect(response).to render_template :index }
-    it { expect(assigns(:projects)).to match_array([project])}
+    it { expect(assigns(:collections)).to match_array([project])}
   end
 
   describe 'GET #show' do
@@ -20,7 +20,7 @@ describe V1::Pbl::ProjectsController do
 
       it { expect(response.status).to  eq(200) }
       it { expect(response).to render_template :show}
-      it { expect(assigns(:project)).to eq(project)}
+      it { expect(assigns(:clazz_instance)).to eq(project)}
     end
 
     context 'with not found' do

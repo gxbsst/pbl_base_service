@@ -1,5 +1,13 @@
 json.data do
-  json.array! @collections
+  json.array! @collections do |technique|
+    json.partial! 'technique', technique: technique
+    if @include_parents
+      json.parents  do
+        json.sub_category technique.sub_category
+        json.category technique.sub_category.category
+      end
+    end
+  end
 end
 
 json.meta do

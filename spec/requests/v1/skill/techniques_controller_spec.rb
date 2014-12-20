@@ -27,6 +27,28 @@ describe V1::Skill::TechniquesController do
     it { expect(@json['meta']['per_page']).to eq('1')}
    end
   end
+
+  context 'with ids' do
+   before(:each) do
+    get "/skill/techniques/#{clazz_instance_1.id.to_s},#{clazz_instance_2.id.to_s}", {sub_category_idd: sub_category.id}, accept
+    @json = parse_json(response.body)
+   end
+
+   it { expect(@json['data'].size).to eq(2)}
+
+   context 'with include parents' do
+    before(:each) do
+     get "/skill/techniques/#{clazz_instance_1.id.to_s},#{clazz_instance_2.id.to_s}", {include: 'parents'}, accept
+     @json = parse_json(response.body)
+    end
+
+    it { expect(@json['data'][1]['parents']).to be_a Hash  }
+    it { expect(@json['data'][1]['parents']['sub_category']['id']).to  eq(clazz_instance_1.sub_category.id)}
+    it { expect(@json['data'][1]['parents']['category']['id']).to  eq(clazz_instance_1.sub_category.category.id)}
+    it { expect(@json['data'][0]['parents']['sub_category']['id']).to  eq(clazz_instance_2.sub_category.id)}
+    it { expect(@json['data'][0]['parents']['category']['id']).to  eq(clazz_instance_2.sub_category.category.id)}
+   end
+  end
  end
 
  describe 'GET #show' do
@@ -49,6 +71,17 @@ describe V1::Skill::TechniquesController do
    end
 
    it { expect(response.status).to  eq(404) }
+  end
+
+  context 'with include parents' do
+   let!(:clazz_instance) { create :skill_technique,  sub_category_id: sub_category.id }
+   before(:each) do
+    get "/skill/techniques/#{clazz_instance.id}", {include: 'parents'}, accept
+    @json = parse_json(response.body)
+   end
+
+   it { expect(@json['parents']['sub_category']['id']).to  eq(sub_category.id)}
+   it { expect(@json['parents']['category']['id']).to  eq(sub_category.category.id)}
   end
  end
 

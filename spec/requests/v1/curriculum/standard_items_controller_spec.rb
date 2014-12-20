@@ -35,6 +35,21 @@ describe V1::Curriculum::StandardItemsController do
       end
 
       it { expect(@json['data'].size).to eq(2)}
+
+      context 'with include parents' do
+        before(:each) do
+          get "/curriculum/standard_items/#{clazz_instance_1.id.to_s},#{clazz_instance_2.id.to_s}", {include: 'parents'}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(@json['data'][1]['parents']).to be_a Hash  }
+        it { expect(@json['data'][1]['parents']['standard']['id']).to  eq(clazz_instance_1.standard.id)}
+        it { expect(@json['data'][1]['parents']['phase']['id']).to  eq(clazz_instance_1.standard.phase.id)}
+        it { expect(@json['data'][1]['parents']['subject']['id']).to  eq(clazz_instance_1.standard.phase.subject.id)}
+        it { expect(@json['data'][0]['parents']['standard']['id']).to  eq(clazz_instance_2.standard.id)}
+        it { expect(@json['data'][0]['parents']['phase']['id']).to  eq(clazz_instance_2.standard.phase.id)}
+        it { expect(@json['data'][0]['parents']['subject']['id']).to  eq(clazz_instance_2.standard.phase.subject.id)}
+      end
     end
   end
 
@@ -57,6 +72,18 @@ describe V1::Curriculum::StandardItemsController do
       end
 
       it { expect(response.status).to  eq(404) }
+    end
+
+    context 'with include parents' do
+      let!(:clazz_instance) { create :curriculum_item,  standard_id: standard.id }
+      before(:each) do
+        get "/curriculum/standard_items/#{clazz_instance.id}", {include: 'parents'}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['parents']['standard']['id']).to  eq(standard.id)}
+      it { expect(@json['parents']['phase']['id']).to  eq(standard.phase.id)}
+      it { expect(@json['parents']['subject']['id']).to  eq(standard.phase.subject.id)}
     end
   end
 

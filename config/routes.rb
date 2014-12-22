@@ -91,6 +91,8 @@ Rails.application.routes.draw do
       end
     end
     resources :regions, defaults: { format: :json}
+
+    resources :follows, defaults: {format: :json}
   end
 
 end

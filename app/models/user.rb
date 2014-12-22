@@ -1,5 +1,6 @@
 
 class User < PgConnection
+  include Surrounded
 
   validates_confirmation_of :password
   validates :email, :presence => true, :uniqueness => true, :email_format => true

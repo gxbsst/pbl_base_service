@@ -1,0 +1,1 @@
+json.extract! @clazz_instance, :id, :user_id, :follower_id

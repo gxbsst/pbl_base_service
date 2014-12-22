@@ -10,6 +10,7 @@ gem 'versionist'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'state_machine'
 gem 'closure_tree'
+gem 'surrounded'
 
 group :development, :test do
   gem 'rspec-rails'

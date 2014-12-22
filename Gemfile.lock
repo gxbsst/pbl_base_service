@@ -196,6 +196,8 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     state_machine (1.2.0)
+    surrounded (0.9.0)
+      triad (~> 0.2.0)
     thin (1.6.3)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0)
@@ -206,6 +208,8 @@ GEM
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
+    triad (0.2.0)
+      thread_safe (~> 0.3.3)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     versionist (1.4.0)
@@ -250,5 +254,6 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   state_machine
+  surrounded
   thin
   versionist

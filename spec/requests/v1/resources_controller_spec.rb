@@ -40,6 +40,21 @@ describe V1::ResourcesController do
       it { expect(@json['data'].size).to eq(2) }
     end
 
+    context 'with  owner_types and owner_ids' do
+      let(:owner_1) { create :pbl_project }
+      let(:owner_2) { create :pbl_project }
+      let!(:owner_3) { create :pbl_product }
+      let!(:resource_1)  { create :resource, owner_type: 'project_product', owner_id: owner_1.id, name: 'name 1' }
+      let!(:resource_2)  { create :resource, owner_type: 'project_product', owner_id: owner_2.id, name: 'name 1' }
+      let!(:resource_3)  { create :resource, owner_type: 'product', owner_id: owner_3.id, name: 'name 1' }
+      let!(:resource_4)  { create :resource, owner_type: 'project_product' }
+      before(:each) do
+        get "/resources/", {owner_types: 'project_product,product', owner_ids: "#{owner_1.id},#{owner_2.id},#{owner_3.id}"}, accept
+        @json = parse_json(response.body)
+      end
+      it { expect(@json['data'].size).to eq(3) }
+    end
+
     context 'with page' do
       before(:each) do
         get 'resources?page=1&limit=1', {owner_type: owner.class.name, owner_id: owner.id}, accept

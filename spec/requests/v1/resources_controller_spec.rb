@@ -17,7 +17,7 @@ describe V1::ResourcesController do
       it { expect(@json['data'][1]['name']).to eq('name 1') }
     end
 
-    context 'with override uri' do
+    context 'with  owner_type and owner_id' do
       let(:owner) { create :pbl_project }
       let!(:resource)  { create :resource, owner_type: 'project_product', owner_id: owner.id, name: 'name 1' }
       before(:each) do
@@ -25,6 +25,19 @@ describe V1::ResourcesController do
         @json = parse_json(response.body)
       end
       it { expect(@json['data'].size).to eq(1) }
+    end
+
+    context 'with  owner_type and owner_ids' do
+      let(:owner_1) { create :pbl_project }
+      let(:owner_2) { create :pbl_project }
+      let!(:resource_1)  { create :resource, owner_type: 'project_product', owner_id: owner_1.id, name: 'name 1' }
+      let!(:resource_2)  { create :resource, owner_type: 'project_product', owner_id: owner_2.id, name: 'name 1' }
+      let!(:resource_3)  { create :resource, owner_type: 'project_product' }
+      before(:each) do
+        get "/resources/", {owner_type: 'project_product', owner_ids: "#{owner_1.id},#{owner_2.id}"}, accept
+        @json = parse_json(response.body)
+      end
+      it { expect(@json['data'].size).to eq(2) }
     end
 
     context 'with page' do

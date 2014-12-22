@@ -1,51 +1,22 @@
+# encoding: utf-8
 module V1
   class GaugesController < BaseController
+
+    # === examples
+    # ====  获取推荐量规
+    #  /gauges/technique_ids=:id1, :ids2
     def index
       page = params[:page] || 1
       @limit = params[:limit] || 10
 
-      @gauges = Gauge.order(created_at: :desc)
-      @gauges = @gauges.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
-      @gauges = @gauges.page(page).per(@limit)
-    end
-
-    def show
-      set_gauge
-
-      if !@gauge
-        render json: {}, status: :not_found
+      check_parent_resource_id if configures[:have_parent_resource]
+      top_collections
+      @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
+      if params[:technique_ids].present?
+        technique_ids = params[:technique_ids].split(',')
+        @collections = @collections.where(technique_id: technique_ids)
       end
-    end
-
-    def create
-      @gauge = Gauge.new(gauge_params)
-
-      if @gauge.save
-        render :show, status: :created
-      else
-        render json: { error: @gauge.errors }, status: :unprocessable_entity
-      end
-    end
-
-    def update
-      set_gauge
-
-      if @gauge.update_attributes(gauge_params)
-        render :show, status: :ok
-      else
-        render json: {error: @gauge.errors}, status: :unprocessable_entity
-      end
-    end
-
-    def destroy
-      set_gauge
-      return head :not_found if !@gauge
-
-      if @gauge.destroy
-        render json: { id: @gauge.id }, status: :ok
-      else
-        head :unauthorized
-      end
+      @collections = @collections.order(reference_count: :desc, created_at: :desc).page(page).per(@limit) if @collections
     end
 
     def increase
@@ -91,13 +62,31 @@ module V1
     end
 
     private
-    def set_gauge
-      include = params[:include] rescue nil
-      @gauge ||= Gauge.includes(include).find(params[:id]) rescue nil
+
+    def top_collections
+      if configures[:have_parent_resource] && parent_resource_id.present?
+        set_parent_resource_instance
+        unless @parent_resource_instance
+          return render json: {data: [], meta: {}}
+        end
+        @collections = @parent_resource_instance.send(:"#{configures[:clazz_resource_name]}")#.order(created_at: :desc)
+      else
+        @collections = configures[:clazz]#.order(created_at: :desc)
+      end
     end
 
-    def gauge_params
+    def configures
+      { have_parent_resource: false,
+        clazz: Gauge }
+    end
+
+    def set_clazz_instance
+      @clazz_instance ||= configures[:clazz].find(params[:id]) rescue nil
+    end
+
+    def clazz_params
       params.fetch(:gauge, {}).permit!
     end
+
   end
 end

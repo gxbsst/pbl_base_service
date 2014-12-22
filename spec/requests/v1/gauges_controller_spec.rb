@@ -25,8 +25,26 @@ describe V1::GaugesController do
         it { expect(@json['meta']['total_pages']).to eq(2)}
         it { expect(@json['meta']['current_page']).to eq(1)}
         it { expect(@json['meta']['per_page']).to eq('1')}
-
       end
+    end
+
+    context 'with technique_ids' do
+      let(:technique_1) { create :skill_technique }
+      let(:technique_2) { create :skill_technique }
+      let(:technique_3) { create :skill_technique }
+      let!(:gauge_1)  { create :gauge, level_1: 'level_1', technique_id: technique_1.id, reference_count: 2 }
+      let!(:gauge_2)  { create :gauge, level_2: 'level_2', technique_id: technique_2.id, reference_count: 1 }
+      let!(:gauge_3)  { create :gauge, level_2: 'level_3', technique_id: technique_3.id }
+      before(:each) do
+        get "gauges?technique_ids=#{technique_1.id},#{technique_2.id}", {}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'].size).to eq(2) }
+      it { expect(@json['data'][0]['reference_count']).to eq(2) }
+      it { expect(@json['data'][0]['level_1']).to eq('level_1') }
+      it { expect(@json['data'][1]['reference_count']).to eq(1) }
+      it { expect(@json['data'][1]['level_2']).to eq('level_2') }
     end
   end
 

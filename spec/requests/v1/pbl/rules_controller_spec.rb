@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe V1::Pbl::RulesController do
- let(:project) { create :pbl_project }
+ let(:project) { create :pbl_project}
 
  describe 'GET #index' do
   let!(:rule_1)  { create :pbl_rule, level_1: 'level_1', project_id: project.id }
@@ -26,8 +26,24 @@ describe V1::Pbl::RulesController do
     it { expect(@json['meta']['total_pages']).to eq(2)}
     it { expect(@json['meta']['current_page']).to eq(1)}
     it { expect(@json['meta']['per_page']).to eq('1')}
-
    end
+  end
+
+  context 'with user_id' do
+   let(:user) { create :user }
+   let(:project) { create :pbl_project, user_id: user.id }
+   let!(:rule_1)  { create :pbl_rule, level_1: 'level', project_id: project.id }
+   let!(:rule_2)  { create :pbl_rule, level_1: 'level', project_id: project.id }
+   let!(:rule)  { create :pbl_rule, level_1: 'level' }
+   before(:each) do
+    get '/pbl/rules', {user_id: user.id}, accept
+    @json = parse_json(response.body)
+   end
+
+   it { expect(@json['data'].size).to eq(2)}
+   it { expect(@json['data'][0]['level_1']).to eq('level')}
+   it { expect(@json['data'][1]['level_1']).to eq('level')}
+
   end
  end
 

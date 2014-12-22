@@ -1,6 +1,22 @@
+# encoding: utf-8
 module V1
   class Pbl::RulesController < BaseController
+    # === examples
+    # ==== 获取某用户的量规
+    #  /pbl/rules/?user_id=:user_id
+    def index
+      page = params[:page] || 1
+      @limit = params[:limit] || 10
 
+      check_parent_resource_id if configures[:have_parent_resource]
+      top_collections
+      @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
+      if params[:user_id].present?
+        project_ids = Pbls::Project.where(user_id: params[:user_id]).collect(&:id)
+        @collections = @collections.where(project_id: project_ids)
+      end
+      @collections = @collections.page(page).per(@limit) if @collections
+    end
     private
 
     def configures

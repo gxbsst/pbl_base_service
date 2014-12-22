@@ -1,5 +1,10 @@
+# encoding: utf-8
 module V1
   class ResourcesController < BaseController
+
+    # === examples
+    # ====  获取某个owner的resources
+    #  "/resources/:owner_type/:owner_id"
 
     def index
       page = params[:page] || 1

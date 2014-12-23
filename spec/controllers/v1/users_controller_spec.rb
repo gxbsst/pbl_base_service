@@ -7,7 +7,7 @@ describe V1::UsersController, :type => :controller do
     subject!(:response) { get :index, format: :json }
 
     it { expect(response).to render_template :index }
-    it { expect(assigns(:users)).to match_array(User.first)}
+    it { expect(assigns(:collections)).to match_array(User.first)}
   end
 
   describe 'POST #Create' do
@@ -17,7 +17,7 @@ describe V1::UsersController, :type => :controller do
 
   describe 'PATCH #update ' do
     let(:user) { create :user }
-    subject!(:response) { patch :update, id: user, user: attributes_for(:user, first_name: 'hello') }
+    subject!(:response) { patch :update, id: user, user: attributes_for(:user, first_name: 'hello'), format: :json }
     it { expect(User.first.first_name).to eq('hello') }
   end
 

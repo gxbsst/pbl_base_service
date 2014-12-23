@@ -29,7 +29,7 @@ describe CreatingFollow do
       it 'follow together' do
         CreatingFollow.create(listener, follower, user)
         expect(Follow.count).to eq(2)
-        expect(Friend.count).to eq(2)
+        expect(FriendShip.count).to eq(2)
       end
     end
   end

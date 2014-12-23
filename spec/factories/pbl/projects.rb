@@ -13,7 +13,6 @@ FactoryGirl.define do
 
     trait :public  do
       limitation 5
-      location_id 1
       grade_id 1
     end
 

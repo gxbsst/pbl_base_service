@@ -8,8 +8,8 @@ module V1
     end
 
     def validate_on_success(user)
-      @user = user
-      render 'v1/users/show'
+      @clazz_instance = user
+      render 'v1/users/show', status: :ok
     end
 
     def validate_on_error(errors)

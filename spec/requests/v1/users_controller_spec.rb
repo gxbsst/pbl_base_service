@@ -63,6 +63,19 @@ describe V1::UsersController, type: :request do
         it {expect(@json['age']).to_not eq(20)}
         it {expect(@json['gender']).to_not eq(0)}
       end
+
+      context 'with include friends' do
+        let(:friend) { create :user }
+        let!(:friend_ship) { create :friend_ship, user_id: user.id, friend_id: friend.id }
+        before(:each) do
+          get "/users/#{user.id}", {include: 'friends'} , accept
+          @json = parse_json(response.body)
+        end
+        it { expect(FriendShip.count).to eq(1)}
+        it { expect(user.friends.count).to eq(1)}
+        it {expect(@json['friends'][0]['id']).to eq(friend.id)}
+        it {expect(@json['friends'][0]['username']).to eq(friend.username)}
+      end
     end
 
     context 'with username' do

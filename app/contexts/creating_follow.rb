@@ -33,8 +33,8 @@ class CreatingFollow
     end
 
     def create_friend(follower)
-      Friend.create(user_id: self.id, friend_id: follower.id)
-      Friend.create(user_id: follower.id, friend_id: user.id)
+      FriendShip.create(user_id: self.id, friend_id: follower.id)
+      FriendShip.create(user_id: follower.id, friend_id: user.id)
     end
   end
 end

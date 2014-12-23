@@ -90,5 +90,14 @@ describe V1::RegionsController do
       it { expect(@json['children'].size).to eq(2) }
       it { expect(@json['children'][0]['type']).to eq('City') }
     end
+
+    context 'with include parents' do
+      before(:each) do
+        get "/regions/#{province.id}?include=parents", {}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['parents'].size).to eq(1) }
+    end
   end
 end

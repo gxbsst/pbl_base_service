@@ -9,7 +9,7 @@ describe V1::GaugesController do
     end
 
     it { expect(response).to render_template :index }
-    it { expect(assigns(:gauges)).to match_array([gauge])}
+    it { expect(assigns(:collections)).to match_array([gauge])}
   end
 
   describe 'GET #show' do
@@ -21,7 +21,7 @@ describe V1::GaugesController do
 
       it { expect(response.status).to  eq(200) }
       it { expect(response).to render_template :show}
-      it { expect(assigns(:gauge)).to eq(gauge)}
+      it { expect(assigns(:clazz_instance)).to eq(gauge)}
     end
 
     context 'with not found' do

@@ -64,7 +64,6 @@ module V1
       # {
       #   have_parent_resource: true,
       #   parent_resource_clazz: Pbls::Project,
-      #   parent_resource_id: params[:project_id] || params[:rule][:project_id],
       #   clazz: Pbls::Rule,
       #   resource_name: rules
       # }

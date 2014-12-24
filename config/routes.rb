@@ -84,7 +84,7 @@ Rails.application.routes.draw do
       collection do
         delete ":ids", to: "assignments#destroy", constraints: {ids: /.+[,].+/}
       end
-    end
+      end
     resources :resources, defaults: { format: :json} do
       collection do
         get ":owner_type/:owner_id", to: "resources#index"
@@ -101,6 +101,14 @@ Rails.application.routes.draw do
     resources :friends, defaults: {format: :json} do
       collection do
         get ":ids", to: "friends#index", constraints: {ids: /.+[,].+/}
+      end
+    end
+
+    namespace :group do
+      resources :groups, defaults: {format: :json} do
+        collection do
+          get ":ids", to: "groups#index", constraints: {ids: /.+[,].+/}
+        end
       end
     end
   end

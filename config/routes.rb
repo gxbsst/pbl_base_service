@@ -92,7 +92,17 @@ Rails.application.routes.draw do
     end
     resources :regions, defaults: { format: :json}
 
-    resources :follows, defaults: {format: :json}
+    resources :follows, defaults: {format: :json} do
+      collection do
+        delete "actions/unfollow", to: "follows#destroy"
+      end
+    end
+
+    resources :friends, defaults: {format: :json} do
+      collection do
+        get ":ids", to: "friends#index", constraints: {ids: /.+[,].+/}
+      end
+    end
   end
 
 end

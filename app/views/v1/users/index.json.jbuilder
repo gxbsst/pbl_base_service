@@ -1,10 +1,10 @@
 json.data do
-  json.array! @users
+  json.array! @collections
 end
 
 json.meta do
-  json.total_count @users.count
-  json.total_pages @users.total_pages
-  json.current_page @users.current_page
+  json.total_count @collections.count
+  json.total_pages @collections.total_pages
+  json.current_page @collections.current_page
   json.per_page @limit
 end

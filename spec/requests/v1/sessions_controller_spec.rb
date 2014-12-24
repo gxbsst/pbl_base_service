@@ -11,6 +11,8 @@ describe V1::SessionsController, type: :request  do
         @json = parse_json(response.body)
       end
 
+      it { expect(User.count).to eq(1)}
+      it { expect(User.first.email).to eq('gxbsst@gmail.com')}
       it { expect(response).to render_template 'v1/users/show' }
       it { expect(response.status).to eq(200) }
       it { expect(response.body).to have_json_type(Hash) }

@@ -6,63 +6,41 @@ module V1
       page = params[:page] || 1
       @limit = params[:limit] || 10
 
-      @users = User.order(created_at: :desc)
-      @users = @users.where(id: params[:id]) if params[:id].present?
-      @users = @users.where('first_name like ?', params[:first_name]) if params[:first_name].present?
-      @users = @users.where('last_name like ?', params[:last_name]) if params[:last_name].present?
-      @users = @users.where(age: params[:age]) if params[:age].present?
-      @users = @users.where(gender: params[:gender]) if params[:gender].present?
-      @users = @users.page(page).per(@limit)
+      check_parent_resource_id if configures[:have_parent_resource]
 
-      if @users.blank?
-        head :not_found
-      end
-    end
-
-    def create
-      @user = User.new(user_params)
-      if @user.save
-        render :show, status: :created
-      else
-        render json: { error: @user.errors }, status: :unprocessable_entity
-      end
-    end
-
-    def update
-      set_user
-      if @user.update_attributes(user_params)
-        render json: { id: @user.id }, status: :ok
-      else
-        render json: {error: @user.errors}, status: :unprocessable_entity
-      end
-    end
-
-    def show
-      set_user
-      if !@user
-        render json: {}, status: :not_found
-      end
-    end
-
-    def destroy
-      set_user
-      return head :not_found if !@user
-
-      if @user.delete
-        render json: { id: @user.id }, status: :ok
-      else
-        head :unauthorized
-      end
+      top_collections
+      @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
+      @collections = @collections.where('first_name like ?', params[:first_name]) if params[:first_name].present?
+      @collections = @collections.where('last_name like ?', params[:last_name]) if params[:last_name].present?
+      @collections = @collections.where(age: params[:age]) if params[:age].present?
+      @collections = @collections.where(gender: params[:gender]) if params[:gender].present?
+      @collections = @collections.page(page).per(@limit)
     end
 
     private
 
-    def user_params
-      params.require(:user).permit(:first_name, :last_name, :age, :gender, :email, :password, :username)
+    def configures
+      {
+        have_parent_resource: false,
+        clazz: User,
+      }
     end
 
-    def set_user
-      @user ||= User.find_by_login(params[:id])
+    def clazz_params
+      params.fetch(:user, {}).permit!
+    end
+
+    def set_clazz_instance
+      parse_includes
+      @clazz_instance ||= configures[:clazz].includes(@include).find_by_login(params[:id]) rescue nil
+    end
+
+    def parse_includes
+      include = params[:include] rescue nil
+      if include
+        @include = include.split(',')
+        @include_friends = include.include? 'friends'
+      end
     end
 
   end

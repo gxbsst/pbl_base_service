@@ -110,6 +110,8 @@ Rails.application.routes.draw do
           get ":ids", to: "groups#index", constraints: {ids: /.+[,].+/}
         end
       end
+
+      resources :members, defaults: {format: :json}
     end
   end
 

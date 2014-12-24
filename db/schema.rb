@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141223131051) do
+ActiveRecord::Schema.define(version: 20141224061104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,17 @@ ActiveRecord::Schema.define(version: 20141223131051) do
   end
 
   add_index "groups_groups", ["user_id"], name: "index_groups_groups_on_user_id", using: :btree
+
+  create_table "groups_member_ships", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "user_id"
+    t.uuid     "group_id"
+    t.text     "role",       default: [], array: true
+    t.string   "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "groups_member_ships", ["group_id", "user_id"], name: "index_groups_member_ships_on_group_id_and_user_id", using: :btree
 
   create_table "pbls_disciplines", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"

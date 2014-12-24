@@ -45,7 +45,7 @@ describe V1::Group::GroupsController do
 
   describe 'POST #create' do
 
-    context 'follow a user ' do
+    context 'create a group with success' do
       let(:user) { create :user }
       before(:each) do
         params = {
@@ -57,6 +57,22 @@ describe V1::Group::GroupsController do
       end
 
       it { expect(Groups::Group.count).to eq(1)}
+      it { expect(Groups::MemberShip.count).to eq(1)}
+    end
+
+    context 'create a group with error' do
+      let(:user) { create :user }
+      before(:each) do
+        params = {
+          user_id: user.id,
+          name: '',
+          description: 'description'
+        }
+        post "/group/groups", {group: params}, accept
+      end
+
+      it { expect(Groups::Group.count).to eq(0)}
+      it { expect(Groups::MemberShip.count).to eq(0)}
     end
   end
 
@@ -70,4 +86,17 @@ describe V1::Group::GroupsController do
     it { expect(Groups::Group.count).to eq(0)}
   end
 
+  describe 'GET #show' do
+    context 'with include members' do
+      let(:user) { create :user }
+      let!(:group) { create :group_with_members, user_id: user.id, members_count: 5}
+      before(:each) do
+        get "/group/groups/#{group.id}", {include: 'members'}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['members'].count).to eq(5) }
+      it { expect(@json['members'][0]['role']).to match_array([]) }
+    end
+  end
 end

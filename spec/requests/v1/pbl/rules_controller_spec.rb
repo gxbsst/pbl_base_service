@@ -116,6 +116,13 @@ describe V1::Pbl::RulesController do
 
  describe 'DELETE #destroy' do
   let!(:rule) { create :pbl_rule, project_id: project.id }
-  it { expect{  delete "pbl/rules/#{rule.id}", {}, accept }.to change(Pbls::Rule, :count).from(1).to(0) }
+  # it { expect{  delete "pbl/rules/#{rule.id}", {}, accept }.to change(Pbls::Rule, :count).from(1).to(0) }
+  before(:each) do
+   delete "pbl/rules/#{rule.id}", {}, accept
+   @json = parse_json(response.body)
+  end
+
+  it { expect(@json['gauge_id']).to_not be_nil }
+  it { expect(@json['id']).to_not be_nil }
  end
 end

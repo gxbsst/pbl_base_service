@@ -17,6 +17,17 @@ module V1
       end
       @collections = @collections.page(page).per(@limit) if @collections
     end
+
+    def destroy
+      set_clazz_instance
+      return head :not_found if !@clazz_instance
+
+      if @clazz_instance.destroy
+        render json: { id: @clazz_instance.id, gauge_id: @clazz_instance.gauge_id }, status: :ok
+      else
+        head :unauthorized
+      end
+    end
     private
 
     def configures

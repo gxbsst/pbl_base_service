@@ -5,7 +5,7 @@ module V1
     # = join a group
     # == examples
     # === @params
-    # /groups/group/actions/join
+    # /groups/members/actions/join
     # {
     #  member: {user_id: user_id, group_id: 'group_id', role: ['creator']}
     # }
@@ -16,7 +16,7 @@ module V1
     # = leave a group
     # == examples
     # === @params
-    # /groups/group/actions/leave
+    # /groups/members/actions/leave
     # {
     #  member: {user_id: user_id, group_id: 'group_id'}
     # }

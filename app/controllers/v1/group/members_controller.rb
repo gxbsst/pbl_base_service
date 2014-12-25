@@ -1,6 +1,31 @@
 module V1
   class Group::MembersController < BaseController
 
+    def create
+      CreatingMemberShip.create(self, params[:member])
+    end
+
+    def destroy
+      DestroyingMemberShip.destroy(self, params[:member])
+    end
+
+    def on_create_success(member_ship)
+      @clazz_instance = member_ship
+      render :show, status: :created
+    end
+
+    def on_create_error(member_ship)
+      render json: {error: member_ship.errors}, status: :unprocessable_entity
+    end
+
+    def on_destroy_success(member_ship)
+      render json: {id: member_ship.id}, status: :ok
+    end
+
+    def on_destroy_error(errors)
+      render json: {error: errors}, status: :unprocessable_entity
+    end
+
     private
 
     def configures
@@ -28,10 +53,18 @@ module V1
     end
 
     def parse_includes
-      include = params[:include] rescue nil
-      if include
-        # TODO
-        @include = include.split(',')
+      @include = [:member]
+    end
+
+    def top_collections
+      if configures[:have_parent_resource] && parent_resource_id.present?
+        set_parent_resource_instance
+        unless @parent_resource_instance
+          return render json: {data: [], meta: {}}
+        end
+        @collections = @parent_resource_instance.send(:"#{configures[:clazz_resource_name]}").order(created_at: :desc)
+      else
+        @collections = configures[:clazz].order(created_at: :desc)
       end
     end
   end

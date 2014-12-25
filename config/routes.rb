@@ -111,7 +111,14 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :members, defaults: {format: :json}
+      resources :members, defaults: {format: :json} do
+        collection do
+          delete "actions/leave", to: "members#destroy"
+        end
+        collection do
+          post "actions/join", to: "members#create"
+        end
+      end
     end
   end
 

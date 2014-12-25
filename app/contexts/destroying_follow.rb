@@ -21,7 +21,7 @@ class DestroyingFollow
 
         listener.on_destroy_success(follow)
       else
-        listener.on_destroy_error("the follow does not exit")
+        listener.on_destroy_error("the follow does not exist")
       end
     end
   end

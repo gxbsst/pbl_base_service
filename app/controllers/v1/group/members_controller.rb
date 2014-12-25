@@ -1,10 +1,25 @@
+# encoding: utf-8
 module V1
   class Group::MembersController < BaseController
 
+    # = join a group
+    # == examples
+    # === @params
+    # /groups/group/actions/join
+    # {
+    #  member: {user_id: user_id, group_id: 'group_id', role: ['creator']}
+    # }
     def create
       CreatingMemberShip.create(self, params[:member])
     end
 
+    # = leave a group
+    # == examples
+    # === @params
+    # /groups/group/actions/leave
+    # {
+    #  member: {user_id: user_id, group_id: 'group_id'}
+    # }
     def destroy
       DestroyingMemberShip.destroy(self, params[:member])
     end

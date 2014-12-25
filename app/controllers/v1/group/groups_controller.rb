@@ -1,6 +1,10 @@
 module V1
   class Group::GroupsController < BaseController
 
+    # == examples
+    # {
+    #  group: {user_id: user_id, name: 'group_name', description: 'description'}
+    # }
     def create
       CreatingGroup.create(self,params[:group])
     end

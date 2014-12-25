@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141225035708) do
+ActiveRecord::Schema.define(version: 20141225071426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -256,9 +256,11 @@ ActiveRecord::Schema.define(version: 20141225035708) do
     t.text     "avinfo"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.uuid     "user_id"
   end
 
   add_index "resources", ["owner_id", "owner_type", "md5"], name: "index_resources_on_owner_id_and_owner_type_and_md5", using: :btree
+  add_index "resources", ["user_id"], name: "index_resources_on_user_id", using: :btree
 
   create_table "roles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"

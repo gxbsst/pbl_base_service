@@ -8,7 +8,7 @@ gem 'kaminari'
 gem 'activerecord-jdbcpostgresql-adapter', platforms: [:jruby]
 gem 'versionist'
 gem 'acts-as-taggable-on', '~> 3.4'
-gem 'state_machine'
+gem 'state_machine', tag: 'v1.2.1', git: 'https://github.com/LiveTyping/state_machine.git'
 gem 'closure_tree'
 gem 'surrounded'
 

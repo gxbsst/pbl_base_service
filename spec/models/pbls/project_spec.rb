@@ -45,4 +45,15 @@ describe Pbls::Project do
   let(:project) { Pbls::Project.create(:limitation => "1")}
   it { expect(project.limitation).to eq(1)}
  end
+
+ describe '#state' do
+  let(:project) { described_class.new }
+  it { expect(project.state).to eq('draft')}
+  it "release a project" do
+   project.release
+   expect(project.state).to eq('release')
+   project.complete
+   expect(project.state).to eq('completed')
+  end
+ end
 end

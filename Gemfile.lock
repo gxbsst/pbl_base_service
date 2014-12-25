@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/LiveTyping/state_machine.git
+  revision: e06c150b0442a0a884fbc726ff8f142020360b1f
+  tag: v1.2.1
+  specs:
+    state_machine (1.2.1)
+
 GEM
   remote: http://ruby.taobao.org/
   specs:
@@ -195,7 +202,6 @@ GEM
       colorize
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    state_machine (1.2.0)
     surrounded (0.9.0)
       triad (~> 0.2.0)
     thin (1.6.3)
@@ -253,7 +259,7 @@ DEPENDENCIES
   shoulda-matchers
   spring
   spring-commands-rspec
-  state_machine
+  state_machine!
   surrounded
   thin
   versionist

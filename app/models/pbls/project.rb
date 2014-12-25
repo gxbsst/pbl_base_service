@@ -19,5 +19,15 @@ module Pbls
     # has_many :techniques, through: :project_skill_techniques
     accepts_nested_attributes_for :standard_decompositions, :project_techniques, allow_destroy: true
 
+
+    state_machine :state, :initial => :draft do
+      event :release do
+        transition :draft => :release
+      end
+
+      event :complete do
+        transition :release => :completed
+      end
+    end
   end
 end

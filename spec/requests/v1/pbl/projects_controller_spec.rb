@@ -295,4 +295,15 @@ describe V1::Pbl::ProjectsController, type: :request do
       it { expect{  delete "pbl/projects/#{project.id}", {}, accept }.to change(Pbls::StandardDecomposition, :count).from(1).to(0) }
     end
   end
+
+  describe 'PATCH #release' do
+    let!(:project) { create :pbl_project }
+    before(:each) do
+      patch "/pbl/projects/#{project.id}/actions/release", {}, accept
+      @json = parse_json(response.body)
+    end
+
+    it { project.reload; expect(project.state).to eq('release')}
+
+  end
 end

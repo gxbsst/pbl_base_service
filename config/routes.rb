@@ -52,6 +52,9 @@ Rails.application.routes.draw do
         collection do
           get ":ids", to: "projects#index", constraints: {ids: /.+[,].+/}
         end
+        member do
+          patch "actions/release", to: "projects#release"
+        end
       end
       resources :products, defaults: {format: 'json'}
       resources :standard_decompositions, defaults: { format: :json}

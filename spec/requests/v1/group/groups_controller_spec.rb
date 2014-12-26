@@ -87,16 +87,16 @@ describe V1::Group::GroupsController do
   end
 
   describe 'GET #show' do
-    context 'with include members' do
+    context 'with include member_ships' do
       let(:user) { create :user }
       let!(:group) { create :group_with_members, user_id: user.id, members_count: 5}
       before(:each) do
-        get "/group/groups/#{group.id}", {include: 'members'}, accept
+        get "/group/groups/#{group.id}", {include: 'member_ships'}, accept
         @json = parse_json(response.body)
       end
 
-      it { expect(@json['members'].count).to eq(5) }
-      it { expect(@json['members'][0]['role']).to match_array([]) }
+      it { expect(@json['member_ships'].count).to eq(5) }
+      it { expect(@json['member_ships'][0]['role']).to match_array([]) }
     end
   end
 end

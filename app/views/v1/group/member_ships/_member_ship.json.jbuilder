@@ -1,0 +1,1 @@
+json.extract! member_ship, :id, :group_id, :user_id, :role, :state

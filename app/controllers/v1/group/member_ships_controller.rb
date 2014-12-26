@@ -1,11 +1,11 @@
 # encoding: utf-8
 module V1
-  class Group::MembersController < BaseController
+  class Group::MemberShipsController < BaseController
 
     # = join a group
     # == examples
     # === @params
-    # /groups/members/actions/join
+    # /groups/member_ships/actions/join
     # {
     #  member: {user_id: user_id, group_id: 'group_id', role: ['creator']}
     # }
@@ -16,12 +16,12 @@ module V1
     # = leave a group
     # == examples
     # === @params
-    # /groups/members/actions/leave
+    # /groups/member_ships/actions/leave
     # {
     #  member: {user_id: user_id, group_id: 'group_id'}
     # }
     def destroy
-      DestroyingMemberShip.destroy(self, params[:member])
+      DestroyingMemberShip.destroy(self, params[:id])
     end
 
     def on_create_success(member_ship)
@@ -68,7 +68,10 @@ module V1
     end
 
     def parse_includes
-      @include = [:member]
+      include = params[:include] rescue nil
+      if include
+        @include = include.split(',')
+      end
     end
 
     def top_collections

@@ -1,7 +1,9 @@
 json.data do
   json.array! @collections do |member_ship|
-    json.role member_ship.role
-    json.partial! 'v1/users/user', user: member_ship.member
+    json.partial! 'member_ship', member_ship: member_ship
+    json.user do
+      json.partial! 'v1/users/user', user: member_ship.member
+    end
   end
 end
 

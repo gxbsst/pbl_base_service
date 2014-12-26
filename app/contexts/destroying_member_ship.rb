@@ -1,14 +1,15 @@
 class DestroyingMemberShip
-  def self.destroy(listener, params)
-    new(listener, params).destroy
+  def self.destroy(listener, id, options = {})
+    new(listener, id, options).destroy
   end
 
-  attr_reader :user, :group, :listener
+  attr_reader :user, :group, :listener, :member_ship
 
-  def initialize(listener, params)
+  def initialize(listener, id, options = {})
     @listener = listener
-    @user = User.find(params[:user_id]).extend(UserRole)
-    @group = Groups::Group.find(params[:group_id]).extend(GroupRole)
+    @member_ship = Groups::MemberShip.find(id)
+    @user = @member_ship.member.extend(UserRole)
+    @group = @member_ship.group.extend(GroupRole)
   end
 
   def destroy

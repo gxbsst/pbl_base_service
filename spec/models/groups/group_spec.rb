@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Groups::Group, :type => :model do
-  it { expect(described_class.new).to have_many(:members) }
+  it { expect(described_class.new).to have_many(:member_ships) }
   it { expect(described_class.new).to validate_presence_of(:name) }
 
-  describe '#members' do
+  describe '#member_ships' do
     let(:group) { create :group }
     let(:user) { create :user }
     let!(:member_ship) { create :member_ship, user_id: user.id, group_id: group.id}

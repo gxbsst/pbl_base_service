@@ -4,7 +4,7 @@ module V1
 
     # === examples
     # ====  获取推荐量规
-    #  /gauges/technique_ids=:id1, :ids2
+    #  /gauges/?technique_ids=:id1, :ids2
     def index
       page = params[:page] || 1
       @limit = params[:limit] || 10

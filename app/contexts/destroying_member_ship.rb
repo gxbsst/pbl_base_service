@@ -7,27 +7,21 @@ class DestroyingMemberShip
 
   def initialize(listener, id, options = {})
     @listener = listener
-    @member_ship = Groups::MemberShip.find(id)
-    @user = @member_ship.member.extend(UserRole)
-    @group = @member_ship.group.extend(GroupRole)
+    @member_ship = Groups::MemberShip.find(id) rescue nil
   end
 
   def destroy
-    user.leave(group) do |success, member_ship|
-      if success
-        group.decrease_member_count
-        listener.on_destroy_success(member_ship)
-      else
-        listener.on_destroy_error("the member_ship does not exist")
-      end
-    end
-  end
+    if member_ship
+      @user = member_ship.member
+      @group = member_ship.group.extend(GroupRole)
 
-  module UserRole
-    def leave(group)
-      member_ship = Groups::MemberShip.find_by(user_id: self.id, group_id: group.id)
-      yield(member_ship.try(:destroy), member_ship)
-      self
+      if member_ship.destroy
+        @group.decrease_member_count
+      end
+
+      listener.on_destroy_success(member_ship)
+    else
+      listener.on_destroy_error("the member_ship does not exist")
     end
   end
 

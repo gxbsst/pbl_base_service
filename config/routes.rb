@@ -77,29 +77,29 @@ Rails.application.routes.draw do
         put "actions/decrease", to: "gauges#decrease"
       end
     end
+
     resources :roles, defaults: { format: :json}
+
     resources :product_forms, defaults: { format: :json} do
       collection do
         get ":ids", to: "product_forms#index", constraints: {ids: /.+[,].+/}
       end
     end
+
     resources :assignments, defaults: { format: :json}, only: %w(create destroy index) do
       collection do
         delete ":ids", to: "assignments#destroy", constraints: {ids: /.+[,].+/}
       end
-      end
+    end
+
     resources :resources, defaults: { format: :json} do
       collection do
         get ":owner_type/:owner_id", to: "resources#index"
       end
     end
-    resources :regions, defaults: { format: :json}
 
-    resources :follows, defaults: {format: :json} do
-      collection do
-        delete "actions/unfollow", to: "follows#destroy"
-      end
-    end
+    resources :regions, defaults: { format: :json}
+    resources :follows, defaults: {format: :json}
 
     resources :friends, defaults: {format: :json} do
       collection do

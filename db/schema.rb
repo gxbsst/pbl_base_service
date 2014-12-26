@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20141225071426) do
 
   add_index "follows", ["user_id", "follower_id"], name: "index_follows_on_user_id_and_follower_id", using: :btree
 
-  create_table "friend_ships", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+  create_table "follows", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "user_id"
     t.uuid     "friend_id"
     t.datetime "created_at"

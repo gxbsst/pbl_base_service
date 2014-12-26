@@ -48,7 +48,7 @@ module V1
       include = params[:include] rescue nil
       if include
         @include = include.split(',')
-        @include_members = include.include? 'member_ships'
+        @include_member_ships = include.include? 'member_ships'
       end
     end
 

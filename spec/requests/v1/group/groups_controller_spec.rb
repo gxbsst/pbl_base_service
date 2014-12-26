@@ -97,6 +97,7 @@ describe V1::Group::GroupsController do
 
       it { expect(@json['member_ships'].count).to eq(5) }
       it { expect(@json['member_ships'][0]['role']).to match_array([]) }
+      it { expect(@json['member_ships'][0]['member']['username']).to_not be_nil  }
     end
   end
 end

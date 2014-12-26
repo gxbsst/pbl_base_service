@@ -10,7 +10,7 @@ module V1
     end
 
     def destroy
-     DestroyingFollow.destroy(self, params[:follow])
+     DestroyingFollow.destroy(self, params[:id])
     end
 
     def on_create_success(follow)

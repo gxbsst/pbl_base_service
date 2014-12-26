@@ -16,6 +16,7 @@ class CreatingMemberShip
 
   def create
     user.join(group) do |member_ship|
+
       if member_ship.valid?
         group.increase_member_count
 

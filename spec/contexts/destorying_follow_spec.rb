@@ -13,7 +13,8 @@ describe DestroyingFollow do
       CreatingFollow.create(listener, user, follower)
     end
 
-    it { expect{DestroyingFollow.destroy(listener, params) }.to change(Follow, :count).from(1).to(0)}
+    it { expect(Follow.count).to eq(1)}
+    it { expect{DestroyingFollow.destroy(listener, Follow.first) }.to change(Follow, :count).from(1).to(0)}
 
     context 'un-follow for a friendship' do
       before(:each) do
@@ -24,7 +25,7 @@ describe DestroyingFollow do
 
       it 'un-follow the user' do
         expect(FriendShip.count).to eq(2)
-        expect{DestroyingFollow.destroy(listener, params)}.to change(FriendShip, :count).from(2).to(0)
+        expect{DestroyingFollow.destroy(listener, Follow.first.id)}.to change(FriendShip, :count).from(2).to(0)
       end
     end
 
@@ -32,11 +33,11 @@ describe DestroyingFollow do
       before(:each) do
         expect(listener).to receive(:on_create_error)
         CreatingFollow.create(listener, user, follower)
-        DestroyingFollow.destroy(listener, params)
+        DestroyingFollow.destroy(listener, Follow.first)
       end
 
       it 'repeat follow' do
-        DestroyingFollow.destroy(listener, params)
+        DestroyingFollow.destroy(listener, Follow.first)
       end
     end
 

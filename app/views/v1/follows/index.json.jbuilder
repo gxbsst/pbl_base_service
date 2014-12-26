@@ -1,5 +1,7 @@
 json.data do
-  json.array! @collections
+  json.array! @collections do |follow|
+    json.partial! 'follow', follow: follow
+  end
 end
 
 json.meta do

@@ -3,7 +3,7 @@ describe V1::FollowsController do
   describe 'GET #index' do
     let!(:user) { create :user, username: 'username'}
     let!(:follower) { create :user, username: 'follower'}
-    let!(:friend_ship) { create :follow, user_id: user.id, follower_id: follower.id}
+    let!(:follow) { create :follow, user_id: user.id, follower_id: follower.id}
     before(:each) do
       get "/follows", {}, accept
       @json = parse_json(response.body)
@@ -55,11 +55,11 @@ describe V1::FollowsController do
   describe 'DELETE #destroy' do
     let(:user) { create :user }
     let(:follower) { create :user }
-    context 'with unfollow' do
+    context 'with follow' do
 
       let!(:following) { create :follow, user_id: user.id, follower_id: follower.id}
       before(:each) do
-        delete "/follows/actions/unfollow", {follow: {user_id: user.id, follower_id: follower.id}}, accept
+        delete "/follows/#{following.id}", {}, accept
       end
 
       it { expect(Follow.count).to eq(0)}
@@ -68,7 +68,7 @@ describe V1::FollowsController do
     context 'with un-follow with dose exit follow' do
       let!(:following) { create :follow, user_id: follower.id, follower_id: user.id}
         before(:each) do
-          delete "/follows/actions/unfollow", {follow: {user_id: user.id, follower_id: follower.id}}, accept
+          delete "/follows/#{user.id}", {}, accept
           @json = parse_json(response.body)
         end
 

@@ -5,7 +5,7 @@ module V1
     # = join a group
     # == examples
     # === @params
-    # /groups/member_ships/actions/join
+    # POST /groups/member_ships
     # {
     #  member: {user_id: user_id, group_id: 'group_id', role: ['creator']}
     # }
@@ -16,10 +16,7 @@ module V1
     # = leave a group
     # == examples
     # === @params
-    # /groups/member_ships/actions/leave
-    # {
-    #  member: {user_id: user_id, group_id: 'group_id'}
-    # }
+    # DELETE /groups/member_ships/:id
     def destroy
       DestroyingMemberShip.destroy(self, params[:id])
     end

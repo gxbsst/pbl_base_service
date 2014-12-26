@@ -104,4 +104,43 @@ describe V1::GaugesController do
     let!(:gauge) { create :gauge, technique_id: technique.id }
     it { expect{  delete "/gauges/#{gauge.id}", {}, accept }.to change(Gauge, :count).from(1).to(0) }
   end
+
+  describe 'GET #recommends' do
+    let(:technique_1) { create :skill_technique }
+    let!(:gauge_1_1)  { create :gauge, level_1: 'technique_1 level_1', technique_id: technique_1.id, reference_count: 1 }
+    let!(:gauge_1_2)  { create :gauge, level_1: 'technique_1 level_2', technique_id: technique_1.id, reference_count: 2 }
+    let!(:gauge_1_3)  { create :gauge, level_1: 'technique_1 level_3', technique_id: technique_1.id, reference_count: 3 }
+    let!(:gauge_1_4)  { create :gauge, level_1: 'technique_1 level_1', technique_id: technique_1.id, reference_count: 0 }
+
+    let(:technique_2) { create :skill_technique }
+    let!(:gauge_2_1)  { create :gauge, level_1: 'technique_2 level_1', technique_id: technique_2.id, reference_count: 1 }
+    let!(:gauge_2_2)  { create :gauge, level_1: 'technique_2 level_2', technique_id: technique_2.id, reference_count: 2 }
+    let!(:gauge_2_3)  { create :gauge, level_1: 'technique_2 level_3', technique_id: technique_2.id, reference_count: 3 }
+    let!(:gauge_2_4)  { create :gauge, level_1: 'level_1', technique_id: technique_2.id, reference_count: 0 }
+
+    let(:technique_3) { create :skill_technique }
+    let!(:gauge_3_1)  { create :gauge, level_1: 'technique_3 level_1', technique_id: technique_3.id, reference_count: 1 }
+    let!(:gauge_3_2)  { create :gauge, level_1: 'technique_3 level_2', technique_id: technique_3.id, reference_count: 2 }
+    let!(:gauge_3_3)  { create :gauge, level_1: 'technique_3 level_3', technique_id: technique_3.id, reference_count: 3 }
+    let!(:gauge_3_4)  { create :gauge, level_1: 'level_1', technique_id: technique_3.id, reference_count: 0 }
+    before(:each) do
+      get 'gauges/recommends', {limit: 3, technique_ids: "#{technique_1.id},#{technique_2.id},#{technique_3.id}"}, accept
+      @json = parse_json(response.body)
+    end
+
+    it { expect(@json[technique_1.id].size).to eq(3)}
+    it { expect(@json[technique_1.id][0]['level_1']).to eq('technique_1 level_3')}
+    it { expect(@json[technique_1.id][1]['level_1']).to eq('technique_1 level_2')}
+    it { expect(@json[technique_1.id][2]['level_1']).to eq('technique_1 level_1')}
+
+    it { expect(@json[technique_2.id].size).to eq(3)}
+    it { expect(@json[technique_2.id][0]['level_1']).to eq('technique_2 level_3')}
+    it { expect(@json[technique_2.id][1]['level_1']).to eq('technique_2 level_2')}
+    it { expect(@json[technique_2.id][2]['level_1']).to eq('technique_2 level_1')}
+
+    it { expect(@json[technique_3.id].size).to eq(3)}
+    it { expect(@json[technique_3.id][0]['level_1']).to eq('technique_3 level_3')}
+    it { expect(@json[technique_3.id][1]['level_1']).to eq('technique_3 level_2')}
+    it { expect(@json[technique_3.id][2]['level_1']).to eq('technique_3 level_1')}
+  end
 end

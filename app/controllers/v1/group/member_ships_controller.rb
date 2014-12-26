@@ -7,7 +7,7 @@ module V1
     # === @params
     # POST /groups/member_ships
     # {
-    #  member: {user_id: user_id, group_id: 'group_id', role: ['creator']}
+    #  member_ship: {user_id: user_id, group_id: 'group_id', role: ['creator']}
     # }
     def create
       CreatingMemberShip.create(self, params[:member_ship])

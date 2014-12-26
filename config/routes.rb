@@ -71,6 +71,7 @@ Rails.application.routes.draw do
         put ":ids/actions/increase", to: "gauges#increase", constraints: {ids: /.+[,].+/}
         put ":ids/actions/decrease", to: "gauges#decrease", constraints: {ids: /.+[,].+/}
         get ":ids", to: "gauges#index", constraints: {ids: /.+[,].+/}
+        get 'recommends', to: "gauges#recommends"
       end
       member do
         put "actions/increase", to: "gauges#increase"

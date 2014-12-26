@@ -61,6 +61,12 @@ module V1
       end
     end
 
+    def recommends
+      @gauges = Gauge.find_by_sql("SELECT * from (SELECT *, RANK() OVER (PARTITION BY technique_id ORDER BY reference_count DESC) AS RP FROM gauges) G WHERE G.rp < 4")
+      @collections = @gauges.group_by { |d| d.technique_id }
+      render json: @collections, status: 200
+    end
+
     private
 
     def top_collections

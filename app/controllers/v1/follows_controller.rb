@@ -2,12 +2,24 @@ module V1
   class FollowsController < BaseController
     include Surrounded
 
+    # = follow a user
+    # == examples
+    # === @params
+    # POST /follows/
+    # {
+    # follow: {user_id: user_id, follower_id: follower_id }
+    # }
     def create
       user = User.find(params[:follow][:user_id])
       follower = User.find(params[:follow][:follower_id])
       
       CreatingFollow.create(self, user, follower)
     end
+
+    # = un-follow a user
+    # == examples
+    # === @params
+    # DELETE /follows/:id
 
     def destroy
      DestroyingFollow.destroy(self, params[:id])

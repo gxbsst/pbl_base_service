@@ -58,7 +58,7 @@ describe V1::Group::MemberShipsController do
   describe 'POST #create' do
     context 'with successful' do
       before(:each) do
-        post '/group/member_ships', { member: attributes_for(:member_ship, group_id: group.id, user_id: user_1.id) }, accept
+        post '/group/member_ships', { member_ship: attributes_for(:member_ship, group_id: group.id, user_id: user_1.id) }, accept
         @json = parse_json(response.body)
       end
 
@@ -66,7 +66,7 @@ describe V1::Group::MemberShipsController do
     end
 
     context 'with failed' do
-      it { expect {post '/group/member_ships', { member: attributes_for(:member_ship) }, accept }.to raise_error(RuntimeError) }
+      it { expect {post '/group/member_ships', { member_ship: attributes_for(:member_ship) }, accept }.to raise_error(RuntimeError) }
     end
   end
 

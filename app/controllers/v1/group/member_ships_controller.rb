@@ -10,7 +10,7 @@ module V1
     #  member: {user_id: user_id, group_id: 'group_id', role: ['creator']}
     # }
     def create
-      CreatingMemberShip.create(self, params[:member])
+      CreatingMemberShip.create(self, params[:member_ship])
     end
 
     # = leave a group
@@ -50,11 +50,11 @@ module V1
     end
 
     def clazz_params
-      params.fetch(:member, {}).permit!
+      params.fetch(:member_ship, {}).permit!
     end
 
     def parent_resource_id
-      params[:group_id] || params[:member][:group_id]
+      params[:group_id] || params[:member_ship][:group_id]
     rescue
       nil
     end

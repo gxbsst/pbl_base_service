@@ -62,7 +62,8 @@ module V1
     end
 
     def recommends
-      @gauges = Gauge.find_by_sql("SELECT * from (SELECT *, RANK() OVER (PARTITION BY technique_id ORDER BY reference_count DESC) AS RP FROM gauges) G WHERE G.rp < 4")
+      limit = params[:limit].try(:to_i) || 3
+      @gauges = Gauge.find_by_sql ["SELECT * from (SELECT *, RANK() OVER (PARTITION BY technique_id ORDER BY reference_count DESC) AS RP FROM gauges) G WHERE G.rp <= ?", limit]
       @collections = @gauges.group_by { |d| d.technique_id }
       render json: @collections, status: 200
     end

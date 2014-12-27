@@ -1,3 +1,3 @@
-1. 重构follow 和 member_ship的删除.
-2. add_followings_count & followers_count & friends_count to user
-3. client 加 Gauge#recommends
+1. 实现执行
+2. 实现群组聊天
+3. 实现发动态

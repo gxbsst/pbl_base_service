@@ -13,14 +13,17 @@ class DestroyingFollow
 
   def destroy
     if follow
-
       @user = follow.user.extend(UserRole)
       @follower = follow.follower.extend(FollowerRole)
 
-      if follow.destroy && follower.be_friend_with?(@user)
+      if follow.destroy
+        user.decrement!(:followers_count, 1)
+        follower.decrement!(:followings_count, 1)
 
-        follower.remove_friend(@user)
-        @user.remove_friend(@follower)
+        if follower.be_friend_with?(@user)
+          follower.remove_friend(@user)
+          @user.remove_friend(@follower)
+        end
       end
       listener.on_destroy_success(follow)
     else
@@ -31,6 +34,7 @@ class DestroyingFollow
   module UserRole
     def remove_friend(follower)
       FriendShip.find_by(user_id: self.id, friend_id: follower.id).destroy
+      self.decrement!(:friends_count, 1)
     end
   end
 
@@ -41,6 +45,7 @@ class DestroyingFollow
 
     def remove_friend(user)
       FriendShip.find_by(user_id: self.id, friend_id: user.id).destroy
+      self.decrement!(:friends_count, 1)
     end
   end
 end

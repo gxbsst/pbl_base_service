@@ -17,6 +17,9 @@ class CreatingFollow
     def follow(user)
       follow = Follow.new(user_id: user.id, follower_id: self.id)
       if follow.save
+        user.increment!(:followers_count, 1)
+        self.increment!(:followings_count, 1)
+
         user.followed? self do |f|
           user.create_friend(self) if f.present?
         end
@@ -35,6 +38,8 @@ class CreatingFollow
     def create_friend(follower)
       FriendShip.create(user_id: self.id, friend_id: follower.id)
       FriendShip.create(user_id: follower.id, friend_id: user.id)
+      self.increment!(:friends_count, 1)
+      follower.increment!(:friends_count, 1)
     end
   end
 end

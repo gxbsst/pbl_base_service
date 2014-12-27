@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141225071426) do
+ActiveRecord::Schema.define(version: 20141227080128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20141225071426) do
 
   add_index "follows", ["user_id", "follower_id"], name: "index_follows_on_user_id_and_follower_id", using: :btree
 
-  create_table "follows", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+  create_table "friend_ships", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "user_id"
     t.uuid     "friend_id"
     t.datetime "created_at"
@@ -327,6 +327,9 @@ ActiveRecord::Schema.define(version: 20141225071426) do
     t.string   "password_digest"
     t.string   "email"
     t.string   "username"
+    t.integer  "followings_count", default: 0
+    t.integer  "followers_count",  default: 0
+    t.integer  "friends_count",    default: 0
   end
 
   create_table "users_roles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

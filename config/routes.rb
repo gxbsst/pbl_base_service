@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   api_version(:module => "V1", :header => {:name => "Accept", :value => "application/vnd.ibridgebrige.com; version=1"}) do
 
-    resources :users, :defaults => { :format => 'json' }, :id => /.*/
+    resources :users, :defaults => { :format => 'json' }, :id => /.*/ do
+      collection do
+        get ":ids", to: "users#index", constraints: {ids: /.+[,].+/}
+      end
+    end
+
     resources :sessions, defaults: { format: 'json'}, only: %w(create destroy)
 
     # Skill

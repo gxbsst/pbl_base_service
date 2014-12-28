@@ -25,7 +25,7 @@ module V1
         have_parent_resource: true,
         parent_resource_clazz: User,
         clazz: Groups::Group,
-        clazz_resource_name: 'group'
+        clazz_resource_name: 'groups'
       }
     end
 

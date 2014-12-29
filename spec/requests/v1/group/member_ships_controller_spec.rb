@@ -28,7 +28,20 @@ describe V1::Group::MemberShipsController do
         it { expect(@json['meta']['total_pages']).to eq(2)}
         it { expect(@json['meta']['current_page']).to eq(1)}
         it { expect(@json['meta']['per_page']).to eq('1')}
+      end
+    end
 
+    context 'with user_id' do
+      context 'page 1' do
+        before(:each) do
+          get '/group/member_ships?page=1&limit=1', {user_id: user_1.id}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(@json['data'][0]['group']).to be_a Hash}
+        it { expect(@json['meta']['total_pages']).to eq(1)}
+        it { expect(@json['meta']['current_page']).to eq(1)}
+        it { expect(@json['meta']['per_page']).to eq('1')}
       end
     end
 

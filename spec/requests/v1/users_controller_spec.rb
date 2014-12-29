@@ -18,6 +18,21 @@ describe V1::UsersController, type: :request do
     context 'with role_name, role_resource_type, role_resource_id' do
       let(:user) { create :user }
     end
+
+
+    context 'with ids' do
+      let!(:user_3)  { create :user, username: 'name3' }
+      let!(:user_4)  { create :user, username: 'name4' }
+      before(:each) do
+        get "/users/#{user_3.id.to_s},#{user_4.id.to_s}", {}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json.size).to eq(2)}
+      it { expect(@json['data'].size).to eq(2)}
+      it { expect(@json['data'][0]['username']).to eq('name4') }
+      it { expect(@json['data'][1]['username']).to eq('name3') }
+    end
   end
 
   describe 'GET #Show' do
@@ -31,6 +46,7 @@ describe V1::UsersController, type: :request do
 
       it { expect(response.status).to eq(200)}
       it { expect(response.body).to have_json_type(Hash) }
+      it {expect(@json['id']).to eq(user.id)}
       it {expect(@json['first_name']).to eq('first_name')}
       it {expect(@json['last_name']).to eq('last_name')}
       it {expect(@json['age']).to eq(20)}

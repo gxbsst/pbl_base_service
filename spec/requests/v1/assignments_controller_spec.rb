@@ -21,6 +21,7 @@ describe V1::AssignmentsController do
         get "/assignments?resource_type=project&name=teacher&resource_id=#{resource.id}&include=user", {}, accept
         @json = parse_json(response.body)
       end
+      it { expect(@json['data'][0]['id']).to eq(role.assignments.last.id)}
       it { expect(@json['data'][0]['user']).to be_a Hash}
       it { expect(@json['data'][0]['user']['username']).to_not be_nil }
       it { expect(@json['data'][0]['user']['email']).to_not be_nil }
@@ -42,31 +43,31 @@ describe V1::AssignmentsController do
 
     it { expect(UsersRole.count).to eq(1)}
 
-    describe 'with errors' do
-      let(:user_1) { create :user }
-      let(:resource_1) { create :pbl_project }
-      before(:each) do
-        params = [
-          {
-            name: 'teacher',
-            user_id: user_1.id,
-            resource_type: resource_1.class.name.demodulize,
-            resource_id: resource_1.id
-          },
-          {
-            name: 'teacher',
-            user_id: user_1.id,
-            resource_type: resource_1.class.name.demodulize,
-            resource_id: resource_1.id
-          }
-        ]
-        post "/assignments", {assignment: params}, accept
-        @json = parse_json(response.body)
-      end
-
-      it{ expect(@json["error"].size).to eq(1)}
-
-    end
+    # describe 'with errors' do
+    #   let(:user_1) { create :user }
+    #   let(:resource_1) { create :pbl_project }
+    #   before(:each) do
+    #     params = [
+    #       {
+    #         name: 'teacher',
+    #         user_id: user_1.id,
+    #         resource_type: resource_1.class.name.demodulize,
+    #         resource_id: resource_1.id
+    #       },
+    #       {
+    #         name: 'teacher',
+    #         user_id: user_1.id,
+    #         resource_type: resource_1.class.name.demodulize,
+    #         resource_id: resource_1.id
+    #       }
+    #     ]
+    #     post "/assignments", {assignment: params}, accept
+    #     @json = parse_json(response.body)
+    #   end
+    #
+    #   it{ expect(@json["error"].size).to eq(1)}
+    #
+    # end
   end
 
   describe 'DELETE #destroy' do

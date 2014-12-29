@@ -42,7 +42,7 @@ module V1
     end
 
     def create_on_success(messages)
-      render json: {error: messages}, status: :created
+      render json: {}, status: :created
     end
 
     private

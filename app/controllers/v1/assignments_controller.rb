@@ -1,5 +1,19 @@
 module V1
   class AssignmentsController < BaseController
+
+    def index
+      page = params[:page] || 1
+      @limit = params[:limit] || 10
+
+      check_parent_resource_id if configures[:have_parent_resource]
+      top_collections
+      @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
+      if params[:resource_id].present? &&  params[:resource_type].present? && params[:name].present?
+        @collections = @collections.where(role_id: parent_resource_id)
+      end
+      @collections = @collections.page(page).per(@limit) if @collections
+    end
+
     # === examples
     # @params
     # users_role: {

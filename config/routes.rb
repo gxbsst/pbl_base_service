@@ -122,6 +122,12 @@ Rails.application.routes.draw do
 
       resources :member_ships, defaults: {format: :json}
     end
+
+    resources :comments, defaults: { format: :json} do
+      collection do
+        get ":ids", to: "comments#index", constraints: {ids: /.+[,].+/}
+      end
+    end
   end
 
 end

@@ -32,8 +32,9 @@ describe V1::Pbl::RulesController do
   context 'with user_id' do
    let(:user) { create :user }
    let(:project) { create :pbl_project, user_id: user.id }
+   let(:project_1) { create :pbl_project, user_id: user.id }
    let!(:rule_1)  { create :pbl_rule, level_1: 'level', project_id: project.id }
-   let!(:rule_2)  { create :pbl_rule, level_1: 'level', project_id: project.id }
+   let!(:rule_2)  { create :pbl_rule, level_1: 'level', project_id: project_1.id }
    let!(:rule)  { create :pbl_rule, level_1: 'level' }
    before(:each) do
     get '/pbl/rules', {user_id: user.id}, accept

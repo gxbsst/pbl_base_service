@@ -5,6 +5,7 @@ describe User do
     it { expect(user).to be_invalid }
   end
 
+  it { expect(described_class.new).to respond_to(:avatar)}
   describe '.find_by_email' do
     let!(:user) { create(:user, :email => 'gxbsst@gmail.com', :password => 'secret')}
 

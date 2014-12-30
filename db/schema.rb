@@ -11,11 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141229083730) do
+ActiveRecord::Schema.define(version: 20141230055912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+  enable_extension "hstore"
 
   create_table "comments", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "title",            limit: 50, default: ""
@@ -116,6 +117,26 @@ ActiveRecord::Schema.define(version: 20141229083730) do
   end
 
   add_index "groups_member_ships", ["group_id", "user_id"], name: "index_groups_member_ships_on_group_id_and_user_id", using: :btree
+
+  create_table "notifications", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "subject"
+    t.text     "body"
+    t.string   "sender_type"
+    t.uuid     "sender_id"
+    t.uuid     "user_id"
+    t.hstore   "additional_info"
+    t.boolean  "read",            default: true
+    t.string   "state"
+    t.boolean  "global",          default: false
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notifications", ["sender_id"], name: "index_notifications_on_sender_id", using: :btree
+  add_index "notifications", ["sender_type"], name: "index_notifications_on_sender_type", using: :btree
+  add_index "notifications", ["type"], name: "index_notifications_on_type", using: :btree
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "pbls_disciplines", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"
@@ -345,6 +366,7 @@ ActiveRecord::Schema.define(version: 20141229083730) do
     t.integer  "followings_count", default: 0
     t.integer  "followers_count",  default: 0
     t.integer  "friends_count",    default: 0
+    t.string   "avatar"
   end
 
   create_table "users_roles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

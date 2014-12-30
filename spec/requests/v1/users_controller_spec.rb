@@ -36,7 +36,7 @@ describe V1::UsersController, type: :request do
   end
 
   describe 'GET #Show' do
-    let!(:user) { create :user, username: 'user.namea@BC*&', email: 'gxbsst@gmail.com', first_name: 'first_name', last_name: 'last_name', age: 20, gender: 0 }
+    let!(:user) { create :user, username: 'user.namea@BC*&', email: 'gxbsst@gmail.com', first_name: 'first_name', last_name: 'last_name', age: 20, gender: 0, avatar: 'avatar' }
 
     context 'with id' do
       before(:each) do
@@ -50,6 +50,7 @@ describe V1::UsersController, type: :request do
       it {expect(@json['first_name']).to eq('first_name')}
       it {expect(@json['last_name']).to eq('last_name')}
       it {expect(@json['age']).to eq(20)}
+      it {expect(@json['avatar']).to eq('avatar')}
       it {expect(@json['gender']).to eq(0)}
     end
 

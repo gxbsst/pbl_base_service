@@ -1,0 +1,10 @@
+json.extract! notification,
+              :id,
+              :subject,
+              :body,
+              :read,
+              :sender_type,
+              :sender_id,
+              :user_id,
+              :additional_info,
+              :type

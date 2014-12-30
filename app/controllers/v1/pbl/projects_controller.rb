@@ -1,6 +1,18 @@
 module V1
   class Pbl::ProjectsController < BaseController
 
+    def index
+      page = params[:page] || 1
+      @limit = params[:limit] || 10
+
+      check_parent_resource_id if configures[:have_parent_resource]
+      top_collections
+      if params[:user_id].present?
+       @collections = @collections.where(user_id: params[:user_id])
+      end
+      @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
+      @collections = @collections.page(page).per(@limit) if @collections
+    end
 
     def release
       set_clazz_instance

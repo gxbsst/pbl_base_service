@@ -128,6 +128,12 @@ Rails.application.routes.draw do
         get ":ids", to: "comments#index", constraints: {ids: /.+[,].+/}
       end
     end
+
+    resources :notifications, defaults: { format: :json} do
+      collection do
+        get ":ids", to: "notifications#index", constraints: {ids: /.+[,].+/}
+      end
+    end
   end
 
 end

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe V1::Group::PostsController do
-
   let(:group) { create :group }
   let(:creator) { create :user }
+
   describe 'GET #index' do
     let!(:post_1) { create :post, group_id: group.id, user_id: creator.id, subject: 'subject 1', body: 'body'}
     let!(:post_2) { create :post, group_id: group.id, user_id: creator.id, subject: 'subject 2', body: 'body'}
@@ -61,17 +61,6 @@ describe V1::Group::PostsController do
       it { expect(@json['likes_count']).to  eq(0)}
       it { expect(@json['forwardeds_count']).to  eq(0)}
       it { expect(@json['user_id']).to eq(creator.id) }
-    end
-
-    context 'with include replies' do
-      let!(:post) { create :post_with_replies, group_id: group.id, user_id: creator.id, replies_count: 5}
-      before(:each) do
-        get "/group/posts/#{post.id}", {include: 'replies'}, accept
-        @json = parse_json(response.body)
-      end
-
-      it { expect(@json['replies'].count).to eq(5)}
-
     end
 
     context 'with not found' do

@@ -121,6 +121,8 @@ Rails.application.routes.draw do
       end
 
       resources :member_ships, defaults: {format: :json}
+      resources :posts, defaults: {format: :json}
+      resources :replies, defaults: {format: :json}
     end
 
     resources :comments, defaults: { format: :json} do

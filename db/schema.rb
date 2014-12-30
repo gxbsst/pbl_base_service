@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141230055912) do
+ActiveRecord::Schema.define(version: 20141230084927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,33 @@ ActiveRecord::Schema.define(version: 20141230055912) do
   end
 
   add_index "groups_member_ships", ["group_id", "user_id"], name: "index_groups_member_ships_on_group_id_and_user_id", using: :btree
+
+  create_table "groups_posts", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "group_id"
+    t.uuid     "user_id"
+    t.string   "subject"
+    t.text     "body"
+    t.integer  "likes_count",      default: 0
+    t.integer  "forwardeds_count", default: 0
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "groups_posts", ["group_id"], name: "index_groups_posts_on_group_id", using: :btree
+  add_index "groups_posts", ["user_id"], name: "index_groups_posts_on_user_id", using: :btree
+
+  create_table "groups_replies", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "post_id"
+    t.uuid     "user_id"
+    t.text     "body"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "groups_replies", ["post_id"], name: "index_groups_replies_on_post_id", using: :btree
+  add_index "groups_replies", ["user_id"], name: "index_groups_replies_on_user_id", using: :btree
 
   create_table "notifications", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "subject"

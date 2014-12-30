@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Groups::Group, :type => :model do
   it { expect(described_class.new).to have_many(:member_ships) }
+  it { expect(described_class.new).to have_many(:posts) }
   it { expect(described_class.new).to validate_presence_of(:name) }
 
   describe '#member_ships' do

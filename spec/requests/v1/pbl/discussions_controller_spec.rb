@@ -5,8 +5,8 @@ describe V1::Pbl::DiscussionsController do
   let(:project) { create :pbl_project,  user_id: user.id }
 
   describe 'GET #index' do
-    let!(:discussion_1) { create :pbl_discussion_with_members, project_id: project.id, name: 'name', uid: 'uid' }
-    let!(:discussion_2) { create :pbl_discussion_with_members, project_id: project.id, name: 'name', uid: 'uid' }
+    let!(:discussion_1) { create :pbl_discussion_with_members, project_id: project.id, name: 'name', no: 'no' }
+    let!(:discussion_2) { create :pbl_discussion_with_members, project_id: project.id, name: 'name', no: 'no' }
     before(:each) do
       get 'pbl/discussions', { project_id: project.id}, accept
       @json = parse_json(response.body)
@@ -21,7 +21,7 @@ describe V1::Pbl::DiscussionsController do
   describe 'POST #create' do
     context 'create one discussion' do
       before(:each) do
-        post 'pbl/discussions', { discussion: {name: 'name', uid: 1, project_id: project.id, members: [user.id]}}, accept
+        post 'pbl/discussions', { discussion: {name: 'name', no: 1, project_id: project.id, members: [user.id]}}, accept
         @json = parse_json(response.body)
       end
 
@@ -34,8 +34,8 @@ describe V1::Pbl::DiscussionsController do
       let(:user_2) { create :user }
       let(:params) {
         [
-            {name: 'name', uid: 1, project_id: project.id, members: [user_1.id, user_2.id]},
-            {name: 'name', uid: 2, project_id: project.id, members: [user_1.id, user_2.id]}
+            {name: 'name', no: 1, project_id: project.id, members: [user_1.id, user_2.id]},
+            {name: 'name', no: 2, project_id: project.id, members: [user_1.id, user_2.id]}
         ]
       }
       before(:each) do

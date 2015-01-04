@@ -12,7 +12,7 @@ describe CreatingPblDiscussion do
         {
             discussion: {
                 name: 'name',
-                uid: 1,
+                no: 1,
                 project_id: project.id,
                 members: [user_1.id, user_2.id]
             }
@@ -35,13 +35,13 @@ describe CreatingPblDiscussion do
             discussion: [
                 {
                     name: 'name',
-                    uid: 1,
+                    no: 1,
                     project_id: project.id,
                     members: [user_1.id, user_2.id]
                 },
                 {
                     name: 'name',
-                    uid: 1,
+                    no: 1,
                     project_id: project.id,
                     members: [user_1.id, user_2.id]
                 }

@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :pbl_discussion, class: 'Pbls::Discussion' do
     name "name"
-    uid 1
+    no 1
 
     association :project, factory: :pbl_project
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150104064050) do
+ActiveRecord::Schema.define(version: 20150104092415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,10 +170,10 @@ ActiveRecord::Schema.define(version: 20150104064050) do
 
   create_table "pbls_discussions", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"
-    t.integer  "uid"
     t.uuid     "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "no"
   end
 
   create_table "pbls_knowledges", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

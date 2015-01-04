@@ -13,4 +13,5 @@ json.extract! @clazz_instance,
               :event_duration,
               :event_cycle,
               :start_at,
-              :submit_way
+              :submit_way,
+              :final

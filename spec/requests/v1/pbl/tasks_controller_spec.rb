@@ -41,6 +41,7 @@ describe V1::Pbl::TasksController do
       it { expect(@json['project_id']).to eq(project.id) }
       it { expect(@json['start_at']).to_not  be_nil}
       it { expect(@json['submit_way']).to eq('user')}
+      it { expect(@json['final']).to be(false)}
     end
 
     context 'with not found' do

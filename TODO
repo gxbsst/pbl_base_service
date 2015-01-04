@@ -6,3 +6,4 @@
 8. 加成员时放到项目里
 9. 群组重构， 添加owner_type 和 owner_id, group 创建是，放在owner_type和owner_id //DONE
 10. 项目加群组
+11. 项目小组创建群组

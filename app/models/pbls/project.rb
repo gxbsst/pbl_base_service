@@ -16,6 +16,7 @@ module Pbls
     has_many :rules
     has_many :techniques
     has_many :standard_items
+    has_many :discussions
     # has_many :techniques, through: :project_skill_techniques
     accepts_nested_attributes_for :standard_decompositions, :project_techniques, allow_destroy: true
 

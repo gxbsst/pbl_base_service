@@ -11,7 +11,7 @@ describe V1::Pbl::WorksController do
       let!(:work_1) { create :pbl_work, user_id: user.id, task_id: task.id, group_id: group.id, state: 'imcomplete'}
       let!(:work_2) { create :pbl_work, user_id: user.id, task_id: task.id, group_id: group.id, state: 'imcomplete'}
       before(:each) do
-         get 'pbl/works', {task_id: task.id}, accept
+        get 'pbl/works', {task_id: task.id}, accept
         @json = parse_json(response.body)
       end
 
@@ -23,5 +23,4 @@ describe V1::Pbl::WorksController do
     context 'get works with assignee_id'
 
   end
-
 end

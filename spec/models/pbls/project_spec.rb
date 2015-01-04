@@ -6,6 +6,7 @@ describe Pbls::Project do
  it { expect(described_class.new).to have_many(:standard_decompositions) }
  it { expect(described_class.new).to have_many(:techniques) }
  it { expect(described_class.new).to have_many(:standard_items) }
+ it { expect(described_class.new).to have_many(:discussions) }
  it { expect(described_class.new).to belong_to(:user) }
  it { expect(described_class.new).to belong_to(:region) }
  it { expect(described_class.new).to have_many(:rules) }

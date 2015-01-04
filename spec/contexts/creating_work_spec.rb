@@ -32,7 +32,7 @@ describe CreatingWork do
         params = {
             task_id: task.id
         }
-        CreatingWork(listener, )
+        # CreatingWork(listener, )
       end
     end
 

@@ -1,1 +1,1 @@
-json.extract! discussion, :id, :name, :uid
+json.extract! discussion, :id, :name, :uid, :project_id

@@ -33,5 +33,17 @@ module V1
       rescue
         nil
     end
+
+    def top_collections
+      if configures[:have_parent_resource] && parent_resource_id.present?
+        set_parent_resource_instance
+        unless @parent_resource_instance
+          return render json: {data: [], meta: {}}
+        end
+        @collections = @parent_resource_instance.send(:"#{configures[:clazz_resource_name]}").includes(:discussion_members).order(created_at: :desc)
+      else
+        @collections = configures[:clazz].includes(:discussion_members).order(created_at: :desc)
+      end
+    end
   end
 end

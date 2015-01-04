@@ -4,5 +4,5 @@ class Groups::Group <  PgConnection
   has_many :members, through: :member_ships, class_name: 'User', dependent: :destroy
   has_many :posts
 
-  validates :name, presence: true
+  # validates :name, presence: true
 end

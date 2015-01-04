@@ -62,21 +62,6 @@ describe V1::Group::GroupsController do
       it { expect(Groups::MemberShip.count).to eq(1)}
     end
 
-    context 'create a group with error' do
-      let(:user) { create :user }
-      before(:each) do
-        params = {
-          owner_id: user.id,
-          owner_type: 'User',
-          name: '',
-          description: 'description'
-        }
-        post "/group/groups", {group: params}, accept
-      end
-
-      it { expect(Groups::Group.count).to eq(0)}
-      it { expect(Groups::MemberShip.count).to eq(0)}
-    end
   end
 
   describe 'DELETE #destroy' do

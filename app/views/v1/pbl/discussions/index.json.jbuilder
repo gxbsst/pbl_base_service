@@ -1,5 +1,8 @@
 json.data do
-  json.array! @collections
+  json.array! @collections do |discussion|
+    json.partial! 'discussion', discussion: discussion
+    json.members discussion.member_ids
+  end
 end
 
 json.meta do

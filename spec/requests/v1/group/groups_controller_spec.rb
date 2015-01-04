@@ -2,7 +2,7 @@ require 'rails_helper'
 describe V1::Group::GroupsController do
   describe 'GET #index' do
     let!(:user) { create :user, username: 'username'}
-    let!(:group) { create :group, user_id: user.id}
+    let!(:group) { create :group, owner_id: user.id, owner_type: 'User'}
     before(:each) do
       get "/group/groups", {}, accept
       @json = parse_json(response.body)
@@ -10,12 +10,13 @@ describe V1::Group::GroupsController do
 
     it { expect(response.body).to have_json_type(Hash)}
     it { expect(@json['data'].size).to eq(1)}
-    it { expect(@json['data'][0]['user_id']).to eq(user.id)}
+    it { expect(@json['data'][0]['owner_id']).to eq(user.id)}
+    it { expect(@json['data'][0]['owner_type']).to eq(user.class.name)}
     it { expect(@json['data'][0]['id']).to_not be_nil}
 
     context 'with ids' do
-      let!(:group_1) { create :group, user_id: user.id}
-      let!(:group_2) { create :group, user_id: user.id}
+      let!(:group_1) { create :group, owner_id: user.id, owner_type: "User"}
+      let!(:group_2) { create :group, owner_id: user.id, owner_type: "User" }
       before(:each) do
         get "/group/groups/#{group_1.id},#{group_2.id}", {}, accept
         @json = parse_json(response.body)
@@ -28,11 +29,11 @@ describe V1::Group::GroupsController do
 
     context 'with user_id' do
       let(:user_1) { create :user }
-      let!(:group_3) { create :group, user_id: user_1.id}
-      let!(:group_1) { create :group, user_id: user.id}
-      let!(:group_2) { create :group, user_id: user.id}
+      let!(:group_3) { create :group, owner_id: user_1.id, owner_type: user_1.class.name}
+      let!(:group_1) { create :group, owner_id: user.id, owner_type: user.class.name }
+      let!(:group_2) { create :group, owner_id: user.id, owner_type: user.class.name }
       before(:each) do
-        get "/group/groups/", {user_id: user_1.id}, accept
+        get "/group/groups/", {owner_id: user_1.id, owner_type: 'User'}, accept
         @json = parse_json(response.body)
       end
 
@@ -49,7 +50,8 @@ describe V1::Group::GroupsController do
       let(:user) { create :user }
       before(:each) do
         params = {
-          user_id: user.id,
+          owner_id: user.id,
+          owner_type: user.class.name,
           name: 'name',
           description: 'description'
         }
@@ -64,7 +66,8 @@ describe V1::Group::GroupsController do
       let(:user) { create :user }
       before(:each) do
         params = {
-          user_id: user.id,
+          owner_id: user.id,
+          owner_type: 'User',
           name: '',
           description: 'description'
         }
@@ -78,7 +81,7 @@ describe V1::Group::GroupsController do
 
   describe 'DELETE #destroy' do
     let(:user) { create :user }
-    let!(:group) { create :group, user_id: user.id}
+    let!(:group) { create :group, owner_id: user.id, owner_type: user.class.name}
     before(:each) do
       delete "/group/groups/#{group.id}", {}, accept
     end
@@ -89,7 +92,7 @@ describe V1::Group::GroupsController do
   describe 'GET #show' do
     context 'with include member_ships' do
       let(:user) { create :user }
-      let!(:group) { create :group_with_members, user_id: user.id, members_count: 5}
+      let!(:group) { create :group_with_members, owner_id: user.id, owner_type: user.class.name, members_count: 5}
       before(:each) do
         get "/group/groups/#{group.id}", {include: 'member_ships'}, accept
         @json = parse_json(response.body)

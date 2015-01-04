@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141230105035) do
+ActiveRecord::Schema.define(version: 20150104023425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,13 +99,14 @@ ActiveRecord::Schema.define(version: 20141230105035) do
   create_table "groups_groups", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"
     t.text     "description"
-    t.uuid     "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "members_count", default: 0
+    t.string   "owner_type"
+    t.uuid     "owner_id"
   end
 
-  add_index "groups_groups", ["user_id"], name: "index_groups_groups_on_user_id", using: :btree
+  add_index "groups_groups", ["owner_id", "owner_type"], name: "index_groups_groups_on_owner_id_and_owner_type", using: :btree
 
   create_table "groups_member_ships", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "user_id"

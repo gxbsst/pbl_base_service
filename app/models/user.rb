@@ -7,7 +7,7 @@ class User < PgConnection
 
   has_many :friend_ships
   has_many :friends, through: :friend_ships
-  has_many :groups, class_name: 'Groups::Group'
+  has_many :groups, class_name: 'Groups::Group', as: :owner
 
   has_secure_password
 

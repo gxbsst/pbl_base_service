@@ -2,7 +2,8 @@ FactoryGirl.define do
   factory :group, class: Groups::Group do
     name "name"
     description "description"
-    association :user
+    owner_type "OwnerType"
+    # owner_id
 
     factory :group_with_members do
       transient do

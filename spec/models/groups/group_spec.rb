@@ -17,7 +17,7 @@ RSpec.describe Groups::Group, :type => :model do
     let(:user) { create :user }
     before(:each) do
       listener = double.as_null_object
-      CreatingGroup.create(listener, name: 'name', user_id: user.id)
+      CreatingGroup.create(listener, name: 'name', owner_id: user.id, owner_type: user.class.name)
     end
 
     it "destroy a group" do

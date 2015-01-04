@@ -7,7 +7,8 @@ describe CreatingGroup  do
     let(:params) {
       {
         group: {
-          user_id: user.id,
+          owner_id: user.id,
+          owner_type: user.class.name,
           name: 'group_name',
           description: 'description'
         }

@@ -2,7 +2,7 @@ set :stage, :release
 
 set :rails_env, 'release'
 
-set :repo_url, 'git@124.202.141.250:pbl/pbl_base_service.git'
+set :repo_url, 'git@172.172.172.62:pbl/pbl_base_service.git'
 
 # Simple Role Syntax
 # ==================

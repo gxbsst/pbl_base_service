@@ -1,5 +1,7 @@
 class Assignments::Work < PgConnection
 
+  has_many :scores, dependent: :destroy
+
   state_machine :state, :initial => :undue do
     event :do_open do
       transition :undue => :opening

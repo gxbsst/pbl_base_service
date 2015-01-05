@@ -138,6 +138,7 @@ describe V1::Assignment::WorksController do
       context 'with submited' do
         before(:each) do
           work.do_open
+          work.work
           patch "assignment/works/#{work.id}", { work: {state: 'submitted'}}, accept
           @json = parse_json(response.body)
         end

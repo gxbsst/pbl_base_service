@@ -41,6 +41,24 @@ module V1
       CreatingAssignmentsWork.create(self, params[:work])
     end
 
+    def update
+      set_clazz_instance
+
+      state = params[:work].delete(:state)
+
+      if @clazz_instance.update_attributes(clazz_params)
+
+        if state.present?
+         @clazz_instance.work if state == 'working'
+         @clazz_instance.submit if state == 'submitted'
+        end
+
+        render :show, status: :ok
+      else
+        render json: {error: @clazz_instance.errors}, status: :unprocessable_entity
+      end
+    end
+
     def on_create_success
       render json: {}, status: :created
     end

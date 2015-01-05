@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Assignments::Work, :type => :model do
 
+  it { expect(described_class.new).to have_many(:scores)}
+
   describe '#state' do
     let(:work) { described_class.create }
     it { expect(described_class.new.state).to eq('undue') }

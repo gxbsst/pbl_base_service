@@ -1,0 +1,1 @@
+json.extract! score, :id, :comment, :score, :work_id

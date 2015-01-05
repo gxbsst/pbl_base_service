@@ -147,6 +147,11 @@ Rails.application.routes.draw do
           get ":ids", to: "works#index", constraints: {ids: /.+[,].+/}
         end
       end
+      resources :scores, defaults: {format: :json} do
+        collection do
+          get ":ids", to: "scores#index", constraints: {ids: /.+[,].+/}
+        end
+      end
     end
   end
 

@@ -11,14 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150105122234) do
+ActiveRecord::Schema.define(version: 20150105124634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
   enable_extension "hstore"
 
-  create_table "assignments_works", force: true do |t|
+  create_table "assignments_scores", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "work_id"
+    t.integer  "score"
+    t.text     "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "assignments_scores", ["work_id"], name: "index_assignments_scores_on_work_id", using: :btree
+
+  create_table "assignments_works", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "sender_id"
     t.string   "state"
     t.datetime "created_at"

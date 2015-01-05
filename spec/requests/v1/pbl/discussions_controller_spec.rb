@@ -50,11 +50,13 @@ describe V1::Pbl::DiscussionsController do
 
   describe 'PATCH #update' do
     let!(:discussion) { create :pbl_discussion_with_members, resource_ids: [1,2], project_id: project.id, members_count: 5}
+    let(:member) { create :user }
     context 'update one discussion' do
       let(:user) { create :user}
       let(:params){
         {
-            name: 'update name'
+            name: 'update name',
+            members: [member.id]
         }
       }
       before(:each) do
@@ -66,6 +68,7 @@ describe V1::Pbl::DiscussionsController do
         discussion.reload
         expect(discussion.name).to eq('update name')
         expect(discussion.resource_ids).to match_array(['1','2'])
+        expect(discussion.discussion_members.count).to eq(1)
       end
     end
   end

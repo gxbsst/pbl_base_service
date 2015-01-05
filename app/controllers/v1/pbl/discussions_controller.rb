@@ -5,6 +5,26 @@ module V1
       CreatingPblDiscussion.create(self, params[:discussion])
     end
 
+    def update
+      set_clazz_instance
+
+      members = params[:discussion].delete(:members)
+
+      if @clazz_instance.update_attributes(clazz_params)
+
+        @clazz_instance.discussion_members.destroy_all
+        if members.present?
+          members.each do |user_id|
+            Pbls::DiscussionMember.create(user_id: user_id, discussion_id: @clazz_instance.id)
+          end
+        end
+
+        render :show, status: :ok
+      else
+        render json: {error: @clazz_instance.errors}, status: :unprocessable_entity
+      end
+    end
+
     def on_create_success
       render json: {}, status: :created
     end

@@ -103,6 +103,9 @@ Rails.application.routes.draw do
       collection do
         get ":owner_type/:owner_id", to: "resources#index"
       end
+      collection do
+        get ":ids", to: "resources#index", constraints: {ids: /.+[,].+/}
+      end
     end
 
     resources :regions, defaults: { format: :json}
@@ -135,6 +138,14 @@ Rails.application.routes.draw do
     resources :notifications, defaults: { format: :json} do
       collection do
         get ":ids", to: "notifications#index", constraints: {ids: /.+[,].+/}
+      end
+    end
+
+    namespace :assignment do
+      resources :works, defaults: { format: :json} do
+        collection do
+          get ":ids", to: "works#index", constraints: {ids: /.+[,].+/}
+        end
       end
     end
   end

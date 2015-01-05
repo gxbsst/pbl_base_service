@@ -14,4 +14,6 @@ json.extract! @clazz_instance,
               :event_cycle,
               :start_at,
               :submit_way,
-              :final
+              :final,
+              :resource_ids,
+              :rule_ids

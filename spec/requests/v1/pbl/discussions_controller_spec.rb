@@ -49,7 +49,7 @@ describe V1::Pbl::DiscussionsController do
   end
 
   describe 'PATCH #update' do
-    let!(:discussion) { create :pbl_discussion_with_members, project_id: project.id, members_count: 5}
+    let!(:discussion) { create :pbl_discussion_with_members, resource_ids: [1,2], project_id: project.id, members_count: 5}
     context 'update one discussion' do
       let(:user) { create :user}
       let(:params){
@@ -65,6 +65,7 @@ describe V1::Pbl::DiscussionsController do
       it 'update the discussion' do
         discussion.reload
         expect(discussion.name).to eq('update name')
+        expect(discussion.resource_ids).to match_array(['1','2'])
       end
     end
   end
@@ -81,7 +82,7 @@ describe V1::Pbl::DiscussionsController do
   end
 
   describe 'GET #show' do
-    let!(:discussion) { create :pbl_discussion, project_id: project.id}
+    let!(:discussion) { create :pbl_discussion, project_id: project.id, resource_ids: ["1","2"]}
     before(:each) do
       get "/pbl/discussions/#{discussion.id}", {}, accept
       @json = parse_json(response.body)
@@ -89,6 +90,7 @@ describe V1::Pbl::DiscussionsController do
 
     it { expect(@json['id']).to eq(discussion.id)}
     it { expect(@json['name']).to eq(discussion.name)}
+    it { expect(@json['resource_ids']).to eq(discussion.resource_ids)}
     it { expect(@json['project_id']).to eq(discussion.project_id)}
   end
 end

@@ -31,7 +31,7 @@ describe V1::Pbl::TasksController do
 
   describe 'GET #show' do
     context 'with found' do
-      let!(:clazz_instance) { create :pbl_task, project_id: project.id, start_at: Time.now, submit_way: 'user' }
+      let!(:clazz_instance) { create :pbl_task, project_id: project.id, start_at: Time.now, submit_way: 'user', resource_ids: ["1", "2"], rule_ids: ["1", "2"] }
       before(:each) do
         get "/pbl/tasks/#{clazz_instance.id}", {}, accept
         @json = parse_json(response.body)
@@ -42,6 +42,8 @@ describe V1::Pbl::TasksController do
       it { expect(@json['start_at']).to_not  be_nil}
       it { expect(@json['submit_way']).to eq('user')}
       it { expect(@json['final']).to be(false)}
+      it { expect(@json['resource_ids']).to match_array(["1", "2"])}
+      it { expect(@json['rule_ids']).to match_array(["1", "2"])}
     end
 
     context 'with not found' do
@@ -72,5 +74,20 @@ describe V1::Pbl::TasksController do
   describe 'DELETE #destroy' do
     let!(:clazz_instance) { create :pbl_task, project_id: project.id }
     it { expect{  delete "pbl/tasks/#{clazz_instance.id}", {}, accept }.to change(Pbls::Task, :count).from(1).to(0) }
+  end
+
+  describe 'PATCH #update' do
+    let!(:clazz_instance) { create :pbl_task, project_id: project.id, start_at: Time.now, submit_way: 'user' }
+
+    before(:each) do
+      patch "pbl/tasks/#{clazz_instance.id}", {task: {resource_ids: [1,2], rule_ids: [3,4]}}, accept
+      @json = parse_json(response.body)
+    end
+
+    it 'update the discussion' do
+      clazz_instance.reload
+      expect(clazz_instance.resource_ids).to match_array(['1','2'])
+      expect(clazz_instance.rule_ids).to match_array(['3','4'])
+    end
   end
 end

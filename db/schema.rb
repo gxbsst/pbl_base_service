@@ -11,12 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150104095135) do
+ActiveRecord::Schema.define(version: 20150105081708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
   enable_extension "hstore"
+
+  create_table "assignments_works", force: true do |t|
+    t.uuid     "sender_id"
+    t.string   "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.uuid     "task_id"
+    t.string   "task_type"
+    t.string   "acceptor_type"
+    t.uuid     "acceptor_id"
+  end
+
+  add_index "assignments_works", ["acceptor_id"], name: "index_assignments_works_on_acceptor_id", using: :btree
+  add_index "assignments_works", ["acceptor_type"], name: "index_assignments_works_on_acceptor_type", using: :btree
+  add_index "assignments_works", ["sender_id"], name: "index_assignments_works_on_sender_id", using: :btree
+  add_index "assignments_works", ["task_id", "task_type"], name: "index_assignments_works_on_task_id_and_task_type", using: :btree
 
   create_table "comments", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "title",            limit: 50, default: ""
@@ -174,6 +190,7 @@ ActiveRecord::Schema.define(version: 20150104095135) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "no"
+    t.text     "resource_ids", default: [], array: true
   end
 
   create_table "pbls_knowledges", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -273,6 +290,8 @@ ActiveRecord::Schema.define(version: 20150104095135) do
     t.datetime "start_at"
     t.string   "submit_way"
     t.boolean  "final",               default: false
+    t.text     "resource_ids",        default: [],    array: true
+    t.text     "rule_ids",            default: [],    array: true
   end
 
   create_table "pbls_techniques", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -281,18 +300,6 @@ ActiveRecord::Schema.define(version: 20150104095135) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "pbls_works", force: true do |t|
-    t.uuid     "assignee_id"
-    t.string   "state"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.uuid     "owner_id"
-    t.string   "owner_type"
-    t.uuid     "task_id"
-  end
-
-  add_index "pbls_works", ["owner_id", "owner_type", "task_id"], name: "index_pbls_works_on_owner_id_and_owner_type_and_task_id", using: :btree
 
   create_table "product_forms", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"

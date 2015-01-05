@@ -1,0 +1,1 @@
+json.extract! work, :sender_id, :task_id, :task_type, :acceptor_id, :acceptor_type, :state

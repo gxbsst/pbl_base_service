@@ -7,3 +7,5 @@
 9. 群组重构， 添加owner_type 和 owner_id, group 创建是，放在owner_type和owner_id //DONE
 10. 项目加群组 // DONE
 11. 项目小组创建群组 // DONE
+12. 当作业状态变为opening， 则发信息通知
+13. discussion/tasks 加resource_ids, tasks添加 rule_ids // DONE

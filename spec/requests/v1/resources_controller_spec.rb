@@ -76,6 +76,14 @@ describe V1::ResourcesController do
       it { expect(@json['data'][0]['owner'][0]['owner_type']).to eq(owner.class.name) }
       it { expect(@json['data'][0]['owner'][0]['owner_id']).to eq(owner.id) }
     end
+
+    context 'with ids' do
+      before(:each) do
+        get "resources/#{resource_1.id},#{resource_2.id}", {owner_type: owner.class.name, owner_id: owner.id}, accept
+        @json = parse_json(response.body)
+      end
+      it { expect(@json['data'].size).to eq(2) }
+    end
   end
 
   describe 'GET #show' do

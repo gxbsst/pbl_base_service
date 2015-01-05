@@ -1,1 +1,1 @@
-json.extract! work, :sender_id, :task_id, :task_type, :acceptor_id, :acceptor_type, :state
+json.extract! work, :sender_id, :task_id, :task_type, :acceptor_id, :acceptor_type, :state, :content, :resource_id

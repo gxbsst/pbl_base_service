@@ -15,7 +15,23 @@ module V1
       end
 
       if params[:task_types].present? && params[:task_ids].present?
-        @collections = @collections.where(task_id: params[:task_id], task_type: params[:task_type])
+        task_types = params[:task_types].split(',')
+        task_ids = params[:task_ids].split(',')
+
+        @collections = @collections.where(task_id: task_ids, task_type: task_types)
+      end
+
+      if params[:acceptor_type].present? && params[:acceptor_id].present?
+        @collections = @collections.where(acceptor_id: params[:acceptor_id], acceptor_type: params[:acceptor_type])
+      end
+
+      if params[:project_id].present?
+        project = Pbls::Project.includes(:tasks).find(params[:project_id]) rescue nil
+
+        if project
+          task_ids = project.tasks.collect(&:id)
+          @collections = @collections.where(task_id: task_ids)
+        end
       end
 
       @collections = @collections.page(page).per(@limit) if @collections

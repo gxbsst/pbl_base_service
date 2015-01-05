@@ -6,7 +6,7 @@ class Assignments::Work < PgConnection
     end
 
     event :work do
-      transition :opening => :working
+      transition [:opening, :submitted] => :working
     end
 
     event :submit do

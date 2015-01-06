@@ -1,6 +1,15 @@
 module V1
   class Pbl::TasksController < BaseController
 
+    def release
+      set_clazz_instance
+      if @clazz_instance.release
+        render :show, status: :ok
+      else
+        render json: {}, status: :unprocessable_entity
+      end
+    end
+
     private
 
     def configures

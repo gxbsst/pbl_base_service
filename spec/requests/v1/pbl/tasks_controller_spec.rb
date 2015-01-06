@@ -92,4 +92,18 @@ describe V1::Pbl::TasksController do
       expect(clazz_instance.rule_ids).to match_array(['3','4'])
     end
   end
+
+  describe 'PATCH #release' do
+    let!(:clazz_instance) { create :pbl_task, project_id: project.id }
+    before(:each) do
+       patch "pbl/tasks/#{clazz_instance.id}/actions/release", {}, accept
+    end
+
+    it "release the task" do
+      clazz_instance.reload
+      expect(clazz_instance.state).to eq('released')
+    end
+  end
+
+
 end

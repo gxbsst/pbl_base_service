@@ -31,7 +31,7 @@ describe V1::Pbl::TasksController do
 
   describe 'GET #show' do
     context 'with found' do
-      let!(:clazz_instance) { create :pbl_task, project_id: project.id, start_at: Time.now, submit_way: 'user', resource_ids: ["1", "2"], rule_ids: ["1", "2"], discussion_ids: ['1', '2']}
+      let!(:clazz_instance) { create :pbl_task, project_id: project.id, start_at: Time.now, submit_way: 'user', resource_ids: ["1", "2"], rule_ids: ["1", "2"], discussion_ids: ['1', '2'], state: 'released'}
       before(:each) do
         get "/pbl/tasks/#{clazz_instance.id}", {}, accept
         @json = parse_json(response.body)
@@ -45,6 +45,7 @@ describe V1::Pbl::TasksController do
       it { expect(@json['resource_ids']).to match_array(["1", "2"])}
       it { expect(@json['rule_ids']).to match_array(["1", "2"])}
       it { expect(@json['discussion_ids']).to match_array(["1", "2"])}
+      it { expect(@json['state']).to eq('released')}
     end
 
     context 'with not found' do

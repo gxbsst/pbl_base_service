@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150106092130) do
+ActiveRecord::Schema.define(version: 20150106094713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -307,7 +307,10 @@ ActiveRecord::Schema.define(version: 20150106092130) do
     t.text     "resource_ids",        default: [],    array: true
     t.text     "rule_ids",            default: [],    array: true
     t.text     "discussion_ids",      default: [],    array: true
+    t.string   "state"
   end
+
+  add_index "pbls_tasks", ["state"], name: "index_pbls_tasks_on_state", using: :btree
 
   create_table "pbls_techniques", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "project_id"

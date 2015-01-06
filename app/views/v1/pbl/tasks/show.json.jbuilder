@@ -17,4 +17,5 @@ json.extract! @clazz_instance,
               :final,
               :resource_ids,
               :rule_ids,
-              :discussion_ids
+              :discussion_ids,
+              :state

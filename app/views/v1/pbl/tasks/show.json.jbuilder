@@ -16,4 +16,5 @@ json.extract! @clazz_instance,
               :submit_way,
               :final,
               :resource_ids,
-              :rule_ids
+              :rule_ids,
+              :discussion_ids

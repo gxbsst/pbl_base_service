@@ -11,5 +11,5 @@
 13. discussion/tasks 加resource_ids, tasks添加 rule_ids // DONE
 14. task 添加状态 state // DONE
 15. task 添加action release // DONE
-16. task 可以根据状态查询
+16. task 可以根据状态查询 // DONE
 17. work可以根据状态查询

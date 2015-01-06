@@ -27,6 +27,29 @@ describe V1::Pbl::TasksController do
 
       end
     end
+
+    context 'with state' do
+      before(:each) do
+       clazz_instance_1.release
+      end
+
+      context 'query with release' do
+        before(:each) do
+           get '/pbl/tasks', {state: 'released'}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(@json['data'].size).to eq(1) }
+      end
+      context 'query with draft' do
+        before(:each) do
+          get '/pbl/tasks', {state: 'draft'}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(@json['data'].size).to eq(1) }
+      end
+    end
   end
 
   describe 'GET #show' do

@@ -99,6 +99,33 @@ describe V1::Assignment::WorksController do
       it { expect(@json['data'][0]['scores'][0]['score']).to eq(10) }
     end
 
+    context 'with state' do
+      let!(:work_1) { create :assignments_work, task_id: task.id, task_type: task.class.name, acceptor_id: acceptor.id, acceptor_type: acceptor.class.name, sender_id: sender.id }
+      let!(:work_2) { create :assignments_work, task_id: task.id, task_type: task.class.name, acceptor_id: acceptor.id, acceptor_type: acceptor.class.name, sender_id: sender.id }
+      before(:each) do
+        work_1.do_open
+        work_2.do_open
+        work_2.work
+      end
+      context 'with open' do
+        before(:each) do
+          get "assignment/works/", {state: "opening"}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(@json['data'].size).to eq(1)}
+      end
+
+      context 'with working' do
+        before(:each) do
+          get "assignment/works/", {state: "working"}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(@json['data'].size).to eq(1)}
+      end
+
+    end
   end
 
   describe 'POST #create' do

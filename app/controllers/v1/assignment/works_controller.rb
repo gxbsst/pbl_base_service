@@ -39,6 +39,10 @@ module V1
         @collections = @collections.includes(@include)
       end
 
+      if params[:state].present?
+        @collections = @collections.where(state: params[:state])
+      end
+
       @collections = @collections.page(page).per(@limit) if @collections
     end
 

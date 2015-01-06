@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150105124634) do
+ActiveRecord::Schema.define(version: 20150106072449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,8 +24,10 @@ ActiveRecord::Schema.define(version: 20150105124634) do
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.uuid     "user_id"
   end
 
+  add_index "assignments_scores", ["user_id"], name: "index_assignments_scores_on_user_id", using: :btree
   add_index "assignments_scores", ["work_id"], name: "index_assignments_scores_on_work_id", using: :btree
 
   create_table "assignments_works", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

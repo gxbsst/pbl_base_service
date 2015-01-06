@@ -34,6 +34,11 @@ module V1
         end
       end
 
+      if params[:include].present?
+        parse_includes
+        @collections = @collections.includes(@include)
+      end
+
       @collections = @collections.page(page).per(@limit) if @collections
     end
 
@@ -78,6 +83,19 @@ module V1
 
     def clazz_params
       params.fetch(:work, {}).permit!
+    end
+
+    def set_clazz_instance
+      parse_includes
+      @clazz_instance ||= configures[:clazz].includes(@include).find(params[:id]) rescue nil
+    end
+
+    def parse_includes
+      include = params[:include] rescue nil
+      if include
+        @include = include.split(',')
+        @include_scores = include.include? 'scores'
+      end
     end
 
   end

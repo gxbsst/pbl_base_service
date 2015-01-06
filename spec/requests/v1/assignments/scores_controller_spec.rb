@@ -35,6 +35,7 @@ describe V1::Assignment::ScoresController do
   describe "POST #create" do
     let(:params) {
       {
+          user_id: user.id,
           work_id: work.id,
           comment: 'comment',
           score: 10

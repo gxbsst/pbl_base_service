@@ -79,7 +79,24 @@ describe V1::Assignment::WorksController do
       end
 
       it { expect(@json['data'].size).to eq(2) }
+    end
 
+    context 'get works with include scores' do
+      let(:project) { create :pbl_project }
+      let(:task) { create :pbl_task, project_id: project.id }
+      let!(:work) { create :assignments_work, task_id: task.id, task_type: task.class.name, acceptor_id: acceptor.id, acceptor_type: acceptor.class.name, sender_id: sender.id }
+      before(:each) do
+        work.do_open
+        work.work
+        work.submit
+        work.scores.create(comment: 'comment', score: 10)
+        get "assignment/works/", {include: "scores"}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'][0]['scores']).to be_a Array }
+      it { expect(@json['data'][0]['scores'][0]['comment']).to eq('comment') }
+      it { expect(@json['data'][0]['scores'][0]['score']).to eq(10) }
     end
 
   end
@@ -149,5 +166,23 @@ describe V1::Assignment::WorksController do
         end
       end
     end
+  end
+
+  describe 'GET #show' do
+    let(:project) { create :pbl_project }
+    let(:task) { create :pbl_task, project_id: project.id }
+    let!(:work) { create :assignments_work, task_id: task.id, task_type: task.class.name, acceptor_id: acceptor.id, acceptor_type: acceptor.class.name, sender_id: sender.id }
+    before(:each) do
+      work.do_open
+      work.work
+      work.submit
+      work.scores.create(comment: 'comment', score: 10)
+      get "assignment/works/#{work.id}", {include: "scores"}, accept
+      @json = parse_json(response.body)
+    end
+
+    it { expect(@json['scores']).to be_a Array }
+    it { expect(@json['scores'][0]['comment']).to eq('comment') }
+    it { expect(@json['scores'][0]['score']).to eq(10) }
   end
 end

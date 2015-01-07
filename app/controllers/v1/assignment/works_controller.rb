@@ -61,6 +61,7 @@ module V1
          @clazz_instance.undue if state == 'undue'
          @clazz_instance.work if state == 'working'
          @clazz_instance.do_open if state == 'opening'
+         @clazz_instance.evaluating if state == 'evaluating'
          @clazz_instance.evaluate if state == 'evaluated'
 
          if state == 'submitted' && @clazz_instance.submit

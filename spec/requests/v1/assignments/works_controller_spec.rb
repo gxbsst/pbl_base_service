@@ -227,6 +227,22 @@ describe V1::Assignment::WorksController do
           work.do_open
           work.work
           work.submit
+          patch "assignment/works/#{work.id}", { work: {state: 'evaluating'}}, accept
+          @json = parse_json(response.body)
+        end
+
+        it 'submit a submitted' do
+          work.reload
+          expect(@json['state']).to eq('evaluating')
+        end
+      end
+
+      context 'with evaluated' do
+        before(:each) do
+          work.do_open
+          work.work
+          work.submit
+          work.evaluating
           patch "assignment/works/#{work.id}", { work: {state: 'evaluated'}}, accept
           @json = parse_json(response.body)
         end

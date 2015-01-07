@@ -35,6 +35,14 @@ RSpec.describe Assignments::Work, :type => :model do
       expect(work.state).to eq('working')
     end
 
+    it 'evaluating' do
+      work.do_open
+      work.work
+      work.submit
+      work.evaluating
+      expect(work.state).to eq('evaluating')
+    end
+
     it 'evaluate' do
       work.do_open
       work.work

@@ -8,12 +8,24 @@ module V1
       check_parent_resource_id if configures[:have_parent_resource]
       top_collections
 
-      if params[:work_id].present?
-        @collections = @collections.where(work_id: params[:work_id])
+      if params[:owner_id].present? && params[:owner_type].present?
+        @collections = @collections.where(owner_id: params[:owner_id], owner_type: params[:owner_type])
       end
 
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
       @collections = @collections.page(page).per(@limit) if @collections
+    end
+
+    def create
+      CreatingAssignmentsScore.create(self, params[:score])
+    end
+
+    def on_create_success
+      render json: {}, status: :created
+    end
+
+    def on_create_error(errors)
+      render json: {error: errors}, status: :unprocessable_entity
     end
 
     private

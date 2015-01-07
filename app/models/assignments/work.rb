@@ -1,6 +1,6 @@
 class Assignments::Work < PgConnection
 
-  has_many :scores, dependent: :destroy
+  has_many :scores, dependent: :destroy, as: :owner
 
   state_machine :state, :initial => :undue do
     event :do_open do

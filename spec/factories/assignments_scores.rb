@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :assignments_score, :class => 'Assignments::Score' do
     score 1
-comment "MyText"
+    comment "MyText"
   end
 
 end

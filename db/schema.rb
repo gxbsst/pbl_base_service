@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107061659) do
+ActiveRecord::Schema.define(version: 20150107065708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,16 +19,18 @@ ActiveRecord::Schema.define(version: 20150107061659) do
   enable_extension "hstore"
 
   create_table "assignments_scores", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid     "work_id"
+    t.uuid     "owner_id"
     t.integer  "score"
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.uuid     "user_id"
+    t.string   "owner_type"
   end
 
+  add_index "assignments_scores", ["owner_id"], name: "index_assignments_scores_on_owner_id", using: :btree
+  add_index "assignments_scores", ["owner_type"], name: "index_assignments_scores_on_owner_type", using: :btree
   add_index "assignments_scores", ["user_id"], name: "index_assignments_scores_on_user_id", using: :btree
-  add_index "assignments_scores", ["work_id"], name: "index_assignments_scores_on_work_id", using: :btree
 
   create_table "assignments_works", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "sender_id"

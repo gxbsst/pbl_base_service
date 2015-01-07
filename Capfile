@@ -9,6 +9,7 @@ require 'capistrano/bundler'
 require 'capistrano/puma'
 # require 'capistrano/rails'
 require 'capistrano/rails/migrations'
+require "whenever/capistrano"
 # Includes tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:

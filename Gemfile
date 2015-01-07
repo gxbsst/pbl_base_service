@@ -11,6 +11,7 @@ gem 'acts-as-taggable-on', '~> 3.4'
 gem 'state_machine', tag: 'v1.2.1', git: 'https://github.com/LiveTyping/state_machine.git'
 gem 'closure_tree'
 gem 'surrounded'
+gem 'whenever', :require => false
 
 group :development, :test do
   gem 'rspec-rails'

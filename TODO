@@ -14,5 +14,5 @@
 16. task 可以根据状态查询 // DONE
 17. work可以根据状态查询 // DONE
 18. project 添加字段 start_at // DONE
-19. Assignment::Score 变为多态， work_id 变为 owner_id, 加字段: owner_type
-20. Assignment::Work 作业需要一个提交时间的字段 submit_at
+19. Assignment::Score 变为多态， work_id 变为 owner_id, 加字段: owner_type // DONE
+20. Assignment::Work 作业需要一个提交时间的字段 submit_at // DONE

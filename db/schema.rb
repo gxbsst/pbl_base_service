@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107065708) do
+ActiveRecord::Schema.define(version: 20150107075450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20150107065708) do
     t.uuid     "acceptor_id"
     t.text     "content"
     t.uuid     "resource_id"
+    t.datetime "submit_at"
   end
 
   add_index "assignments_works", ["acceptor_id"], name: "index_assignments_works_on_acceptor_id", using: :btree

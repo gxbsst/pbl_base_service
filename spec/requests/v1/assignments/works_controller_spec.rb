@@ -176,6 +176,7 @@ describe V1::Assignment::WorksController do
         it 'submit a work' do
           work.reload
           expect(@json['state']).to eq('working')
+          expect(@json['submit_at']).to be_nil
         end
       end
 
@@ -190,6 +191,7 @@ describe V1::Assignment::WorksController do
         it 'submit a submitted' do
           work.reload
           expect(@json['state']).to eq('submitted')
+          expect(@json['submit_at']).to_not be_nil
         end
       end
     end

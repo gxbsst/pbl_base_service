@@ -59,7 +59,10 @@ module V1
 
         if state.present?
          @clazz_instance.work if state == 'working'
-         @clazz_instance.submit if state == 'submitted'
+
+         if state == 'submitted' && @clazz_instance.submit
+           @clazz_instance.update_attribute(:submit_at, Time.now)
+         end
         end
 
         render :show, status: :ok

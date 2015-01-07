@@ -18,6 +18,7 @@ class Assignments::Work < PgConnection
     event :evaluate do
       transition :submitted => :evaluated
     end
+
   end
 
 end

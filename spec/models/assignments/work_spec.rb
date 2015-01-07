@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Assignments::Work, :type => :model do
 
   it { expect(described_class.new).to have_many(:scores)}
+  it { expect(described_class.new).to respond_to(:submit_at)}
 
   describe '#state' do
     let(:work) { described_class.create }

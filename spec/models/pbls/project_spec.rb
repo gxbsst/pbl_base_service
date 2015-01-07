@@ -13,6 +13,7 @@ describe Pbls::Project do
 
  it { expect(described_class.new).to respond_to(:rule_head) }
  it { expect(described_class.new).to respond_to(:rule_template) }
+ it { expect(described_class.new).to respond_to(:start_at) }
  it { expect(described_class.new).to respond_to(:region_id) }
 
  let(:project) { described_class.new(name: 'name', driven_issue: 'driven_issue')}

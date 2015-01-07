@@ -61,7 +61,7 @@ describe V1::Pbl::ProjectsController, type: :request do
   describe 'GET #show' do
     let(:user) { create :user }
     let(:region) { create :region }
-    let!(:project)  { create :pbl_project, name: 'name', grade: '1', user_id: user.id, region_id: region.id }
+    let!(:project)  { create :pbl_project, name: 'name', grade: '1', user_id: user.id, region_id: region.id , start_at: Time.now}
     before(:each) do
       get "/pbl/projects/#{project.id.to_s}", {}, accept
       @json = parse_json(response.body)
@@ -73,8 +73,9 @@ describe V1::Pbl::ProjectsController, type: :request do
     it { expect(@json['rule_head']).to eq('rule_head') }
     it { expect(@json['rule_template']).to eq('rule_template') }
     it { expect(@json['public']).to  be_falsey}
-    it { expect(@json['grade']).to  eq('1')}
+    it { expect(@json['grade']).to  eq(1)}
     it { expect(@json['region_id']).to  eq(region.id)}
+    it { expect(@json['start_at']).to_not be_nil}
 
     context 'with include techniques' do
       let!(:project)  { create :pbl_project_with_techniques, name: 'name', user_id: user.id, techniques_count: 5}

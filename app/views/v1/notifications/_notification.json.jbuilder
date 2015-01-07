@@ -1,7 +1,7 @@
 json.extract! notification,
               :id,
               :subject,
-              :body,
+              :content,
               :read,
               :sender_type,
               :sender_id,

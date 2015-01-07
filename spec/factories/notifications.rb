@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :notification do
     subject "subject"
-    body "body"
+    content "content"
     additional_info "{a: 1}"
     read false
     state "state"

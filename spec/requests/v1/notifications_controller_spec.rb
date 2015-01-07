@@ -4,8 +4,8 @@ describe V1::NotificationsController do
   let(:owner) { create :pbl_project }
   let(:user) { create :user }
   describe 'GET #index' do
-    let!(:notification_1) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 1', body: 'body 1', user_id: user.id }
-    let!(:notification_2) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', body: 'body 2', user_id: user.id }
+    let!(:notification_1) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 1', content: 'content 1', user_id: user.id }
+    let!(:notification_2) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', content: 'content 2', user_id: user.id }
 
     context 'get notifications' do
       before(:each) do
@@ -31,9 +31,9 @@ describe V1::NotificationsController do
 
     context 'with user_id' do
       let(:user_1) { create :user }
-      let!(:notification_1) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 1', body: 'body 1', user_id: user_1.id }
-      let!(:notification_2) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', body: 'body 2', user_id: user_1.id }
-      let!(:notification_3) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', body: 'body 2', user_id: user.id }
+      let!(:notification_1) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 1', content: 'content 1', user_id: user_1.id }
+      let!(:notification_2) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', content: 'content 2', user_id: user_1.id }
+      let!(:notification_3) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', content: 'content 2', user_id: user.id }
       before(:each) do
         get 'notifications', {user_id: user_1.id}, accept
         @json = parse_json(response.body)
@@ -46,7 +46,7 @@ describe V1::NotificationsController do
 
   describe 'GET #show' do
     context 'with found' do
-      let!(:notification) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', body: 'body 2', user_id: user.id, additional_info: {a: 1} }
+      let!(:notification) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', content: 'content 2', user_id: user.id, additional_info: {a: 1} }
       before(:each) do
         get "/notifications/#{notification.id}", {}, accept
         @json = parse_json(response.body)
@@ -54,7 +54,7 @@ describe V1::NotificationsController do
 
       it { expect(@json['id']).to eq(notification.id.to_s) }
       it { expect(@json['subject']).to eq('title 2') }
-      it { expect(@json['body']).to eq('body 2') }
+      it { expect(@json['content']).to eq('content 2') }
       it { expect(@json['read']).to be_falsey }
       it { expect(@json['global']).to be_falsey }
       it { expect(@json['additional_info']).to eq({"a" => "1"})}
@@ -88,7 +88,7 @@ describe V1::NotificationsController do
   end
 
   describe 'DELETE #destroy' do
-    let!(:notification) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', body: 'body 2', user_id: user.id, additional_info: {a: 1} }
+    let!(:notification) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', content: 'content 2', user_id: user.id, additional_info: {a: 1} }
     it { expect{  delete "/notifications/#{notification.id}", {}, accept }.to change(Notification, :count).from(1).to(0) }
   end
 end

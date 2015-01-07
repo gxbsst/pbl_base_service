@@ -42,5 +42,14 @@ RSpec.describe Assignments::Work, :type => :model do
       work.evaluate
       expect(work.state).to eq('evaluated')
     end
+
+    it 'undue' do
+      work.do_open
+      work.work
+      work.submit
+      work.evaluate
+      work.undue
+      expect(work.state).to eq('undue')
+    end
   end
 end

@@ -166,6 +166,19 @@ describe V1::Assignment::WorksController do
       let(:resource) { create :resource }
       let!(:work) { create :assignments_work, task_id: task.id, task_type: task.class.name, acceptor_id: acceptor.id, acceptor_type: acceptor.class.name, sender_id: sender.id }
 
+      context 'with opening' do
+        before(:each) do
+          patch "assignment/works/#{work.id}", { work: {state: 'opening'}}, accept
+          @json = parse_json(response.body)
+        end
+
+        it 'submit a work' do
+          work.reload
+          expect(@json['state']).to eq('opening')
+          expect(@json['submit_at']).to be_nil
+        end
+      end
+
       context 'with working' do
         before(:each) do
           work.do_open
@@ -192,6 +205,35 @@ describe V1::Assignment::WorksController do
           work.reload
           expect(@json['state']).to eq('submitted')
           expect(@json['submit_at']).to_not be_nil
+        end
+      end
+
+      context 'with undue' do
+        before(:each) do
+          work.do_open
+          work.work
+          patch "assignment/works/#{work.id}", { work: {state: 'undue'}}, accept
+          @json = parse_json(response.body)
+        end
+
+        it 'submit a submitted' do
+          work.reload
+          expect(@json['state']).to eq('undue')
+        end
+      end
+
+      context 'with evaluated' do
+        before(:each) do
+          work.do_open
+          work.work
+          work.submit
+          patch "assignment/works/#{work.id}", { work: {state: 'evaluated'}}, accept
+          @json = parse_json(response.body)
+        end
+
+        it 'submit a submitted' do
+          work.reload
+          expect(@json['state']).to eq('evaluated')
         end
       end
     end

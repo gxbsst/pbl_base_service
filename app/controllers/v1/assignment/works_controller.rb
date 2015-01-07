@@ -58,7 +58,10 @@ module V1
       if @clazz_instance.update_attributes(clazz_params)
 
         if state.present?
+         @clazz_instance.undue if state == 'undue'
          @clazz_instance.work if state == 'working'
+         @clazz_instance.do_open if state == 'opening'
+         @clazz_instance.evaluate if state == 'evaluated'
 
          if state == 'submitted' && @clazz_instance.submit
            @clazz_instance.update_attribute(:submit_at, Time.now)

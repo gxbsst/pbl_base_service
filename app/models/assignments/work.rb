@@ -19,6 +19,10 @@ class Assignments::Work < PgConnection
       transition :submitted => :evaluated
     end
 
+    event :undue do
+      transition all => :undue
+    end
+
   end
 
 end

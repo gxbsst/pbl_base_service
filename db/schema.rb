@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107075450) do
+ActiveRecord::Schema.define(version: 20150110160041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,10 +26,12 @@ ActiveRecord::Schema.define(version: 20150107075450) do
     t.datetime "updated_at"
     t.uuid     "user_id"
     t.string   "owner_type"
+    t.uuid     "scorer_id"
   end
 
   add_index "assignments_scores", ["owner_id"], name: "index_assignments_scores_on_owner_id", using: :btree
   add_index "assignments_scores", ["owner_type"], name: "index_assignments_scores_on_owner_type", using: :btree
+  add_index "assignments_scores", ["scorer_id"], name: "index_assignments_scores_on_scorer_id", using: :btree
   add_index "assignments_scores", ["user_id"], name: "index_assignments_scores_on_user_id", using: :btree
 
   create_table "assignments_works", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
@@ -445,11 +447,9 @@ ActiveRecord::Schema.define(version: 20150107075450) do
     t.string   "avatar"
   end
 
-  create_table "users_roles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid     "user_id"
-    t.uuid     "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "users_roles", id: false, force: true do |t|
+    t.uuid "user_id"
+    t.uuid "role_id"
   end
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree

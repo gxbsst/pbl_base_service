@@ -16,3 +16,5 @@
 18. project 添加字段 start_at // DONE
 19. Assignment::Score 变为多态， work_id 变为 owner_id, 加字段: owner_type // DONE
 20. Assignment::Work 作业需要一个提交时间的字段 submit_at // DONE
+21. score带scorer_id（评分者） // DONE
+22. score 返回数据缺少 user_id // DONE

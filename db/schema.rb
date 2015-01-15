@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114063027) do
+ActiveRecord::Schema.define(version: 20150115031738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,10 +46,12 @@ ActiveRecord::Schema.define(version: 20150114063027) do
     t.text     "content"
     t.uuid     "resource_id"
     t.datetime "submit_at"
+    t.uuid     "lock_by"
   end
 
   add_index "assignments_works", ["acceptor_id"], name: "index_assignments_works_on_acceptor_id", using: :btree
   add_index "assignments_works", ["acceptor_type"], name: "index_assignments_works_on_acceptor_type", using: :btree
+  add_index "assignments_works", ["lock_by"], name: "index_assignments_works_on_lock_by", using: :btree
   add_index "assignments_works", ["sender_id"], name: "index_assignments_works_on_sender_id", using: :btree
   add_index "assignments_works", ["task_id", "task_type"], name: "index_assignments_works_on_task_id_and_task_type", using: :btree
 

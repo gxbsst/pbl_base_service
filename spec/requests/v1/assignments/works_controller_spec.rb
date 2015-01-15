@@ -256,9 +256,11 @@ describe V1::Assignment::WorksController do
   end
 
   describe 'GET #show' do
+
+    let(:locker) { create :user }
     let(:project) { create :pbl_project }
     let(:task) { create :pbl_task, project_id: project.id }
-    let!(:work) { create :assignments_work, task_id: task.id, task_type: task.class.name, acceptor_id: acceptor.id, acceptor_type: acceptor.class.name, sender_id: sender.id }
+    let!(:work) { create :assignments_work, task_id: task.id, task_type: task.class.name, acceptor_id: acceptor.id, acceptor_type: acceptor.class.name, sender_id: sender.id, lock_by: locker.id }
     before(:each) do
       work.do_open
       work.work
@@ -271,5 +273,6 @@ describe V1::Assignment::WorksController do
     it { expect(@json['scores']).to be_a Array }
     it { expect(@json['scores'][0]['comment']).to eq('comment') }
     it { expect(@json['scores'][0]['score']).to eq(10) }
+    it { expect(@json['lock_by']).to eq(locker.id) }
   end
 end

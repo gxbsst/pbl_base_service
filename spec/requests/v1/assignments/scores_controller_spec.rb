@@ -4,8 +4,8 @@ describe V1::Assignment::ScoresController do
   let(:task) { create :pbl_task }
   let(:acceptor) { create :user }
   let(:sender) { create :user }
-  let!(:work) { create :assignments_work, task_id: task.id, task_type: task.class.name, acceptor_id: acceptor.id, acceptor_type: acceptor.class.name, sender_id: sender.id, state: 'submitted' }
-  let!(:work_1) { create :assignments_work, task_id: task.id, task_type: task.class.name, acceptor_id: acceptor.id, acceptor_type: acceptor.class.name, sender_id: sender.id, state: 'submitted' }
+  let!(:work) { create :assignments_work, task_id: task.id, task_type: task.class.name, acceptor_id: acceptor.id, acceptor_type: acceptor.class.name, sender_id: sender.id, state: 'evaluating' }
+  let!(:work_1) { create :assignments_work, task_id: task.id, task_type: task.class.name, acceptor_id: acceptor.id, acceptor_type: acceptor.class.name, sender_id: sender.id, state: 'evaluating' }
 
   describe 'GET #index' do
 
@@ -33,9 +33,10 @@ describe V1::Assignment::ScoresController do
     end
 
     context 'with owner_id and owner_type and user_id' do
-      let!(:score_3) { create :assignments_score, owner_id: work.id, owner_type: 'Assignments::Work', comment: 'comment', score: 10, user_id: user.id }
+      let!(:work_2) { create :assignments_work, task_id: task.id, task_type: task.class.name, acceptor_id: acceptor.id, acceptor_type: acceptor.class.name, sender_id: sender.id, state: 'evaluating' }
+      let!(:score_5) { create :assignments_score, owner_id: work_2.id, owner_type: 'Assignments::Work', comment: 'comment', score: 10, user_id: user.id }
       before(:each) do
-        get 'assignment/scores', {owner_id: work.id, owner_type: 'Assignments::Work', user_id:user.id }, accept
+        get 'assignment/scores', {owner_id: work_2.id, owner_type: 'Assignments::Work', user_id:user.id }, accept
         @json = parse_json(response.body)
       end
 
@@ -94,6 +95,7 @@ describe V1::Assignment::ScoresController do
         work.do_open
         work.work
         work.submit
+        work.evaluating
         post 'assignment/scores', {score: params}, accept
         @json = parse_json(response.body)
       end
@@ -106,7 +108,7 @@ describe V1::Assignment::ScoresController do
     end
 
     context 'with array' do
-      let!(:work) { create :assignments_work, task_id: task.id, task_type: task.class.name, acceptor_id: acceptor.id, acceptor_type: acceptor.class.name, sender_id: sender.id, state: 'working' }
+      let!(:work) { create :assignments_work, task_id: task.id, task_type: task.class.name, acceptor_id: acceptor.id, acceptor_type: acceptor.class.name, sender_id: sender.id, state: 'evaluating' }
       let!(:gauge) { create :gauge }
       let(:params) {
         [

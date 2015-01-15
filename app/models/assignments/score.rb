@@ -5,8 +5,8 @@ class Assignments::Score < PgConnection
   validate :update_work_state, :after => :create
 
   def check_work_state
-    if owner_type == 'Assignments::Work' && owner.state != 'submitted'
-      errors[:base] << 'the work has not been submitted'
+    if owner_type == 'Assignments::Work' && owner.state != 'evaluating'
+      errors[:base] << 'the work has not been evaluating'
     end
   end
 

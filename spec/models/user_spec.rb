@@ -13,4 +13,5 @@ describe User do
   end
 
    it { expect(described_class.new).to have_many(:friends) }
+  it { expect(described_class.new).to validate_uniqueness_of(:username) }
 end

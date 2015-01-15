@@ -55,7 +55,7 @@ describe V1::Curriculum::StandardItemsController do
 
   describe 'GET #show' do
     context 'with found' do
-      let!(:clazz_instance) { create :curriculum_item,  standard_id: standard.id }
+      let!(:clazz_instance) { create :curriculum_item,  standard_id: standard.id, is_category: true }
       before(:each) do
         get "/curriculum/standard_items/#{clazz_instance.id}", {}, accept
         @json = parse_json(response.body)
@@ -63,6 +63,7 @@ describe V1::Curriculum::StandardItemsController do
 
       it { expect(@json['id']).to eq(clazz_instance.id.to_s) }
       it { expect(@json['standard_id']).to eq(standard.id) }
+      it { expect(@json['is_category']).to eq(true) }
     end
 
     context 'with not found' do
@@ -75,7 +76,7 @@ describe V1::Curriculum::StandardItemsController do
     end
 
     context 'with include parents' do
-      let!(:clazz_instance) { create :curriculum_item,  standard_id: standard.id }
+      let!(:clazz_instance) { create :curriculum_item,  standard_id: standard.id, is_category: true }
       before(:each) do
         get "/curriculum/standard_items/#{clazz_instance.id}", {include: 'parents'}, accept
         @json = parse_json(response.body)

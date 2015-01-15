@@ -9,7 +9,8 @@ describe V1::Assignment::ScoresController do
 
   describe 'GET #index' do
 
-    let!(:score_1) { create :assignments_score, owner_id: work.id, owner_type: 'Assignments::Work',  comment: 'comment', score: 10 }
+    let(:user) { create :user }
+    let!(:score_1) { create :assignments_score, owner_id: work.id, owner_type: 'Assignments::Work',  comment: 'comment', score: 10}
     let!(:score_3) { create :assignments_score, owner_id: work_1.id, owner_type: 'Assignments::Work', comment: 'comment', score: 10 }
 
     context 'with normal' do
@@ -30,6 +31,17 @@ describe V1::Assignment::ScoresController do
 
       it { expect(@json['data'].size).to eq(1) }
     end
+
+    context 'with owner_id and owner_type and user_id' do
+      let!(:score_3) { create :assignments_score, owner_id: work.id, owner_type: 'Assignments::Work', comment: 'comment', score: 10, user_id: user.id }
+      before(:each) do
+        get 'assignment/scores', {owner_id: work.id, owner_type: 'Assignments::Work', user_id:user.id }, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'].size).to eq(1) }
+    end
+
   end
 
   describe "POST #create" do

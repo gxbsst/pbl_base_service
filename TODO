@@ -18,6 +18,6 @@
 20. Assignment::Work 作业需要一个提交时间的字段 submit_at // DONE
 21. score带scorer_id（评分者） // DONE
 22. score 返回数据缺少 user_id // DONE
-23. score 通过user_id, owner_type 和 owner_id 查找分数
+23. score 通过user_id, owner_type 和 owner_id 查找分数 // DONE
 24. work 添加字段lock_by， 类型为uuid // DONE
 25. curriculums_standard_items 添加字段is_category, 类型为boolean // DONE

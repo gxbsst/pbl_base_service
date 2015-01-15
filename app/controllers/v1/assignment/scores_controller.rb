@@ -9,7 +9,11 @@ module V1
       top_collections
 
       if params[:owner_id].present? && params[:owner_type].present?
-        @collections = @collections.where(owner_id: params[:owner_id], owner_type: params[:owner_type])
+        if params[:user_id].present?
+          @collections = @collections.where(owner_id: params[:owner_id], owner_type: params[:owner_type], user_id: params[:user_id])
+        else
+          @collections = @collections.where(owner_id: params[:owner_id], owner_type: params[:owner_type])
+        end
       end
 
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?

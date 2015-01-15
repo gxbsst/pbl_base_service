@@ -9,6 +9,8 @@ class User < PgConnection
   has_many :friends, through: :friend_ships
   has_many :groups, class_name: 'Groups::Group', as: :owner
 
+  self.inheritance_column = :_type_disabled
+
   has_secure_password
 
   class << self

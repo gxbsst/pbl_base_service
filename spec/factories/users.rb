@@ -7,5 +7,6 @@ FactoryGirl.define do
     sequence(:email) { |n| "person-#{n}}@example.com" }
     password 'secret'
     avatar 'avatar'
+    type 'Teacher'
   end
 end

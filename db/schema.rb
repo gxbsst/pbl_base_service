@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150115094508) do
+ActiveRecord::Schema.define(version: 20150116060038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -449,8 +449,14 @@ ActiveRecord::Schema.define(version: 20150115094508) do
     t.integer  "friends_count",    default: 0
     t.string   "avatar"
     t.string   "type"
+    t.string   "realname"
+    t.string   "nickname"
+    t.text     "interests",        default: [], array: true
+    t.text     "disciplines",      default: [], array: true
   end
 
+  add_index "users", ["nickname"], name: "index_users_on_nickname", using: :btree
+  add_index "users", ["realname"], name: "index_users_on_realname", using: :btree
   add_index "users", ["type"], name: "index_users_on_type", using: :btree
 
   create_table "users_roles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

@@ -29,7 +29,16 @@
 31. 找回密码
 32. 发动态
 33. 群要有自己的邀请码
-34. 学生注册时，生成邀请码
+34. 学生注册时，生成邀请码 // DONE
 35. 家长注册时， 输入邀请码，则要和学生创建家长关系
 36. 可以群发讯息
 37. username 做唯一验证 // DONE
+38. 配置发送邮件
+39. 注册成功发送邮件内容
+40. 用户添加新字段，感兴趣（interests) => Array, 真实姓名real_name => String, disciplines(学科) => Array // DONE
+41. 建立schools表, 字段包括region_id, name
+42. 如果是老师注册， 则要相应的要建立相对应的群组
+43. 如果是学生注册， 如果加入该班级
+44. 建立班级表， 其和学校做关联
+45. 在关系表建一个关系状态relation, 如01, 10,11
+46. 新建表invitations, 字段: code(String), owner_id(uuid), owner_type(String)

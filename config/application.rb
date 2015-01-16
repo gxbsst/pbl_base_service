@@ -32,7 +32,7 @@ module PblBaseService
     # config.i18n.default_locale = :de
 
     #config.autoload_paths << %W("#{config.root}/lib/validators  "#{config.root}/app/contexts)
-    config.autoload_paths << Rails.root.join('lib/validators') << Rails.root.join('app/contexts')
+    config.autoload_paths << Rails.root.join('lib/validators') << Rails.root.join('app/contexts') <<  Rails.root.join('lib/utilities')
     config.generators do |g|
       g.orm :active_record
     end

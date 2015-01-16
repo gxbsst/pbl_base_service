@@ -8,5 +8,9 @@ FactoryGirl.define do
     password 'secret'
     avatar 'avatar'
     type 'Teacher'
+    realname 'realname'
+    nickname 'nickname'
+    disciplines []
+    interests []
   end
 end

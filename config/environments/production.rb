@@ -75,4 +75,15 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.action_mailer.default_url_options = { :host => 'www.dev.pbl.org' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      :address              => 'smtp.mailgun.org',
+      :port                 => 587,
+      :domain               => 'ibridgelearn.com',
+      :user_name            => 'postmaster@ibridgelearn.com',
+      :password             => '4q1z59h0qln6',
+      :authentication       => 'plain',
+      :enable_starttls_auto => true  }
 end

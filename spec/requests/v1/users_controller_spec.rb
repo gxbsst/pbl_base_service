@@ -54,6 +54,10 @@ describe V1::UsersController, type: :request do
       it {expect(@json['avatar']).to eq('avatar')}
       it {expect(@json['gender']).to eq(0)}
       it {expect(@json['type']).to eq('Teacher')}
+      it {expect(@json['interests']).to eq([])}
+      it {expect(@json['disciplines']).to eq([])}
+      it {expect(@json['nickname']).to eq('nickname')}
+      it {expect(@json['realname']).to eq('realname')}
     end
 
     context 'with email' do

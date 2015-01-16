@@ -14,6 +14,11 @@ class User < PgConnection
 
   has_secure_password
 
+  after_create :create_invite_code, if: Proc.new {|user| user.type == 'Student'}
+
+  def create_invite_code
+  end
+
   class << self
     def find_by_login(login)
       if /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/.match(login)

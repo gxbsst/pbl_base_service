@@ -24,6 +24,7 @@ describe CreatingAssignmentsScore do
         work.do_open
         work.work
         work.submit
+        work.evaluating
         expect(listener).to receive(:on_create_success)
       end
       it "create a score" do
@@ -56,6 +57,7 @@ describe CreatingAssignmentsScore do
         work.do_open
         work.work
         work.submit
+        work.evaluating
         expect(listener).to receive(:on_create_success)
       end
       it "create many works" do

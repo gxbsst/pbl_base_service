@@ -181,6 +181,12 @@ Rails.application.routes.draw do
         get ":ids", to: "clazzs#index", constraints: {ids: /.+[,].+/}
       end
     end
+
+    resources :students, defaults: { format: :json } do
+      collection do
+        get ":ids", to: "students#index", constraints: {ids: /.+[,].+/}
+      end
+    end
   end
 
 end

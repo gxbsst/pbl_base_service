@@ -89,6 +89,7 @@ describe V1::Assignment::WorksController do
         work.do_open
         work.work
         work.submit
+        work.evaluating
         work.scores.create(comment: 'comment', score: 10)
         get "assignment/works/", {include: "scores"}, accept
         @json = parse_json(response.body)
@@ -265,6 +266,7 @@ describe V1::Assignment::WorksController do
       work.do_open
       work.work
       work.submit
+      work.evaluating
       work.scores.create(comment: 'comment', score: 10)
       get "assignment/works/#{work.id}", {include: "scores"}, accept
       @json = parse_json(response.body)

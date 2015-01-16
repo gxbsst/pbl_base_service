@@ -1,0 +1,1 @@
+json.partial! 'student', student: @clazz_instance

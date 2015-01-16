@@ -1,2 +1,3 @@
-class School < ActiveRecord::Base
+class School < PgConnection
+  has_many :grades, dependent: :destroy
 end

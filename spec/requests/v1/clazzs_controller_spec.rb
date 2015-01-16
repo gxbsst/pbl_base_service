@@ -42,7 +42,7 @@ RSpec.describe V1::ClazzsController, :type => :request do
 
   describe 'GET #show' do
     context 'with found' do
-      let!(:clazz) { create :clazz, user_id: user.id, name: 'name', grade_id: grade.id, master_id: master.id }
+      let!(:clazz) { create :clazz_with_students, user_id: user.id, name: 'name', grade_id: grade.id, master_id: master.id }
       before(:each) do
         get "/clazzs/#{clazz.id}", {}, accept
         @json = parse_json(response.body)
@@ -52,6 +52,8 @@ RSpec.describe V1::ClazzsController, :type => :request do
       it { expect(@json['name']).to eq('name') }
       it { expect(@json['grade_id']).to eq(grade.id) }
       it { expect(@json['user_id']).to eq(user.id) }
+      it { expect(@json['students']).to be_a Array }
+      it { expect(@json['students'][0]['user']['avatar']).to eq('avatar') }
     end
 
     context 'with not found' do

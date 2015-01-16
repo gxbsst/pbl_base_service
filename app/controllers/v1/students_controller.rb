@@ -1,5 +1,5 @@
 module V1
-  class ClazzsController < BaseController
+  class StudentsController < BaseController
 
     def index
       page = params[:page] || 1
@@ -7,8 +7,8 @@ module V1
 
       top_collections
 
-      if params[:grade_id].present?
-        @collections = @collections.where(grade_id: params[:grade_id])
+      if params[:clazz_id].present?
+        @collections = @collections.where(clazz_id: params[:clazz_id])
       end
 
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
@@ -17,23 +17,19 @@ module V1
 
     private
 
-    def top_collections
-      @collections = configures[:clazz].includes(students: [:user]).order(created_at: :desc)
-    end
-
     def configures
       {
           have_parent_resource: false,
-          clazz: Clazz
+          clazz: Student
       }
     end
 
     def set_clazz_instance
-      @clazz_instance ||= configures[:clazz].includes(students: [:user]).find(params[:id]) rescue nil
+      @clazz_instance ||= configures[:clazz].includes(:user).find(params[:id]) rescue nil
     end
 
     def clazz_params
-      params.fetch(:clazz, {}).permit!
+      params.fetch(:student, {}).permit!
     end
 
   end

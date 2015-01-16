@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe V1::SchoolController, :type => :controller do
+RSpec.describe V1::SchoolsController, :type => :controller do
 
 end

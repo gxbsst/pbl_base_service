@@ -38,7 +38,7 @@
 40. 用户添加新字段，感兴趣（interests) => Array, 真实姓名real_name => String, disciplines(学科) => Array // DONE
 41. 建立schools表, 字段包括region_id, name, user_id, master_id // DONE
 41. 建立grades表, 字段包括school_id, name, user_id // DONE
-41. 建立clazzes表, 字段包括grade_id, name, user_id // DONE
+41. 建立clazzs表, 字段包括grade_id, name, user_id // DONE
 41. 建立students表, 字段包括clazz_id, name, user_id
 42. 如果是老师注册， 则要相应的要建立相对应的群组
 43. 如果是学生注册， 如果加入该班级

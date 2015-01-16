@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150116060038) do
+ActiveRecord::Schema.define(version: 20150116064953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,6 +171,17 @@ ActiveRecord::Schema.define(version: 20150116060038) do
 
   add_index "groups_posts", ["group_id"], name: "index_groups_posts_on_group_id", using: :btree
   add_index "groups_posts", ["user_id"], name: "index_groups_posts_on_user_id", using: :btree
+
+  create_table "invitations", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "code"
+    t.string   "owner_type"
+    t.uuid     "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "invitations", ["code"], name: "index_invitations_on_code", using: :btree
+  add_index "invitations", ["owner_type", "owner_id"], name: "index_invitations_on_owner_type_and_owner_id", using: :btree
 
   create_table "notifications", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "subject"

@@ -1,0 +1,1 @@
+json.extract! invitation, :id, :code, :owner_type, :owner_id

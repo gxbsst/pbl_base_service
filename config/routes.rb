@@ -163,6 +163,12 @@ Rails.application.routes.draw do
         get ":ids", to: "invitations#index", constraints: {ids: /.+[,].+/}
       end
     end
+
+    resources :schools, defaults: { format: :json } do
+      collection do
+        get ":ids", to: "schools#index", constraints: {ids: /.+[,].+/}
+      end
+    end
   end
 
 end

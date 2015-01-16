@@ -1,19 +1,13 @@
 module V1
-  class InvitationsController < BaseController
-
+  class SchoolsController < BaseController
     def index
       page = params[:page] || 1
       @limit = params[:limit] || 10
 
       top_collections
 
-      if params[:code].present?
-        @collections = @collections.where(code: params[:code])
-      end
-
-      if params[:owner_type].present? && params[:owner_id].present?
-        puts 'abc'
-        @collections = @collections.where(owner_id: params[:owner_id], owner_type: params[:owner_type])
+      if params[:region_id].present?
+        @collections = @collections.where(region_id: params[:region_id])
       end
 
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
@@ -25,7 +19,7 @@ module V1
     def configures
       {
           have_parent_resource: false,
-          clazz: Invitation
+          clazz: School
       }
     end
 
@@ -34,8 +28,7 @@ module V1
     end
 
     def clazz_params
-      params.fetch(:invitation, {}).permit!
+      params.fetch(:schools, {}).permit!
     end
-
   end
 end

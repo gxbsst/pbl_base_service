@@ -1,0 +1,1 @@
+json.extract! school, :id, :name, :region_id, :user_id, :master_id

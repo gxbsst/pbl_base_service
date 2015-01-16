@@ -1,0 +1,1 @@
+json.extract! clazz, :id, :name, :grade_id, :user_id, :master_id

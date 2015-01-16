@@ -1,5 +1,5 @@
 module V1
-  class InvitationsController < BaseController
+  class GradesController < BaseController
 
     def index
       page = params[:page] || 1
@@ -7,12 +7,8 @@ module V1
 
       top_collections
 
-      if params[:code].present?
-        @collections = @collections.where(code: params[:code])
-      end
-
-      if params[:owner_type].present? && params[:owner_id].present?
-        @collections = @collections.where(owner_id: params[:owner_id], owner_type: params[:owner_type])
+      if params[:school_id].present?
+        @collections = @collections.where(school_id: params[:school_id])
       end
 
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
@@ -24,7 +20,7 @@ module V1
     def configures
       {
           have_parent_resource: false,
-          clazz: Invitation
+          clazz: Grade
       }
     end
 
@@ -33,7 +29,7 @@ module V1
     end
 
     def clazz_params
-      params.fetch(:invitation, {}).permit!
+      params.fetch(:grade, {}).permit!
     end
 
   end

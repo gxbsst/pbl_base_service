@@ -1,0 +1,1 @@
+json.partial! 'grade', grade: @clazz_instance

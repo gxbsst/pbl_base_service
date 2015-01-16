@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150116083731) do
+ActiveRecord::Schema.define(version: 20150116090402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,17 @@ ActiveRecord::Schema.define(version: 20150116083731) do
     t.string   "standard"
     t.string   "weight"
   end
+
+  create_table "grades", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "school_id"
+    t.string   "name"
+    t.uuid     "user_id"
+    t.uuid     "master_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "grades", ["school_id"], name: "index_grades_on_school_id", using: :btree
 
   create_table "groups_groups", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"

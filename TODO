@@ -42,3 +42,4 @@
 44. 建立班级表， 其和学校做关联
 45. 在关系表建一个关系状态relation, 如01, 10,11
 46. 新建表invitations, 字段: code(String), owner_id(uuid), owner_type(String)
+27. 通过code找

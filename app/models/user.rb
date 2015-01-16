@@ -14,10 +14,10 @@ class User < PgConnection
 
   has_secure_password
 
-  after_create :create_invite_code, if: Proc.new {|user| user.type == 'Student'}
+  after_create :create_invite, if: Proc.new {|user| user.type == 'Student'}
 
-  def create_invite_code
-    Invitation.create!(code: CodeGenerator.generate, owner_id: self.id, owner_type: self.class.name)
+  def create_invite
+    Invitation.create(owner_id: self.id, owner_type: self.class.name)
   end
 
   class << self

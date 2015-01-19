@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'rails_helper'
 
 describe V1::Pbl::ProjectsController, type: :request do
@@ -54,6 +55,89 @@ describe V1::Pbl::ProjectsController, type: :request do
       it { expect(@json.size).to eq(2)}
       it { expect(@json['data'][0]['name']).to eq('name4') }
       it { expect(@json['data'][1]['name']).to eq('name3') }
+    end
+
+    context 'with name' do
+      let!(:user) { create :user }
+      let!(:project_1)  { create :pbl_project, name: 'name3', user_id: user.id }
+      let!(:project_2)  { create :pbl_project, name: 'nam4', user_id: user.id}
+      let!(:project_3)  { create :pbl_project, name: 'name3' }
+
+      before(:each) do
+        get "/pbl/projects/", {name: 'name'}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'].size).to eq(2)}
+      # it { expect(@json['data'][1]['name']).to eq('name3') }
+    end
+
+    context 'with subject && phase && technique'  do
+
+      let!(:user) { create :user }
+
+      let!(:category) { create :skill_category, name: '分类'}
+      let!(:sub_category) { create :skill_sub_category, name: '分类', category_id: category.id }
+      let!(:technique) { create :skill_technique,  sub_category_id: sub_category.id }
+
+      let!(:subject) { create :curriculum_subject, name: '数学' }
+      let!(:phase) { create :curriculum_phase, subject_id: subject.id, name: '一年级'}
+      let!(:standard) { create :curriculum_standard, phase_id: phase.id}
+      let!(:standard_item) { create :curriculum_item, standard_id: standard.id}
+
+      let!(:project)  { create :pbl_project, name: 'name3', user_id: user.id }
+      let!(:pbl_standard_item) { create :pbl_standard_item, project_id: project.id, standard_item_id: standard_item.id}
+      let!(:pbl_technique) { create :pbl_technique, project_id: project.id, technique_id: technique.id}
+
+      context 'with subject' do
+        before(:each) do
+          get "/pbl/projects/", {subject: '数学', order: 'asc'}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(@json['data'].size).to eq(1)}
+        it { expect(assigns(:collections).count).to eq(1)}
+      end
+
+      context 'with phase' do
+        before(:each) do
+          get "/pbl/projects/", {phase: '一年级'}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(@json['data'].size).to eq(1)}
+        it { expect(assigns(:collections).count).to eq(1)}
+      end
+
+      context 'with technique' do
+        before(:each) do
+          get "/pbl/projects/", {technique: '分类'}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(@json['data'].size).to eq(1)}
+        it { expect(assigns(:collections).count).to eq(1)}
+      end
+
+      context 'with phase and subject' do
+        before(:each) do
+          get "/pbl/projects/", {phase: '一年级', subject: '数学'}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(@json['data'].size).to eq(1)}
+        it { expect(assigns(:collections).count).to eq(1)}
+      end
+
+      context 'with technique and subject' do
+        before(:each) do
+          get "/pbl/projects/", {technique: '分类', subject: '数学'}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(@json['data'].size).to eq(1)}
+        it { expect(assigns(:collections).count).to eq(1)}
+      end
     end
 
   end

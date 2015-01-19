@@ -21,7 +21,7 @@
 23. score 通过user_id, owner_type 和 owner_id 查找分数 // DONE
 24. work 添加字段lock_by， 类型为uuid // DONE
 25. curriculums_standard_items 添加字段is_category, 类型为boolean // DONE
-26. 用户信息更新， 添加类型字段(type)
+26. 用户信息更新， 添加类型字段(type) // DONE
 27. 加入群组需要审核
 28. 如果群主退出群组， 如果群有成员， 则要转让， 没有则删除群组
 29. 代办事项
@@ -33,7 +33,7 @@
 35. 家长注册时， 输入邀请码，则要和学生创建家长关系
 36. 可以群发讯息
 37. username 做唯一验证 // DONE
-38. 配置发送邮件
+38. 配置发送邮件 // DONE
 39. 注册成功发送邮件内容
 40. 用户添加新字段，感兴趣（interests) => Array, 真实姓名real_name => String, disciplines(学科) => Array // DONE
 41. 建立schools表, 字段包括region_id, name, user_id, master_id // DONE
@@ -45,4 +45,5 @@
 44. 建立班级表， 其和学校做关联
 45. 在关系表建一个关系状态relation, 如01, 10,11
 46. 新建表invitations, 字段: code(String), owner_id(uuid), owner_type(String) // DONE
-27. 通过code找invitations,删除等 // DONE
+47. 通过code找invitations,删除等 // DONE
+48. school 添加city_id, country_id, provide_id

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150116094145) do
+ActiveRecord::Schema.define(version: 20150119060032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -292,6 +292,9 @@ ActiveRecord::Schema.define(version: 20150116094145) do
     t.datetime "start_at"
   end
 
+  add_index "pbls_projects", ["name"], name: "index_pbls_projects_on_name", using: :btree
+  add_index "pbls_projects", ["user_id"], name: "index_pbls_projects_on_user_id", using: :btree
+
   create_table "pbls_rules", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "technique_id"
     t.uuid     "project_id"
@@ -308,6 +311,22 @@ ActiveRecord::Schema.define(version: 20150116094145) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "pbls_searchers", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "subject"
+    t.string   "phase"
+    t.string   "technique"
+    t.string   "name"
+    t.uuid     "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pbls_searchers", ["name"], name: "index_pbls_searchers_on_name", using: :btree
+  add_index "pbls_searchers", ["phase"], name: "index_pbls_searchers_on_phase", using: :btree
+  add_index "pbls_searchers", ["project_id"], name: "index_pbls_searchers_on_project_id", using: :btree
+  add_index "pbls_searchers", ["subject"], name: "index_pbls_searchers_on_subject", using: :btree
+  add_index "pbls_searchers", ["technique"], name: "index_pbls_searchers_on_technique", using: :btree
 
   create_table "pbls_standard_decompositions", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "role"

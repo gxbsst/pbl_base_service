@@ -10,6 +10,17 @@ module V1
       if params[:user_id].present?
        @collections = @collections.where(user_id: params[:user_id])
       end
+
+      if params[:name].present?
+        @collections = @collections.where(["name LIKE ?",  "%#{params[:name]}%"])
+      end
+
+      if params[:subject].present? || params[:phase].present? || params[:technique].present?
+        query_hash = request.query_parameters.delete_if {|key, value| key != 'subject' || key != 'phase' || key != 'technique'}
+        ids = Pbls::Searcher.where(query_hash).collect(&:project_id)
+        @collections = @collections.where(id: ids)
+      end
+
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
       @collections = @collections.page(page).per(@limit) if @collections
     end
@@ -64,5 +75,12 @@ module V1
         @include_region = include.include? 'region'
       end
     end
+
+    def top_collections
+      order = params[:order].try(:to_sym) || :desc
+
+      @collections = configures[:clazz].order(created_at: order)
+    end
+
   end
 end

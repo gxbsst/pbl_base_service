@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150119060032) do
+ActiveRecord::Schema.define(version: 20150119070559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -449,8 +449,16 @@ ActiveRecord::Schema.define(version: 20150119060032) do
     t.uuid     "master_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.uuid     "province_id"
+    t.uuid     "city_id"
+    t.uuid     "country_id"
+    t.uuid     "district_id"
   end
 
+  add_index "schools", ["city_id"], name: "index_schools_on_city_id", using: :btree
+  add_index "schools", ["country_id"], name: "index_schools_on_country_id", using: :btree
+  add_index "schools", ["district_id"], name: "index_schools_on_district_id", using: :btree
+  add_index "schools", ["province_id"], name: "index_schools_on_province_id", using: :btree
   add_index "schools", ["region_id"], name: "index_schools_on_region_id", using: :btree
 
   create_table "skills_categories", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

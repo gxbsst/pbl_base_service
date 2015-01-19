@@ -38,6 +38,18 @@ RSpec.describe V1::SchoolsController, :type => :request do
       it { expect(@json['data'][0]['id']).to eq(school_1.id) }
     end
 
+    context 'with country_id' do
+      let!(:school_1) { create :school, user_id: user.id, name: 'name', region_id: region.id, country_id: region.id, province_id: region.id, city_id: region.id, district_id: region.id }
+      let!(:school_2) { create :school, user_id: user.id, name: 'name' }
+      before(:each) do
+        get "/schools/", {region_id: region.id, country_id:  region.id, city_id: region.id, province_id: region.id, district_id: region.id}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'].size).to eq(1) }
+      it { expect(@json['data'][0]['id']).to eq(school_1.id) }
+    end
+
   end
 
   describe 'GET #show' do

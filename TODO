@@ -46,4 +46,4 @@
 45. 在关系表建一个关系状态relation, 如01, 10,11
 46. 新建表invitations, 字段: code(String), owner_id(uuid), owner_type(String) // DONE
 47. 通过code找invitations,删除等 // DONE
-48. school 添加city_id, country_id, provide_id
+48. school 添加city_id, country_id, province_id, district_id, 并且可以通过 region_id = ? 查找对应的记录

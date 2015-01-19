@@ -1,0 +1,1 @@
+json.partial! 'request', request: @clazz_instance

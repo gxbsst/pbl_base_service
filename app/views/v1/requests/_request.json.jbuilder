@@ -1,0 +1,1 @@
+json.extract! request, :id, :resource_id, :resource_type, :invitee_id, :state, :user_id

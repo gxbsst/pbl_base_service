@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150119095023) do
+ActiveRecord::Schema.define(version: 20150119115147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -396,6 +396,21 @@ ActiveRecord::Schema.define(version: 20150119095023) do
 
   add_index "regions", ["parent_id", "pinyin"], name: "index_regions_on_parent_id_and_pinyin", using: :btree
   add_index "regions", ["type"], name: "index_regions_on_type", using: :btree
+
+  create_table "requests", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "resource_id"
+    t.string   "resource_type"
+    t.uuid     "invitee_id"
+    t.uuid     "user_id"
+    t.string   "state"
+    t.string   "relation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "requests", ["resource_id"], name: "index_requests_on_resource_id", using: :btree
+  add_index "requests", ["resource_type"], name: "index_requests_on_resource_type", using: :btree
+  add_index "requests", ["user_id"], name: "index_requests_on_user_id", using: :btree
 
   create_table "resources", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"

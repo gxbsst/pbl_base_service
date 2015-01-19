@@ -48,4 +48,5 @@
 47. 通过code找invitations,删除等 // DONE
 48. school 添加city_id, country_id, province_id, district_id, 并且可以通过 region_id = ? 查找对应的记录 // DONE
 49. 通过学科、学段、技能查找projects， 并且根据创建时间排序  // DONE
-50. 删除grade表，在班级添加字段school_id, 将grade_id的类型变成int
+50. 删除grade表，在班级添加字段school_id, 将grade_id的类型变成int // DONE
+51. 通过actor_id(参与者id)获取项目列表, 使用: GET /pbl/projects/?actor_id=? // DONE

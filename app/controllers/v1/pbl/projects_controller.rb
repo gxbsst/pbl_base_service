@@ -15,6 +15,12 @@ module V1
         @collections = @collections.where(["name LIKE ?",  "%#{params[:name]}%"])
       end
 
+      if params[:actor_id].present?
+        discussions = Pbls::Discussion.joins(:discussion_members).where('pbls_discussion_members.user_id' => params[:actor_id])
+        project_ids = discussions.collect(&:project_id)
+        @collections = @collections.where(id: project_ids)
+      end
+
       if params[:subject].present? || params[:phase].present? || params[:technique].present?
         query_hash = request.query_parameters.delete_if {|key, value| key != 'subject' || key != 'phase' || key != 'technique'}
         ids = Pbls::Searcher.where(query_hash).collect(&:project_id)

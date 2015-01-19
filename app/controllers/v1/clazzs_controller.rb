@@ -11,6 +11,10 @@ module V1
         @collections = @collections.where(grade_id: params[:grade_id])
       end
 
+      if params[:school_id].present?
+        @collections = @collections.where(school_id: params[:school_id])
+      end
+
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
       @collections = @collections.page(page).per(@limit) if @collections
     end

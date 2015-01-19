@@ -1,1 +1,1 @@
-json.extract! school, :id, :name, :region_id, :user_id, :master_id
+json.extract! school, :id, :name, :region_id, :user_id, :master_id, :country_id, :city_id, :province_id, :district_id

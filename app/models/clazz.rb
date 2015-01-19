@@ -1,5 +1,4 @@
 class Clazz < PgConnection
-  belongs_to :grade
   has_many :students, dependent: :destroy
-
+  belongs_to :school
 end

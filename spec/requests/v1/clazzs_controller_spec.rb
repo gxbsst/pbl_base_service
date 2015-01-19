@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe V1::ClazzsController, :type => :request do
   let!(:user) { create :user }
   let!(:master) { create :user }
-  let(:grade) { create :grade }
+  let(:school) { create :school }
   describe 'GET #index' do
     let!(:clazz) { create :clazz, user_id: user.id, name: 'name' }
     before(:each) do
@@ -27,10 +27,10 @@ RSpec.describe V1::ClazzsController, :type => :request do
     end
 
     context 'with clazz_id' do
-      let!(:clazz_1) { create :clazz, user_id: user.id, name: 'name', grade_id: grade.id }
+      let!(:clazz_1) { create :clazz, user_id: user.id, name: 'name', school_id: school.id }
       let!(:clazz_2) { create :clazz, user_id: user.id, name: 'name' }
       before(:each) do
-        get "/clazzs/", {grade_id:  grade.id}, accept
+        get "/clazzs/", {school_id:  school.id}, accept
         @json = parse_json(response.body)
       end
 
@@ -42,7 +42,7 @@ RSpec.describe V1::ClazzsController, :type => :request do
 
   describe 'GET #show' do
     context 'with found' do
-      let!(:clazz) { create :clazz_with_students, user_id: user.id, name: 'name', grade_id: grade.id, master_id: master.id }
+      let!(:clazz) { create :clazz_with_students, user_id: user.id, name: 'name', school_id: school.id, master_id: master.id }
       before(:each) do
         get "/clazzs/#{clazz.id}", {}, accept
         @json = parse_json(response.body)
@@ -50,7 +50,7 @@ RSpec.describe V1::ClazzsController, :type => :request do
 
       it { expect(@json['id']).to eq(clazz.id.to_s) }
       it { expect(@json['name']).to eq('name') }
-      it { expect(@json['grade_id']).to eq(grade.id) }
+      it { expect(@json['school_id']).to eq(school.id) }
       it { expect(@json['user_id']).to eq(user.id) }
       it { expect(@json['students']).to be_a Array }
       it { expect(@json['students'][0]['user']['avatar']).to eq('avatar') }
@@ -68,7 +68,7 @@ RSpec.describe V1::ClazzsController, :type => :request do
   describe 'POST #create' do
     context 'with successful' do
       before(:each) do
-        post '/clazzs', {clazz: attributes_for(:clazz, name: 'name', user_id: user.id, grade_id: grade.id) }, accept
+        post '/clazzs', {clazz: attributes_for(:clazz, name: 'name', user_id: user.id, school_id: school.id) }, accept
         @json = parse_json(response.body)
       end
 
@@ -77,7 +77,7 @@ RSpec.describe V1::ClazzsController, :type => :request do
   end
 
   describe 'DELETE #destroy' do
-    let!(:clazz) { create :clazz, user_id: user.id, name: 'name', grade_id: grade.id, master_id: master.id }
+    let!(:clazz) { create :clazz, user_id: user.id, name: 'name', school_id: school.id, master_id: master.id }
     it { expect{  delete "/clazzs/#{clazz.id}", {}, accept }.to change(Clazz, :count).from(1).to(0) }
   end
 end

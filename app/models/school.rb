@@ -1,3 +1,3 @@
 class School < PgConnection
-  has_many :grades, dependent: :destroy
+  has_many :clazzs, dependent: :destroy
 end

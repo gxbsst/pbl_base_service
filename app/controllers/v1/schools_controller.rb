@@ -30,7 +30,7 @@ module V1
     end
 
     def clazz_params
-      params.fetch(:schools, {}).permit!
+      params.fetch(:school, {}).permit!
     end
   end
 end

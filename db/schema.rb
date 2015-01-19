@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150119070559) do
+ActiveRecord::Schema.define(version: 20150119074516) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,15 +56,14 @@ ActiveRecord::Schema.define(version: 20150119070559) do
   add_index "assignments_works", ["task_id", "task_type"], name: "index_assignments_works_on_task_id_and_task_type", using: :btree
 
   create_table "clazzs", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid     "grade_id"
     t.string   "name"
     t.uuid     "user_id"
     t.uuid     "master_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "grade_id"
+    t.uuid     "school_id"
   end
-
-  add_index "clazzs", ["grade_id"], name: "index_clazzs_on_grade_id", using: :btree
 
   create_table "comments", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "title",            limit: 50, default: ""
@@ -144,17 +143,6 @@ ActiveRecord::Schema.define(version: 20150119070559) do
     t.string   "standard"
     t.string   "weight"
   end
-
-  create_table "grades", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid     "school_id"
-    t.string   "name"
-    t.uuid     "user_id"
-    t.uuid     "master_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "grades", ["school_id"], name: "index_grades_on_school_id", using: :btree
 
   create_table "groups_groups", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"

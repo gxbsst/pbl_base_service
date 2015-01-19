@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150119074516) do
+ActiveRecord::Schema.define(version: 20150119095023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -522,6 +522,9 @@ ActiveRecord::Schema.define(version: 20150119074516) do
     t.string   "nickname"
     t.text     "interests",        default: [], array: true
     t.text     "disciplines",      default: [], array: true
+    t.uuid     "school_id"
+    t.integer  "grade_id"
+    t.uuid     "clazz_id"
   end
 
   add_index "users", ["nickname"], name: "index_users_on_nickname", using: :btree

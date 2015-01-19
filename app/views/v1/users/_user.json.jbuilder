@@ -11,4 +11,7 @@ json.extract! user,
               :realname,
               :nickname,
               :disciplines,
-              :interests
+              :interests,
+              :school_id,
+              :grade_id,
+              :clazz_id

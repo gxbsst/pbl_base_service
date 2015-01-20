@@ -14,4 +14,5 @@ json.extract! user,
               :interests,
               :school_id,
               :grade_id,
-              :clazz_id
+              :clazz_id,
+              :title

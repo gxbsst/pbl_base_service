@@ -39,7 +39,7 @@ describe V1::UsersController, type: :request do
     let(:school) { create :school }
     let(:clazz) { create :clazz }
 
-    let!(:user) { create :user, username: 'user.namea@BC*&', email: 'gxbsst@gmail.com', first_name: 'first_name', last_name: 'last_name', age: 20, gender: 0, avatar: 'avatar', school_id: school.id, grade_id: 123, clazz_id: clazz.id }
+    let!(:user) { create :user, username: 'user.namea@BC*&', email: 'gxbsst@gmail.com', first_name: 'first_name', last_name: 'last_name', age: 20, gender: 0, avatar: 'avatar', school_id: school.id, grade_id: 123, clazz_id: clazz.id, title: 'title' }
 
     context 'with id' do
 
@@ -64,6 +64,7 @@ describe V1::UsersController, type: :request do
       it {expect(@json['school_id']).to eq(school.id)}
       it {expect(@json['grade_id']).to eq(123)}
       it {expect(@json['clazz_id']).to eq(clazz.id)}
+      it {expect(@json['title']).to eq('title')}
     end
 
     context 'with email' do

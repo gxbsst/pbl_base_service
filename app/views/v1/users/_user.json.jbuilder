@@ -16,3 +16,9 @@ json.extract! user,
               :grade_id,
               :clazz_id,
               :title
+
+if @include_school
+  json.school do
+    json.partial! 'v1/schools/school', school: user.school
+  end
+end

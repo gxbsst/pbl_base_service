@@ -40,6 +40,7 @@ module V1
       if include
         @include = include.split(',')
         @include_friends = include.include? 'friends'
+        @include_school = include.include? 'school'
       end
     end
 

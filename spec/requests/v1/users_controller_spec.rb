@@ -106,6 +106,17 @@ describe V1::UsersController, type: :request do
         it {expect(@json['friends'][0]['id']).to eq(friend.id)}
         it {expect(@json['friends'][0]['username']).to eq(friend.username)}
       end
+
+      context 'with include school' do
+        let(:school) { create :school }
+        let(:user) { create :user, school_id: school.id}
+        before(:each) do
+          get "/users/#{user.id}", {include: 'school'} , accept
+          @json = parse_json(response.body)
+        end
+        it { expect(user.school.id).to eq(school.id)}
+        it {expect(@json['school']['id']).to eq(school.id)}
+      end
     end
 
     context 'with username' do

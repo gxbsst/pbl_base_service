@@ -50,5 +50,5 @@
 49. 通过学科、学段、技能查找projects， 并且根据创建时间排序  // DONE
 50. 删除grade表，在班级添加字段school_id, 将grade_id的类型变成int // DONE
 51. 通过actor_id(参与者id)获取项目列表, 使用: GET /pbl/projects/?actor_id=? // DONE
-52. 作为前端开发者，我需要可以通过ajax方法登录
+52. 作为前端开发者，我需要可以通过ajax方法登录 // DONE
 53. 作为前端开发者，我需要新闻的接口

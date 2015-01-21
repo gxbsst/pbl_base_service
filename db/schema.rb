@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150120124902) do
+ActiveRecord::Schema.define(version: 20150121105857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20150120124902) do
     t.uuid     "resource_id"
     t.datetime "submit_at"
     t.uuid     "lock_by"
+    t.uuid     "worker_id"
   end
 
   add_index "assignments_works", ["acceptor_id"], name: "index_assignments_works_on_acceptor_id", using: :btree
@@ -126,6 +127,7 @@ ActiveRecord::Schema.define(version: 20150120124902) do
     t.uuid     "friend_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "relation"
   end
 
   create_table "gauges", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

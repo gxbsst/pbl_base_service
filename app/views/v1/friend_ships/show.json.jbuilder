@@ -1,0 +1,1 @@
+json.partial! 'friend_ship', friend_ship: @clazz_instance

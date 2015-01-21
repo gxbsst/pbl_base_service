@@ -193,6 +193,12 @@ Rails.application.routes.draw do
         get ":ids", to: "requests#index", constraints: {ids: /.+[,].+/}
       end
     end
+
+    resources :friend_ships, defaults: { format: :json } do
+      collection do
+        get ":ids", to: "friend_ships#index", constraints: {ids: /.+[,].+/}
+      end
+    end
   end
 
 end

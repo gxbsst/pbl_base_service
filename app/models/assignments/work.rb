@@ -2,7 +2,7 @@ class Assignments::Work < PgConnection
 
   has_many :scores, dependent: :destroy, as: :owner
 
-  state_machine :state, :initial => :undue do
+  state_machine :state, :initial => :opening do
     event :do_open do
       transition :undue => :opening
     end

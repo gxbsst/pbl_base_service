@@ -27,19 +27,31 @@ describe V1::Group::GroupsController do
       it { expect(@json['data'][1]['name']).to eq('name') }
     end
 
-    context 'with user_id' do
+    context 'with owner_id || owner_type' do
       let(:user_1) { create :user }
       let!(:group_3) { create :group, owner_id: user_1.id, owner_type: user_1.class.name}
       let!(:group_1) { create :group, owner_id: user.id, owner_type: user.class.name }
       let!(:group_2) { create :group, owner_id: user.id, owner_type: user.class.name }
-      before(:each) do
-        get "/group/groups/", {owner_id: user_1.id, owner_type: 'User'}, accept
+
+      context 'owner_id & owner_type' do before(:each) do
+          get "/group/groups/", {owner_id: user_1.id, owner_type: 'User'}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(@json.size).to eq(2)}
+        it { expect(@json['data'].size).to eq(1) }
+        it { expect(@json['data'][0]['id']).to eq(group_3.id) }
+      end
+
+      context 'owner_id' do before(:each) do
+        get "/group/groups/", {owner_id: user_1.id}, accept
         @json = parse_json(response.body)
       end
 
-      it { expect(@json.size).to eq(2)}
       it { expect(@json['data'].size).to eq(1) }
       it { expect(@json['data'][0]['id']).to eq(group_3.id) }
+      end
+
     end
 
   end

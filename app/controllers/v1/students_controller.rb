@@ -7,8 +7,10 @@ module V1
 
       top_collections
 
-      if params[:clazz_id].present?
-        @collections = @collections.where(clazz_id: params[:clazz_id])
+      if params[:clazz_id].present? || params[:user_id].present?
+        keys = %w(clazz_id user_id)
+        query_hash = request.query_parameters.delete_if {|key, value| !keys.include?(key)}
+        @collections = @collections.where(query_hash)
       end
 
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?

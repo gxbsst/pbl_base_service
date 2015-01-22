@@ -39,6 +39,19 @@ RSpec.describe V1::StudentsController, :type => :request do
       it { expect(@json['data'][0]['id']).to eq(student_1.id) }
     end
 
+    context 'with user_id' do
+      let(:clazz_1) { create :clazz }
+      let(:user_1) { create :user}
+      let!(:student_1) { create :student, user_id: user_1.id, clazz_id: clazz_1.id }
+      let!(:student_2) { create :student, user_id: user.id }
+      before(:each) do
+        get "/students/", {user_id: user_1.id}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'].size).to eq(1) }
+    end
+
   end
 
   describe 'GET #show' do

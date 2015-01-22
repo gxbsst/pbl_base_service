@@ -1,33 +1,62 @@
 class CreatingFriendShip
 
   def self.create(listener, params, options = {})
-    fail 'miss user_id or friend_id' if params[:user_id].blank? || params[:friend_id].blank?
     new(listener, params, options).create
   end
 
-  attr_reader :listener, :user, :friend, :options, :params
+  attr_reader :listener, :options, :params, :errors
 
   def initialize(listener, params, options = {})
     @listener = listener
-    @user = User.find(params[:user_id]).extend(UserRole)
-    @friend = User.find(params[:friend_id]).extend(FriendRole)
+    
     @options = options
     @params = params
+    @errors = Error.new
   end
 
   def create
-    friend_ship = FriendShip.create(user_id: user.id, friend_id: friend.id, relation: params[:relation])
-    if friend_ship.valid?
+    if params.is_a? Hash
+      create_one(params)
+    elsif params.is_a? Array
+      create_many(params)
+    end
+
+    if errors.count > 0
+      listener.on_create_error(errors)
+    else
+      listener.on_create_success
+    end
+
+    self
+  end
+
+  def create_one(params = {})
+    params = ActionController::Parameters.new(params).permit!
+    friend_ship = FriendShip.new(params)
+
+    if friend_ship.save
+
+      user = User.find(params[:user_id]).extend(UserRole)
+      friend = User.find(params[:friend_id]).extend(FriendRole)
+
       clone_ship(friend_ship)
       user.follow(friend)
       friend.follow(user)
       user.increment_friends_count
       friend.increment_friends_count
-
-      listener.on_create_success(friend_ship)
     else
-      listener.on_create_error(friend_ship)
+      errors << score.errors
     end
+
+    friend_ship
+  end
+
+  def create_many(params = [])
+    params.each do |param|
+      create_one(param)
+    end
+
+    self
   end
 
   def clone_ship(friend_ship)
@@ -66,4 +95,5 @@ class CreatingFriendShip
     end
   end
 
+  class Error < Array; end
 end

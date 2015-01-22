@@ -77,11 +77,41 @@ RSpec.describe V1::FriendShipsController, :type => :request do
       end
 
       it { expect(response.status).to  eq(201) }
-      it { expect(@json['user_id']).to  eq(user.id)}
       it { expect(FriendShip.count).to eq(2)}
       it { expect(@friends[0].user_id).to eq(parent.id)}
       it { expect(@friends[1].user_id).to eq(user.id)}
       it { expect(Follow.count).to eq(2) }
+    end
+
+    context 'with Array' do
+      let(:user_1) { create :user}
+      let(:user_2) { create :user}
+      let(:user_3) { create :user}
+      let(:params) {
+        [
+            {
+                user_id: user_1.id,
+                friend_id: user_2.id,
+                relation: '000'
+
+            },
+            {
+                user_id: user_1.id,
+                friend_id: user_3.id,
+                relation: '000'
+            }
+        ]
+
+      }
+      before(:each) do
+        post '/friend_ships', {friend_ship: params }, accept
+        @json = parse_json(response.body)
+        @friends = FriendShip.all.order(created_at: :desc)
+      end
+
+      it { expect(response.status).to  eq(201) }
+      it { expect(FriendShip.count).to eq(4)}
+      it { expect(Follow.count).to eq(4) }
     end
 
   end

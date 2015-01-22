@@ -18,16 +18,15 @@ module V1
     end
 
     def create
-       CreatingFriendShip.create(self, clazz_params)
+       CreatingFriendShip.create(self, params[:friend_ship])
     end
 
-    def on_create_success(friend_ship)
-      @clazz_instance = friend_ship
-      render :show, status: :created
+    def on_create_success
+      render json: {}, status: :created
     end
 
-    def on_create_error(friend_ship)
-      render json: {error: friend_ship.errors}, status: :unprocessable_entity
+    def on_create_error(errors)
+      render json: {error: errors}, status: :unprocessable_entity
     end
 
     private

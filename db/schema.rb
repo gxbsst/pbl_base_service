@@ -531,7 +531,7 @@ ActiveRecord::Schema.define(version: 20150121105857) do
     t.string   "email"
     t.string   "username"
     t.integer  "followings_count", default: 0
-    t.integer  "followers_count",  default: 0
+    t.integer  "followings_count",  default: 0
     t.integer  "friends_count",    default: 0
     t.string   "avatar"
     t.string   "type"

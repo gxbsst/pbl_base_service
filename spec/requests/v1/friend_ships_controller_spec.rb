@@ -81,6 +81,7 @@ RSpec.describe V1::FriendShipsController, :type => :request do
       it { expect(FriendShip.count).to eq(2)}
       it { expect(@friends[0].user_id).to eq(parent.id)}
       it { expect(@friends[1].user_id).to eq(user.id)}
+      it { expect(Follow.count).to eq(2) }
     end
 
   end

@@ -18,20 +18,16 @@ module V1
     end
 
     def create
-      @clazz_instance = configures[:clazz].new(clazz_params)
-      if @clazz_instance.save
-        friend_id = params[:friend_ship].delete(:friend_id)
-        user_id = params[:friend_ship].delete(:user_id)
+       CreatingFriendShip.create(self, clazz_params)
+    end
 
-        params[:friend_ship][:user_id] = friend_id
-        params[:friend_ship][:friend_id] = user_id
+    def on_create_success(friend_ship)
+      @clazz_instance = friend_ship
+      render :show, status: :created
+    end
 
-        configures[:clazz].create(clazz_params)
-        render :show, status: :created
-      else
-        render json: { error: @clazz_instance.errors }, status: :unprocessable_entity
-      end
-
+    def on_create_error(friend_ship)
+      render json: {error: friend_ship.errors}, status: :unprocessable_entity
     end
 
     private

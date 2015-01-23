@@ -11,7 +11,7 @@ class Assignments::Score < PgConnection
   end
 
   def update_work_state
-    owner.evaluate if owner_type == 'Assignments::Work'
+    # owner.evaluate if owner_type == 'Assignments::Work'
     self
   end
 end

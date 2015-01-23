@@ -11,7 +11,7 @@ require 'capistrano/puma'
 require 'capistrano/rails/migrations'
 require "whenever/capistrano"
 require 'capistrano/sidekiq'
-require 'capistrano/sidekiq/monit' #to require monit tasks # Only for capistrano3
+# require 'capistrano/sidekiq/monit' #to require monit tasks # Only for capistrano3
 
 # Includes tasks from other gems included in your Gemfile
 #

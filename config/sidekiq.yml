@@ -1,0 +1,9 @@
+:queues:
+  - default
+  - flash_print
+:limits:
+  flash_print: 10
+:concurrency: 5
+:pidfile: tmp/pids/sidekiq.pid
+production:
+  :concurrency: 15

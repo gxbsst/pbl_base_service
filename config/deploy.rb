@@ -16,7 +16,7 @@ set :rvm_ruby_version, 'jruby-1.7.16.1'
 set :default_shell, '/bin/bash -l'
 set :assets_roles, [:web, :app]
 set :whenever_roles, :app
-# set :sidekiq_options, -> { "-C #{current_path}/config/sidekiq.yml" }
+set :sidekiq_options, -> { "-C #{current_path}/config/sidekiq.yml" }
 
 # set :linked_files, %w{config/database.yml}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}

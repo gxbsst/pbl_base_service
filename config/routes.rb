@@ -199,6 +199,10 @@ Rails.application.routes.draw do
         get ":ids", to: "friend_ships#index", constraints: {ids: /.+[,].+/}
       end
     end
+
+    namespace :feed do
+      resources :posts, defaults: { format: :json }
+    end
   end
 
 end

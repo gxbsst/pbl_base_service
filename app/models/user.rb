@@ -7,6 +7,8 @@ class User < PgConnection
   validates :username, :presence => true, :uniqueness => true
 
   has_many :friend_ships
+  has_many :follows
+
   has_many :friends, through: :friend_ships
   has_many :groups, class_name: 'Groups::Group', as: :owner
   belongs_to :school

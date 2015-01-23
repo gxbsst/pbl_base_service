@@ -12,6 +12,7 @@ gem 'state_machine', tag: 'v1.2.1', git: 'https://github.com/LiveTyping/state_ma
 gem 'closure_tree'
 gem 'surrounded'
 gem 'whenever', :require => false
+gem 'sidekiq'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -39,6 +40,7 @@ group :test do
   gem 'database_cleaner'
   gem 'json_spec'
   gem 'shoulda-matchers', require: false
+  # gem 'rspec-sidekiq'
 end
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.1.2'

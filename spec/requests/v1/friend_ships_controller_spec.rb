@@ -40,6 +40,33 @@ RSpec.describe V1::FriendShipsController, :type => :request do
       it { expect(@json['data'][0]['id']).to eq(friend_ship1.id) }
     end
 
+    context 'with  relation_null' do
+      let!(:user_1) { create :user, email: 'www1@dd.com', username: 'user.2222..' }
+      let!(:parent_1) { create :user, email: 'ww2w1@dd.com', username: 'user.222...' }
+      let!(:friend_ship1) { create :friend_ship, friend_id: parent_1.id, user_id: user_1.id }
+
+      context 'with true' do
+        before(:each) do
+          get "/friend_ships/", {relation_null: true}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(@json['data'].size).to eq(1) }
+        it { expect(@json['data'][0]['id']).to eq(friend_ship1.id) }
+      end
+
+
+      context 'with false' do
+        before(:each) do
+          get "/friend_ships/", {relation_null: false}, accept
+          @json = parse_json(response.body)
+        end
+
+        it { expect(@json['data'].size).to eq(1) }
+        it { expect(@json['data'][0]['id']).to eq(friend_ship.id) }
+      end
+    end
+
   end
 
   describe 'GET #show' do

@@ -13,6 +13,14 @@ module V1
         @collections = @collections.where(query_hash)
       end
 
+      if params[:relation_null].present?
+        if params[:relation_null] == 'true'
+          @collections = @collections.where(relation: nil)
+        else
+          @collections = @collections.where.not(relation: nil)
+        end
+      end
+
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
       @collections = @collections.page(page).per(@limit) if @collections
     end

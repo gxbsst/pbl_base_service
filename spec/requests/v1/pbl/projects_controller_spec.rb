@@ -72,6 +72,21 @@ describe V1::Pbl::ProjectsController, type: :request do
       # it { expect(@json['data'][1]['name']).to eq('name3') }
     end
 
+    context 'with state' do
+      let!(:user) { create :user }
+      let!(:project_1)  { create :pbl_project, name: 'name3', user_id: user.id, state: 'release' }
+      let!(:project_2)  { create :pbl_project, name: 'nam4', user_id: user.id}
+      let!(:project_3)  { create :pbl_project, name: 'name3' }
+
+      before(:each) do
+        get "/pbl/projects/", {state: 'release'}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'].size).to eq(1)}
+      # it { expect(@json['data'][1]['name']).to eq('name3') }
+    end
+
     context 'with actor_id' do
       let!(:user) { create :user }
       let!(:project)  { create :pbl_project, name: 'name3', user_id: user.id }

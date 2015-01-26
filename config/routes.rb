@@ -201,7 +201,12 @@ Rails.application.routes.draw do
     end
 
     namespace :feed do
-      resources :posts, defaults: { format: :json }
+      resources :posts, defaults: { format: :json } do
+        get ":ids", to: "posts#index", constraints: {ids: /.+[,].+/}
+      end
+      resources :messages, defaults: { format: :json } do
+        get ":ids", to: "messages#index", constraints: {ids: /.+[,].+/}
+      end
     end
   end
 

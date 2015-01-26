@@ -1,6 +1,6 @@
 class Feeds::Message < PgConnection
 
-  before_create :init
+  before_save :init
   belongs_to :post
   belongs_to :sender, class_name: 'User'
   belongs_to :user

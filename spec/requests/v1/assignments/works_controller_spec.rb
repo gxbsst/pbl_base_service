@@ -90,7 +90,7 @@ describe V1::Assignment::WorksController do
         work.work
         work.submit
         work.evaluating
-        work.scores.create(comment: 'comment', score: 10)
+        work.scores.create(comment: 'comment', score: 10, work_id: work.id)
         get "assignment/works/", {include: "scores"}, accept
         @json = parse_json(response.body)
       end
@@ -98,6 +98,7 @@ describe V1::Assignment::WorksController do
       it { expect(@json['data'][0]['scores']).to be_a Array }
       it { expect(@json['data'][0]['scores'][0]['comment']).to eq('comment') }
       it { expect(@json['data'][0]['scores'][0]['score']).to eq(10) }
+      it { expect(@json['data'][0]['scores'][0]['work_id']).to eq(work.id) }
     end
 
     context 'with state' do

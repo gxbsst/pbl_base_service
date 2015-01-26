@@ -1,1 +1,1 @@
-json.extract! score, :id, :comment, :score, :owner_id, :owner_type, :scorer_id, :user_id
+json.extract! score, :id, :comment, :score, :owner_id, :owner_type, :scorer_id, :user_id, :work_id

@@ -7,8 +7,8 @@ module V1
 
       top_collections
 
-      if params[:invitee_id].present? || params[:resource_type].present? || params[:resource_id].present? || params[:user_id].present?
-        keys = %w(invitee_id resource_type resource_id user_id)
+      if params[:user_id].present? || params[:friend_id].present? || params[:relation].present?
+        keys = %w(user_id friend_id relation)
         query_hash = request.query_parameters.delete_if {|key, value| !keys.include?(key)}
         @collections = @collections.where(query_hash)
       end

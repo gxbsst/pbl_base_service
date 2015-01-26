@@ -1,1 +1,1 @@
-json.extract! technique, :id, :sub_category_id, :title
+json.extract! technique, :id, :sub_category_id, :title, :description

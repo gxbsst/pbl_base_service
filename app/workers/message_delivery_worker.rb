@@ -7,7 +7,10 @@ class MessageDeliveryWorker
     case post.owner_type
       when 'User'
         follows = Follow.where(user_id: post.owner_id)
-        follows.each {|follow| deliver(follow.follower_id, post)}
+        if follows
+          follows.each {|follow| deliver(follow.follower_id, post)}
+          deliver(post.user_id, post)
+        end
       else
         raise 'Only group and user can receive message'
     end

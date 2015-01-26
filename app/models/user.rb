@@ -17,11 +17,11 @@ class User < PgConnection
 
   has_secure_password
 
-  after_create :create_invite, if: Proc.new {|user| user.type == 'Student'}
-
-  def create_invite
-    Invitation.create(owner_id: self.id, owner_type: self.class.name)
-  end
+  # after_create :create_invite, if: Proc.new {|user| user.type == 'Student'}
+  #
+  # def create_invite
+  #   Invitation.create(owner_id: self.id, owner_type: self.class.name)
+  # end
 
   class << self
     def find_by_login(login)

@@ -13,6 +13,8 @@ gem 'closure_tree'
 gem 'surrounded'
 gem 'whenever', :require => false
 gem 'sidekiq'
+gem 'sidekiq-daemon', git: 'https://github.com/yabawock/sidekiq-daemon'
+gem 'sidekiq-limit_fetch'
 
 group :development, :test do
   gem 'rspec-rails'

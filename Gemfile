@@ -54,3 +54,7 @@ group :production do
   gem 'rack-cache', :require => 'rack/cache'
   gem 'puma'
 end
+
+gem "figaro"
+
+gem 'sinatra', require: false

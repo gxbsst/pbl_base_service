@@ -20,7 +20,7 @@ set :repo_url, 'git@172.172.172.62:pbl/pbl_base_service.git'
 # something that quacks like a hash can be used to set
 # extended properties on the server.
 #server '172.172.172.199', user: 'root', roles: %w{web app whenever db}
-server '172.172.172.120', user: 'deployer', roles: %w{web app whenever db}
+#server '172.172.172.120', user: 'deployer', roles: %w{web app whenever db}
 #server '124.205.151.252', user: 'edu', roles: %w{web app}
 
 # you can set custom ssh options

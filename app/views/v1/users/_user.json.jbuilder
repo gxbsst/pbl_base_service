@@ -15,7 +15,8 @@ json.extract! user,
               :school_id,
               :grade_id,
               :clazz_id,
-              :title
+              :title,
+              :bio
 
 if @include_school
   json.school do

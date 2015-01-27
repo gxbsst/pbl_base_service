@@ -588,11 +588,9 @@ ActiveRecord::Schema.define(version: 20150127063526) do
   add_index "users", ["realname"], name: "index_users_on_realname", using: :btree
   add_index "users", ["type"], name: "index_users_on_type", using: :btree
 
-  create_table "users_roles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid     "user_id"
-    t.uuid     "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "users_roles", id: false, force: true do |t|
+    t.uuid "user_id"
+    t.uuid "role_id"
   end
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree

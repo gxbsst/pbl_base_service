@@ -52,6 +52,15 @@ describe V1::Group::GroupsController do
       it { expect(@json['data'][0]['id']).to eq(group_3.id) }
       end
 
+      context 'owner_ids' do before(:each) do
+        get "/group/groups?owner_ids=#{user_1.id}", {}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'].size).to eq(1) }
+      it { expect(@json['data'][0]['id']).to eq(group_3.id) }
+      end
+
     end
 
   end

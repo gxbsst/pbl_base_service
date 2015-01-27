@@ -8,13 +8,12 @@ module V1
       check_parent_resource_id if configures[:have_parent_resource]
       top_collections
 
-      if params[:owner_id].present? && params[:owner_type].present?
-        if params[:user_id].present?
-          @collections = @collections.where(owner_id: params[:owner_id], owner_type: params[:owner_type], user_id: params[:user_id])
-        else
-          @collections = @collections.where(owner_id: params[:owner_id], owner_type: params[:owner_type])
-        end
+      if params[:owner_type].present? || params[:owner_id].present? || params[:user_id].present? || params[:work_id].present?
+        keys = %w(owner_type owner_id user_id work_id)
+        query_hash = request.query_parameters.delete_if {|key, value| !keys.include?(key)}
+        @collections = @collections.where(query_hash)
       end
+
 
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
       @collections = @collections.page(page).per(@limit) if @collections

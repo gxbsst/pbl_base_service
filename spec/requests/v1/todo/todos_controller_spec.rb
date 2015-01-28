@@ -47,28 +47,23 @@ describe V1::Todo::TodosController do
     it { expect(Todos::TodoItem.count).to eq(5)}
   end
 
-  # describe 'DELETE #destroy' do
-  #   let(:user) { create :user }
-  #   let!(:group) { create :group, owner_id: user.id, owner_type: user.class.name}
-  #   before(:each) do
-  #     delete "/group/groups/#{group.id}", {}, accept
-  #   end
-  #
-  #   it { expect(Groups::Group.count).to eq(0)}
-  # end
-  #
-  # describe 'GET #show' do
-  #   context 'with include member_ships' do
-  #     let(:user) { create :user }
-  #     let!(:group) { create :group_with_members, owner_id: user.id, owner_type: user.class.name, members_count: 5}
-  #     before(:each) do
-  #       get "/group/groups/#{group.id}", {include: 'member_ships'}, accept
-  #       @json = parse_json(response.body)
-  #     end
-  #
-  #     it { expect(@json['member_ships'].count).to eq(5) }
-  #     it { expect(@json['member_ships'][0]['role']).to match_array([]) }
-  #     it { expect(@json['member_ships'][0]['member']['username']).to_not be_nil  }
-  #   end
-  # end
+  describe 'GET #show' do
+    let!(:todo) { create :todos_todo, start_at: Time.now + 1.days, end_at: Time.now + 5.days, content: 'content', repeat_by: 'day', user_id: user.id}
+    before(:each) do
+      get "/todo/todos/#{todo.id}", {}, accept
+      @json = parse_json(response.body)
+    end
+
+    it { expect(@json['id']).to eq(todo.id)}
+    it { expect(@json['start_at']).to_not be_nil }
+    it { expect(@json['end_at']).to_not be_nil }
+    it { expect(@json['content']).to eq('content') }
+    it { expect(@json['repeat_by']).to eq('day') }
+    it { expect(@json['user_id']).to eq(user.id) }
+  end
+
+  describe 'DELETE #destroy' do
+    let!(:message) { create :feeds_message,  user_id: user.id, post_id: post_0.id }
+    it { expect{  delete "/feed/messages/#{message.id}", {}, accept }.to change(Feeds::Message, :count).from(1).to(0) }
+  end
 end

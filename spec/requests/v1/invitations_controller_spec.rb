@@ -54,6 +54,20 @@ RSpec.describe V1::InvitationsController, :type => :request do
       it { expect(@json['data'].size).to eq(1) }
       it { expect(@json['data'][0]['id']).to eq(invitation_1.id) }
     end
+
+
+    context 'with owner_ids' do
+      let(:group) { create :group }
+      let!(:invitation_1) { create :invitation, owner_type: group.class.name, owner_id: group.id }
+      let!(:invitation_2) { create :invitation, owner_type: user.class.name, owner_id: user.id }
+      before(:each) do
+        get "/invitations/?owner_ids=#{group.id}", {}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'].size).to eq(1) }
+      it { expect(@json['data'][0]['id']).to eq(invitation_1.id) }
+    end
   end
 
   describe 'GET #show' do

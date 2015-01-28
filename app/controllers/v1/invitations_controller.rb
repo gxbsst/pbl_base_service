@@ -15,6 +15,11 @@ module V1
         @collections = @collections.where(owner_id: params[:owner_id], owner_type: params[:owner_type])
       end
 
+      if params[:owner_ids].present?
+        owner_ids = params[:owner_ids].split(',')
+        @collections = @collections.where(owner_id: owner_ids)
+      end
+
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
       @collections = @collections.page(page).per(@limit) if @collections
     end

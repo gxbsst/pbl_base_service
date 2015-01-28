@@ -213,6 +213,9 @@ Rails.application.routes.draw do
       resources :todos, defaults: { format: :json } do
         get ":ids", to: "todos#index", constraints: {ids: /.+[,].+/}
       end
+      resources :todo_items, defaults: { format: :json } do
+        get ":ids", to: "todo_items#index", constraints: {ids: /.+[,].+/}
+      end
     end
   end
 

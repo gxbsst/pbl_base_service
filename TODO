@@ -28,13 +28,13 @@
 30. 修改密码
 31. 找回密码
 32. 发动态
-33. 群要有自己的邀请码
+33. 群要有自己的邀请码 // DONE
 34. 学生注册时，生成邀请码 // DONE
 35. 家长注册时， 输入邀请码，则要和学生创建家长关系
 36. 可以群发讯息
 37. username 做唯一验证 // DONE
 38. 配置发送邮件 // DONE
-39. 注册成功发送邮件内容
+39. 注册成功发送邮件内容 // CLIENT
 40. 用户添加新字段，感兴趣（interests) => Array, 真实姓名real_name => String, disciplines(学科) => Array // DONE
 41. 建立schools表, 字段包括region_id, name, user_id, master_id // DONE
 41. 建立grades表, 字段包括school_id, name, user_id // DONE
@@ -52,3 +52,4 @@
 51. 通过actor_id(参与者id)获取项目列表, 使用: GET /pbl/projects/?actor_id=? // DONE
 52. 作为前端开发者，我需要可以通过ajax方法登录 // DONE
 53. 作为前端开发者，我需要新闻的接口
+54. 作为前端开发者，我需要发送邮件的接口

@@ -208,6 +208,12 @@ Rails.application.routes.draw do
         get ":ids", to: "messages#index", constraints: {ids: /.+[,].+/}
       end
     end
+
+    namespace :todo do
+      resources :todos, defaults: { format: :json } do
+        get ":ids", to: "todos#index", constraints: {ids: /.+[,].+/}
+      end
+    end
   end
 
 

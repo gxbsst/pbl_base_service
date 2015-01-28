@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150127063526) do
+ActiveRecord::Schema.define(version: 20150127081659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -557,6 +557,32 @@ ActiveRecord::Schema.define(version: 20150127063526) do
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
+
+  create_table "todos_recipients", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "todo_id"
+    t.uuid     "assignee_id"
+    t.string   "assignee_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "todos_recipients", ["assignee_type", "assignee_id"], name: "index_todos_recipients_on_assignee_type_and_assignee_id", using: :btree
+  add_index "todos_recipients", ["todo_id"], name: "index_todos_recipients_on_todo_id", using: :btree
+
+  create_table "todos_todos", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.string   "repeat_by"
+    t.text     "content"
+    t.string   "state"
+    t.uuid     "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "todos_todos", ["repeat_by"], name: "index_todos_todos_on_repeat_by", using: :btree
+  add_index "todos_todos", ["state"], name: "index_todos_todos_on_state", using: :btree
+  add_index "todos_todos", ["user_id"], name: "index_todos_todos_on_user_id", using: :btree
 
   create_table "users", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "first_name"

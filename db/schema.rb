@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150128032800) do
+ActiveRecord::Schema.define(version: 20150128051519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,6 +194,7 @@ ActiveRecord::Schema.define(version: 20150128032800) do
     t.uuid     "owner_id"
     t.text     "label",         default: [], array: true
     t.string   "avatar"
+    t.integer  "no"
   end
 
   add_index "groups_groups", ["owner_id", "owner_type"], name: "index_groups_groups_on_owner_id_and_owner_type", using: :btree
@@ -570,6 +571,19 @@ ActiveRecord::Schema.define(version: 20150128032800) do
 
   add_index "todos_recipients", ["assignee_type", "assignee_id"], name: "index_todos_recipients_on_assignee_type_and_assignee_id", using: :btree
   add_index "todos_recipients", ["todo_id"], name: "index_todos_recipients_on_todo_id", using: :btree
+
+  create_table "todos_todo_items", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "todo_id"
+    t.uuid     "user_id"
+    t.string   "state"
+    t.uuid     "recipient_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "todos_todo_items", ["recipient_id"], name: "index_todos_todo_items_on_recipient_id", using: :btree
+  add_index "todos_todo_items", ["todo_id"], name: "index_todos_todo_items_on_todo_id", using: :btree
+  add_index "todos_todo_items", ["user_id"], name: "index_todos_todo_items_on_user_id", using: :btree
 
   create_table "todos_todos", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.datetime "start_at"

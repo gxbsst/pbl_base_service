@@ -29,4 +29,10 @@ RSpec.describe Groups::Group, :type => :model do
     end
 
   end
+
+  describe '#no' do
+    let!(:group) { described_class.create }
+
+    it { expect(group.no).to eq(1000)}
+  end
 end

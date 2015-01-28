@@ -37,15 +37,16 @@ describe V1::Todo::TodosController do
 
     let(:user) { create :user }
     let!(:recipient) { {assignee_type: 'Clazz', assignee_id: clazz.id }}
-    let!(:params) { attributes_for :todos_todo, start_at: Time.now + 1.days, end_at: Time.now + 5.days, content: 'content', repeat_by: 'day', user_id: user.id, recipients: recipient  }
+    let!(:params) { attributes_for :todos_todo, start_at: Time.now + 1.days, end_at: Time.now + 5.days, content: 'content', repeat_by: 'day', user_id: user.id, recipient: recipient  }
     before(:each) do
       post "/todo/todos", {todo: params}, accept
     end
 
     it { expect(Todos::Todo.count).to eq(1)}
-    it { expect(Todos::Todo.first.recipients).to eq(1)}
+    it { expect(Todos::Todo.first.recipients.size).to eq(1)}
+    it { expect(Todos::TodoItem.count).to eq(5)}
   end
-  #
+
   # describe 'DELETE #destroy' do
   #   let(:user) { create :user }
   #   let!(:group) { create :group, owner_id: user.id, owner_type: user.class.name}

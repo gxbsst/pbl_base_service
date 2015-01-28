@@ -18,6 +18,18 @@ module V1
       @collections = @collections.page(page).per(@limit) if @collections
     end
 
+    def create
+      check_parent_resource_id if configures[:have_parent_resource]
+
+      @clazz_instance = configures[:clazz].new(clazz_params)
+
+      if @clazz_instance.save
+        render :show, status: :created
+      else
+        render json: { error: @clazz_instance.errors }, status: :unprocessable_entity
+      end
+    end
+
     private
 
     def top_collections

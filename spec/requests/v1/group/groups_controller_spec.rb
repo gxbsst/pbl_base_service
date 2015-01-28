@@ -27,6 +27,10 @@ describe V1::Group::GroupsController do
       it { expect(@json['data'][1]['name']).to eq('name') }
     end
 
+    context 'with name' do
+
+    end
+
     context 'with owner_id || owner_type' do
       let(:user_1) { create :user }
       let!(:group_3) { create :group, owner_id: user_1.id, owner_type: user_1.class.name}

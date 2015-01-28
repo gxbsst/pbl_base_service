@@ -111,5 +111,12 @@ module V1
       I18n.locale = (params[:locale] || 'robot') || I18n.default_locale
     end
 
+    def query
+      keys = configures[:query]
+      query_hash = request.query_parameters.delete_if {|key, value| !keys.include?(key)}
+
+      @collections = @collections.where(query_hash) if query_hash.present?
+    end
+
   end
 end

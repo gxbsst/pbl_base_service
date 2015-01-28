@@ -9,11 +9,9 @@ module V1
       check_parent_resource_id if configures[:have_parent_resource]
 
       top_collections
+      query
+
       @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
-      @collections = @collections.where('first_name like ?', params[:first_name]) if params[:first_name].present?
-      @collections = @collections.where('last_name like ?', params[:last_name]) if params[:last_name].present?
-      @collections = @collections.where(age: params[:age]) if params[:age].present?
-      @collections = @collections.where(gender: params[:gender]) if params[:gender].present?
       @collections = @collections.page(page).per(@limit)
     end
 
@@ -23,6 +21,7 @@ module V1
       {
         have_parent_resource: false,
         clazz: User,
+        query: ['username']
       }
     end
 
@@ -41,6 +40,16 @@ module V1
         @include = include.split(',')
         @include_friends = include.include? 'friends'
         @include_school = include.include? 'school'
+      end
+    end
+
+    def query
+      if params[:username].present?
+        @collections = @collections.where(["username LIKE ?", "%#{params[:username]}%"])
+      else
+        keys = configures[:query]
+        query_hash = request.query_parameters.delete_if {|key, value| !keys.include?(key)}
+        @collections = @collections.where(query_hash) if query_hash.present?
       end
     end
 

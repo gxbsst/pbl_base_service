@@ -33,6 +33,17 @@ describe V1::UsersController, type: :request do
       it { expect(@json['data'][0]['username']).to eq('name4') }
       it { expect(@json['data'][1]['username']).to eq('name3') }
     end
+
+    context 'with username' do
+      let!(:user_3)  { create :user, username: 'abcccc' }
+      let!(:user_4)  { create :user, username: 'name4' }
+      before(:each) do
+        get "/users/", {username: 'abcccc'}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'].size).to eq(1)}
+    end
   end
 
   describe 'GET #Show' do

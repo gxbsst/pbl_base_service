@@ -18,6 +18,24 @@ module V1
       @collections = @collections.page(page).per(@limit) if @collections
     end
 
+    def complete
+      set_clazz_instance
+      if @clazz_instance.complete
+        render :show, status: :ok
+      else
+        render json: {}, status: :unprocessable_entity
+      end
+    end
+
+    def cancel_complete
+      set_clazz_instance
+      if @clazz_instance.do_open
+        render :show, status: :ok
+      else
+        render json: {}, status: :unprocessable_entity
+      end
+    end
+
     private
 
     def top_collections

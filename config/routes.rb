@@ -215,10 +215,13 @@ Rails.application.routes.draw do
       end
       resources :todo_items, defaults: { format: :json } do
         get ":ids", to: "todo_items#index", constraints: {ids: /.+[,].+/}
+        member do
+          patch "actions/complete", to: "todo_items#complete"
+          patch "actions/cancel_complete", to: "todo_items#cancel_complete"
+        end
       end
     end
   end
-
 
   require "sidekiq/web"
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|

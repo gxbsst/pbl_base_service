@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150128030721) do
+ActiveRecord::Schema.define(version: 20150128032800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -193,7 +193,7 @@ ActiveRecord::Schema.define(version: 20150128030721) do
     t.string   "owner_type"
     t.uuid     "owner_id"
     t.text     "label",         default: [], array: true
-    t.uuid     "cover_id"
+    t.string   "avatar"
   end
 
   add_index "groups_groups", ["owner_id", "owner_type"], name: "index_groups_groups_on_owner_id_and_owner_type", using: :btree

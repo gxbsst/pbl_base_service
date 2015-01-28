@@ -87,3 +87,9 @@ Rails.application.configure do
       :authentication       => 'plain',
       :enable_starttls_auto => true  }
 end
+
+
+Sidekiq.configure_server do |config|
+  config.redis = {:url => 'redis://172.172.172.63:6379/0', :namespace => 'sidekiq'}
+end
+

@@ -4,7 +4,8 @@ class User < PgConnection
 
   validates_confirmation_of :password
   validates :email, :presence => true, :uniqueness => true, :email_format => true
-  validates :username, :presence => true, :uniqueness => true
+  validates :username, :presence => true
+  validates_uniqueness_of :username,  case_sensitive: false
 
   has_many :friend_ships
   has_many :follows

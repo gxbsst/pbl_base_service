@@ -41,4 +41,13 @@ describe User do
   #   end
   #
   # end
+
+  describe 'validate name with case_sensitive' do
+    let!(:user) { create(:user, :email => 'gxbsst@gmail.com', :password => 'secret', username: 'username')}
+
+    it "validate with up-case" do
+      u = build(:user, username: 'Username')
+      expect(u.valid?).to be(false)
+    end
+  end
 end

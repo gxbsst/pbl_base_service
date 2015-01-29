@@ -1,7 +1,3 @@
-set :stage, :stress
-set :repo_url, 'git@124.205.151.245:education_community/education_commnity.git'
-set :rails_env, 'stress'
-
 # Simple Role Syntax
 # ==================
 # Supports bulk-adding hosts to roles, the primary
@@ -17,7 +13,8 @@ set :rails_env, 'stress'
 # definition into the server list. The second argument
 # something that quacks like a hash can be used to set
 # extended properties on the server.
-server '192.168.1.127', user: 'root', roles: %w{web app whenever db}
+#server '172.172.172.199', user: 'root', roles: %w{web app whenever db}
+#server '172.172.172.120', user: 'deployer', roles: %w{web app whenever db}
 #server '124.205.151.252', user: 'edu', roles: %w{web app}
 
 # you can set custom ssh options
@@ -30,16 +27,14 @@ server '192.168.1.127', user: 'root', roles: %w{web app whenever db}
 #    auth_methods: %w(password)
 #  }
 # and/or per server
-server '192.168.1.127',
-       user: 'root',
-       roles: %w{web app whenever db},
+server '10.10.31.109',
+       user: 'deployer',
+       roles: %w{web app db whenever},
        ssh_options: {
-         user: 'edu', # overrides user setting above
-         #keys: %w(/home/user_name/.ssh/id_rsa),
-         #forward_agent: true,
-         auth_methods: %w(password),
-         password: '123456'
+           user: 'deployer', # overrides user setting above
+           #keys: %w(/home/user_name/.ssh/id_rsa),
+           #forward_agent: true,
+           auth_methods: %w(password),
+           password: '51448888'
        }
-# setting per server overrides global ssh_options
 
-fetch(:default_env).merge!(rails_env: 'stress', jruby_opts: '"-J-Xmx4096m --1.9"')

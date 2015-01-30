@@ -12,7 +12,7 @@ require 'capistrano/rails/migrations'
 require "whenever/capistrano"
 require 'capistrano/sidekiq'
 # require 'capistrano/sidekiq/monit' #to require monit tasks # Only for capistrano3
-
+require 'capistrano/puma/nginx'   #if you want to upload a nginx site template
 # Includes tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:

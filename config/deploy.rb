@@ -33,7 +33,7 @@ set :linked_dirs, %w{log}
 set :puma_env, fetch(:rack_env, fetch(:rails_env, 'production'))
 set :puma_threads, [16, 48]
 set :puma_workers, 0
-
+set :use_sudo, false
 
 set :keep_releases, 3
 

@@ -25,11 +25,11 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'thin', platforms: [:ruby]
-  gem 'capistrano', '~> 3.0.1', :platforms => [:ruby, :jruby]
-  gem 'capistrano-rails', '~> 1.1.0', :platforms => [:ruby, :jruby]
-  gem 'capistrano3-puma', '~> 0.1.2', :platforms => [:ruby, :jruby]
-  gem 'capistrano-rvm', :platforms => [:ruby, :jruby]
-  gem 'capistrano-bundler', :platforms => [:ruby, :jruby]
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano3-puma'
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler'
   gem 'capistrano-sidekiq'
 end
 

@@ -7,3 +7,6 @@ json.extract! todo_item,
               :repeat_by,
               :state
 
+json.recipients do
+  json.array! todo_item.todo.recipients
+end

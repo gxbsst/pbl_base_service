@@ -11,6 +11,8 @@ json.extract! post,
               :no,
               :origin_id,
               :hotness,
-              :blocked
+              :blocked,
+              :created_at,
+              :updated_at
 
 

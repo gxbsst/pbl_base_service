@@ -45,5 +45,5 @@ server '172.172.172.120',
        }
 # setting per server overrides global ssh_options
 
-fetch(:default_env).merge!(rails_env: 'release', jruby_opts: '"-J-Xmx4096m --1.9"')
+fetch(:default_env).merge!(rails_env: 'staging', jruby_opts: '"-J-Xmx4096m --1.9"')
 

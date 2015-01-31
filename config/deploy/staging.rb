@@ -1,3 +1,4 @@
+set :rails_env, 'staging'
 # Simple Role Syntax
 # ==================
 # Supports bulk-adding hosts to roles, the primary
@@ -5,7 +6,7 @@
 ## unless any hosts have the primary property set.
 #role :app, %w{124.205.151.249}
 #role :web, %w{124.205.151.249}
-#role :db,  %w{124.205.151.249}
+#role :db,  %w{124.205.151.249}q
 
 # Extended Server Syntax
 # ======================
@@ -38,3 +39,4 @@ server '10.10.31.109',
            password: '51448888'
        }
 
+fetch(:default_env).merge!(rails_env: 'staging', jruby_opts: '"-J-Xmx4096m --1.9"')

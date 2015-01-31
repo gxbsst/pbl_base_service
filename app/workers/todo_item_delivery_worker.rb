@@ -5,7 +5,7 @@ class TodoItemDeliveryWorker
   def perform(recipient_id)
     recipient = Todos::Recipient.find(recipient_id)
 
-    case recipient.assignee_type == 'Clazz'
+    case recipient.assignee_type
       when 'Clazz'
         clazz = Clazz.includes(:students).find(recipient.assignee_id)
         clazz.students.each do |student|

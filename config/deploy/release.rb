@@ -1,9 +1,4 @@
-set :stage, :release
-
 set :rails_env, 'release'
-
-set :repo_url, 'git@172.172.172.62:pbl/pbl_base_service.git'
-
 # Simple Role Syntax
 # ==================
 # Supports bulk-adding hosts to roles, the primary
@@ -11,7 +6,7 @@ set :repo_url, 'git@172.172.172.62:pbl/pbl_base_service.git'
 ## unless any hosts have the primary property set.
 #role :app, %w{124.205.151.249}
 #role :web, %w{124.205.151.249}
-#role :db,  %w{124.205.151.249}
+#role :db,  %w{124.205.151.249}q
 
 # Extended Server Syntax
 # ======================
@@ -33,17 +28,15 @@ set :repo_url, 'git@172.172.172.62:pbl/pbl_base_service.git'
 #    auth_methods: %w(password)
 #  }
 # and/or per server
-server '172.172.172.120',
+server '10.10.31.109',
        user: 'deployer',
        roles: %w{web app db whenever},
        ssh_options: {
-         user: 'deployer', # overrides user setting above
-         #keys: %w(/home/user_name/.ssh/id_rsa),
-         #forward_agent: true,
-         auth_methods: %w(password),
-         password: '51448888'
+           user: 'deployer', # overrides user setting above
+           #keys: %w(/home/user_name/.ssh/id_rsa),
+           #forward_agent: true,
+           auth_methods: %w(password),
+           password: '51448888'
        }
-# setting per server overrides global ssh_options
 
 fetch(:default_env).merge!(rails_env: 'release', jruby_opts: '"-J-Xmx4096m --1.9"')
-

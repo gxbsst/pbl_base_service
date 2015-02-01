@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150128051519) do
+ActiveRecord::Schema.define(version: 20150131091409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,17 +132,17 @@ ActiveRecord::Schema.define(version: 20150128051519) do
     t.string   "title"
     t.text     "content"
     t.integer  "no"
-    t.integer  "like_count",  default: 0
-    t.boolean  "blocked",     default: false
+    t.integer  "like_count", default: 0
+    t.boolean  "blocked",    default: false
     t.string   "owner_type"
     t.uuid     "owner_id"
     t.uuid     "user_id"
     t.uuid     "sender_id"
-    t.uuid     "resource_id"
-    t.integer  "hotness",     default: 0
+    t.integer  "hotness",    default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.uuid     "origin_id"
+    t.text     "images",     default: [],    array: true
   end
 
   add_index "feeds_posts", ["content"], name: "index_feeds_posts_on_content", using: :btree
@@ -630,11 +630,9 @@ ActiveRecord::Schema.define(version: 20150128051519) do
   add_index "users", ["realname"], name: "index_users_on_realname", using: :btree
   add_index "users", ["type"], name: "index_users_on_type", using: :btree
 
-  create_table "users_roles", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid     "user_id"
-    t.uuid     "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "users_roles", id: false, force: true do |t|
+    t.uuid "user_id"
+    t.uuid "role_id"
   end
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree

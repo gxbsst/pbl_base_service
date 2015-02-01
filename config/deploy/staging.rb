@@ -1,3 +1,9 @@
+set :stage, :staging
+
+set :rails_env, 'staging'
+
+set :repo_url, 'git@58.246.127.90:pbl/pbl_base_service.git'
+
 # Simple Role Syntax
 # ==================
 # Supports bulk-adding hosts to roles, the primary
@@ -27,14 +33,17 @@
 #    auth_methods: %w(password)
 #  }
 # and/or per server
-server '10.10.31.109',
+server '172.172.172.120',
        user: 'deployer',
        roles: %w{web app db whenever},
        ssh_options: {
-           user: 'deployer', # overrides user setting above
-           #keys: %w(/home/user_name/.ssh/id_rsa),
-           #forward_agent: true,
-           auth_methods: %w(password),
-           password: '51448888'
+         user: 'deployer', # overrides user setting above
+         #keys: %w(/home/user_name/.ssh/id_rsa),
+         #forward_agent: true,
+         auth_methods: %w(password),
+         password: '51448888'
        }
+# setting per server overrides global ssh_options
+
+fetch(:default_env).merge!(rails_env: 'staging', jruby_opts: '"-J-Xmx4096m --1.9"')
 

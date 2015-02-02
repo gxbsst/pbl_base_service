@@ -30,6 +30,16 @@ module V1
       end
     end
 
+    def update
+      set_clazz_instance
+
+      if @clazz_instance.update_attributes(clazz_params)
+        render :show, status: :ok
+      else
+        render json: {error: @clazz_instance.errors}, status: :unprocessable_entity
+      end
+    end
+
     private
 
     def top_collections

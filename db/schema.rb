@@ -564,7 +564,7 @@ ActiveRecord::Schema.define(version: 20150131091409) do
   create_table "todos_recipients", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "todo_id"
     t.uuid     "assignee_id"
-    t.string   "assignee_type"
+    t.string   "assignee_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

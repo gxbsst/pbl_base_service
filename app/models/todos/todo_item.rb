@@ -15,4 +15,8 @@ class Todos::TodoItem < PgConnection
     end
   end
 
+  def sender_id
+   self.todo.user_id
+  end
+
 end

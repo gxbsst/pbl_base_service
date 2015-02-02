@@ -56,6 +56,7 @@ describe V1::Todo::TodoItemsController do
     it { expect(@json['repeat_by']).to eq('day') }
     it { expect(@json['user_id']).to eq(user.id) }
     it { expect(@json['recipients']).to be_a Array}
+    it { expect(@json['sender_id']).to eq(todo.user_id)}
   end
 
   describe 'DELETE #destroy' do

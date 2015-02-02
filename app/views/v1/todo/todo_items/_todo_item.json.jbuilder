@@ -5,7 +5,10 @@ json.extract! todo_item,
               :start_at,
               :end_at,
               :repeat_by,
-              :state
+              :state,
+              :sender_id,
+              :created_at,
+              :updated_at
 
 json.recipients do
   json.array! todo_item.todo.recipients

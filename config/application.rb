@@ -23,7 +23,7 @@ module PblBaseService
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
-    config.time_zone = 'Beijing'
+    # config.time_zone = 'Beijing'
     I18n.config.enforce_available_locales = true
     config.i18n.available_locales = [:'zh-CN', :en, :robot]
     config.i18n.default_locale = :'en'

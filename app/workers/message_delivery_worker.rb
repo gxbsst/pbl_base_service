@@ -9,7 +9,6 @@ class MessageDeliveryWorker
         follows = Follow.where(user_id: post.owner_id)
         if follows
           follows.each {|follow| deliver(follow.follower_id, post)}
-          deliver(post.user_id, post)
         end
       else
         raise 'Only group and user can receive message'

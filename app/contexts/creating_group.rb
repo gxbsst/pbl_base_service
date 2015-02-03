@@ -16,9 +16,9 @@ class CreatingGroup
   def create
    @creator.create_group(params) do |group|
      if group.valid?
-       if owner_type.downcase == 'user'
-         Groups::MemberShip.create(user_id: owner_id, group_id: group.id, role: ['creator'])
-       end
+       # if owner_type.downcase == 'user'
+       #   Groups::MemberShip.create(user_id: owner_id, group_id: group.id, role: ['creator'])
+       # end
        listener.on_create_success(group)
      else
        listener.on_create_error(group)

@@ -8,7 +8,7 @@ class Todos::Recipient < PgConnection
   private
 
   def deliver_todo_items
-    # TodoItemDeliveryWorker.perform_async(self.id.to_s)
+    TodoItemDeliveryWorker.perform_async(self.id.to_s)
   end
 
 end

@@ -7,4 +7,6 @@ json.extract! notification,
               :sender_id,
               :user_id,
               :additional_info,
-              :type
+              :type,
+              :created_at,
+              :updated_at

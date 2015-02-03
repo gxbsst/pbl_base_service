@@ -142,6 +142,7 @@ Rails.application.routes.draw do
     resources :notifications, defaults: { format: :json} do
       collection do
         get ":ids", to: "notifications#index", constraints: {ids: /.+[,].+/}
+        get :count, to: "notifications#count"
       end
     end
 

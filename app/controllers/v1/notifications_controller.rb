@@ -27,6 +27,19 @@ module V1
       @collections = @collections.page(page).per(@limit) if @collections
     end
 
+    def count
+      params[:read] ||= false
+      count = configures[:clazz].where(read: params[:read]).count
+
+      if params[:type].present?
+        keys = %w(type)
+        query_hash = request.query_parameters.delete_if {|key, value| !keys.include?(key)}
+        count = configures[:clazz].where(query_hash).count
+      end
+
+      render json: {count: count}, status: 200
+    end
+
     private
     def configures
       {

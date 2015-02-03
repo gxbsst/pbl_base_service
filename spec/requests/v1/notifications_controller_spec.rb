@@ -91,4 +91,23 @@ describe V1::NotificationsController do
     let!(:notification) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', content: 'content 2', user_id: user.id, additional_info: {a: 1} }
     it { expect{  delete "/notifications/#{notification.id}", {}, accept }.to change(Notification, :count).from(1).to(0) }
   end
+
+  describe 'get #count' do
+    let!(:notification_1) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', content: 'content 2', user_id: user.id, additional_info: {a: 1} }
+    let!(:notification_2) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', content: 'content 2', user_id: user.id, additional_info: {a: 1}, type: 'S' }
+    before(:each) do
+      notification_2.update_attribute(:read, true)
+      get '/notifications/count', {}, accept
+      @json = parse_json(response.body)
+    end
+
+    it { expect(@json['count']).to eq(1)}
+
+    it 'get not read' do
+      get '/notifications/count', {type: 'S'}, accept
+      @json = parse_json(response.body)
+
+      expect(@json['count']).to eq(1)
+    end
+  end
 end

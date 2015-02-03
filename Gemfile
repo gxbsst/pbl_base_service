@@ -43,6 +43,7 @@ group :test do
   gem 'json_spec'
   gem 'shoulda-matchers', require: false
   # gem 'rspec-sidekiq'
+  gem 'email_spec'
 end
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.1.2'

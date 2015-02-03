@@ -31,8 +31,8 @@ module V1
       params[:read] ||= false
       count = configures[:clazz].where(read: params[:read]).count
 
-      if params[:type].present?
-        keys = %w(type)
+      if params[:type].present? || params[:sender_type].present? || params[:sender_id].present? || params[:user_id].present?
+        keys = %w(type sender_type sender_id user_id)
         query_hash = request.query_parameters.delete_if {|key, value| !keys.include?(key)}
         count = configures[:clazz].where(query_hash).count
       end

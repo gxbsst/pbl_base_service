@@ -6,7 +6,7 @@ class Todos::Todo < PgConnection
   attr_accessor :recipient
 
   after_create :create_recipients
-  after_save :sync_todo_items
+  # after_save :sync_todo_items
 
 
   def sync_todo_items

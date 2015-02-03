@@ -17,6 +17,10 @@ class Feeds::Post < PgConnection
 
 
   def deliver_messages
+    message = Feeds::Message.where(user_id: self.user_id, post_id: self.id).first
+    unless message
+      Feeds::Message.create(post_id: self.id, user_id: self.user_id)
+    end
     MessageDeliveryWorker.perform_async(self.id.to_s)
   end
 

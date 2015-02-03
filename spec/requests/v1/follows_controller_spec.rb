@@ -4,16 +4,37 @@ describe V1::FollowsController do
     let!(:user) { create :user, username: 'username'}
     let!(:follower) { create :user, username: 'follower'}
     let!(:follow) { create :follow, user_id: user.id, follower_id: follower.id}
-    before(:each) do
-      get "/follows", {}, accept
-      @json = parse_json(response.body)
+    context 'get index' do
+      before(:each) do
+        get "/follows", {}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(response.body).to have_json_type(Hash)}
+      it { expect(@json['data'].size).to eq(1)}
+      it { expect(@json['data'][0]['follower_id']).to eq(follower.id)}
+      it { expect(@json['data'][0]['user_id']).to eq(user.id)}
+      it { expect(@json['data'][0]['id']).to_not be_nil}
     end
 
-    it { expect(response.body).to have_json_type(Hash)}
-    it { expect(@json['data'].size).to eq(1)}
-    it { expect(@json['data'][0]['follower_id']).to eq(follower.id)}
-    it { expect(@json['data'][0]['user_id']).to eq(user.id)}
-    it { expect(@json['data'][0]['id']).to_not be_nil}
+    context 'get index with user_id' do
+      let!(:user_1) { create :user}
+      let!(:follower_1) { create :user}
+      let!(:follow) { create :follow, user_id: user_1.id, follower_id: follower_1.id}
+      before(:each) do
+        get "/follows", {user_id: user_1.id}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'].size).to eq(1)}
+
+      before(:each) do
+        get "/follows", {follower_id: follower_1.id}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'].size).to eq(1)}
+    end
 
   end
 

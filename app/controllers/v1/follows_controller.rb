@@ -2,6 +2,18 @@ module V1
   class FollowsController < BaseController
     include Surrounded
 
+    def index
+      page = params[:page] || 1
+      @limit = params[:limit] || 10
+
+      check_parent_resource_id if configures[:have_parent_resource]
+      top_collections
+      query
+      @collections = @collections.where(id: params[:ids].gsub(/\s+/, "").split(',')) if params[:ids].present?
+      @collections = @collections.page(page).per(@limit) if @collections
+    end
+
+
     # = follow a user
     # == examples
     # === @params
@@ -44,8 +56,11 @@ module V1
 
     private
     def configures
-      { have_parent_resource: false,
-        clazz: Follow }
+      {
+          have_parent_resource: false,
+          clazz: Follow,
+          query: ['follower_id', 'user_id']
+      }
     end
 
     def set_clazz_instance

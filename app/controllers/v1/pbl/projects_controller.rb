@@ -15,7 +15,9 @@ module V1
         @collections = @collections.where(["name LIKE ?",  "%#{params[:name]}%"])
       end
 
-      if params[:state].present?
+      if params[:state].present? || params[:recommend].present?
+        keys = %w(state recommend)
+        query_hash = request.query_parameters.delete_if {|key, value| !keys.include?(key)}
         @collections = @collections.where(state: params[:state])
       end
 
@@ -89,7 +91,7 @@ module V1
     def top_collections
       order = params[:order].try(:to_sym) || :desc
 
-      @collections = configures[:clazz].order(created_at: order)
+      @collections = configures[:clazz].order(position: :desc, created_at: order)
     end
 
   end

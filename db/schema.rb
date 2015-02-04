@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150202101356) do
+ActiveRecord::Schema.define(version: 20150204063055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -323,9 +323,12 @@ ActiveRecord::Schema.define(version: 20150202101356) do
     t.uuid     "region_id"
     t.integer  "grade"
     t.datetime "start_at"
+    t.boolean  "recommend",         default: false
+    t.integer  "position",          default: 0
   end
 
   add_index "pbls_projects", ["name"], name: "index_pbls_projects_on_name", using: :btree
+  add_index "pbls_projects", ["recommend"], name: "index_pbls_projects_on_recommend", using: :btree
   add_index "pbls_projects", ["user_id"], name: "index_pbls_projects_on_user_id", using: :btree
 
   create_table "pbls_rules", id: :uuid, default: "uuid_generate_v4()", force: true do |t|

@@ -15,4 +15,9 @@ json.extract! project,
               :grade,
               :region_id,
               :state,
-              :start_at
+              :start_at,
+              :recommend,
+              :position,
+              :created_at,
+              :updated_at
+

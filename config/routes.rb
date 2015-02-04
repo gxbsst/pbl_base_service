@@ -222,6 +222,8 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    resources :mails, defaults: { format: :json }, only: %w(create)
   end
 
   require "sidekiq/web"

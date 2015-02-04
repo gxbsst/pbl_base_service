@@ -79,7 +79,7 @@ describe V1::Pbl::ProjectsController, type: :request do
       let!(:project_3)  { create :pbl_project, name: 'name3' }
 
       before(:each) do
-        get "/pbl/projects/", {state: 'release'}, accept
+        get "/pbl/projects/", {state: 'release,complete'}, accept
         @json = parse_json(response.body)
       end
 

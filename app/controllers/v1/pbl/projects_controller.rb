@@ -15,10 +15,15 @@ module V1
         @collections = @collections.where(["name LIKE ?",  "%#{params[:name]}%"])
       end
 
-      if params[:state].present? || params[:recommend].present?
-        keys = %w(state recommend)
+      if params[:recommend].present?
+        keys = %w(recommend)
         query_hash = request.query_parameters.delete_if {|key, value| !keys.include?(key)}
-        @collections = @collections.where(state: params[:state])
+        @collections = @collections.where(query_hash)
+      end
+
+      if params[:state].present?
+        state = params[:state].split(',')
+        @collections = @collections.where(state: state)
       end
 
       if params[:actor_id].present?

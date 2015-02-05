@@ -28,6 +28,15 @@ describe V1::Pbl::TasksController do
       end
     end
 
+    context 'with order ' do
+      before(:each) do
+        get '/pbl/tasks?page=1&limit=1', {project_id: project.id, order: 'created_at asc'}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'].size).to eq(1)}
+    end
+
     context 'with state' do
       before(:each) do
        clazz_instance_1.release

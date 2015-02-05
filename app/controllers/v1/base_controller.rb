@@ -82,14 +82,16 @@ module V1
     end
 
     def top_collections
+      order = params[:order] || 'created_at desc'
+
       if configures[:have_parent_resource] && parent_resource_id.present?
         set_parent_resource_instance
         unless @parent_resource_instance
           return render json: {data: [], meta: {}}
         end
-        @collections = @parent_resource_instance.send(:"#{configures[:clazz_resource_name]}").order(created_at: :desc)
+        @collections = @parent_resource_instance.send(:"#{configures[:clazz_resource_name]}").order(order)
       else
-        @collections = configures[:clazz].order(created_at: :desc)
+        @collections = configures[:clazz].order(order)
       end
     end
 

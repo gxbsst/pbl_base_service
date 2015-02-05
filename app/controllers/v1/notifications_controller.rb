@@ -14,6 +14,16 @@ module V1
         @collections = @collections.where(query_hash)
       end
 
+      if params[:older_id].present?
+        notification = Notification.find(params[:older_id])
+        @collections = @collections.where(["created_at < ?", notification.created_at])
+      end
+
+      if params[:latest_id].present?
+        notification = Notification.find(params[:latest_id])
+        @collections = @collections.where(["created_at > ?", notification.created_at])
+      end
+
       if params[:sender_ids].present?
         sender_ids = params[:sender_ids].split(',')
         @collections = @collections.where(sender_id: sender_ids)

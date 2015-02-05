@@ -42,6 +42,32 @@ describe V1::NotificationsController do
       it { expect(@json['data'].size).to eq(2)}
     end
 
+    context 'with older_id' do
+      let(:user_1) { create :user }
+      let!(:notification_1) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 1', content: 'content 1', user_id: user_1.id }
+      let!(:notification_2) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', content: 'content 2', user_id: user_1.id }
+      let!(:notification_3) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', content: 'content 2', user_id: user.id }
+      before(:each) do
+        get 'notifications', {older_id: notification_2.id}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'].size).to eq(1)}
+    end
+
+    context 'with latest_id' do
+      let(:user_1) { create :user }
+      let!(:notification_1) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 1', content: 'content 1', user_id: user_1.id }
+      let!(:notification_2) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', content: 'content 2', user_id: user_1.id }
+      let!(:notification_3) { create :notification, sender_type: owner.class.name, sender_id: owner.id, subject: 'title 2', content: 'content 2', user_id: user.id }
+      before(:each) do
+        get 'notifications', {latest_id: notification_2.id}, accept
+        @json = parse_json(response.body)
+      end
+
+      it { expect(@json['data'].size).to eq(1)}
+    end
+
   end
 
   describe 'GET #show' do

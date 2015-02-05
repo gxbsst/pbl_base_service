@@ -8,7 +8,7 @@ module V1
       top_collections
 
       if params[:user_id].present? && params[:sender_id].present? && params[:type].present?
-        @collections = @collections.where(['type = ? AND ((user_id = ? AND sender_id = ?) OR (sender_id = ? AND user_id = ?))', params[:type], params[:user_id], params[:sender_id]], params[:sender_id], params[:user_id])
+        @collections = @collections.where(["type = '%s' AND ((user_id = '%s' AND sender_id = '%s') OR (sender_id = '%s' AND user_id = '%s'))", params[:type], params[:user_id], params[:sender_id]], params[:sender_id], params[:user_id])
       else
         if params[:type].present? || params[:user_id].present? || params[:sender_id].present? || params[:sender_type].present? || params[:event_type].present?
           keys = %w(type sender_type sender_id user_id event_type)

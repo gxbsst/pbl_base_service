@@ -7,11 +7,14 @@ module V1
       check_parent_resource_id if configures[:have_parent_resource]
       top_collections
 
-      if params[:type].present? || params[:user_id].present? || params[:sender_id].present? || params[:sender_type].present? || params[:event_type].present?
-        keys = %w(type sender_type sender_id user_id event_type)
-        query_hash = request.query_parameters.delete_if {|key, value| !keys.include?(key)}
-
-        @collections = @collections.where(query_hash)
+      if params[:user_id].present? && params[:sender_id].present? && params[:type].present?
+        @collections = @collections.where(['type = ? AND ((user_id = ? AND sender_id = ?) OR (sender_id = ? AND user_id = ?))', params[:type], params[:user_id], params[:sender_id]], params[:sender_id], params[:user_id])
+      else
+        if params[:type].present? || params[:user_id].present? || params[:sender_id].present? || params[:sender_type].present? || params[:event_type].present?
+          keys = %w(type sender_type sender_id user_id event_type)
+          query_hash = request.query_parameters.delete_if {|key, value| !keys.include?(key)}
+          @collections = @collections.where(query_hash)
+        end
       end
 
       if params[:older_id].present?

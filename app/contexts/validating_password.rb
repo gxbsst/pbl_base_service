@@ -18,7 +18,9 @@ class ValidatingPassword
     @listener ||= listener
     @login ||= login
     @password ||= password
-    @user = User.find_by_email(login)
+
+    @user = User.where(["lower(username) = :login OR lower(email) = :login", login: @login]).try(:first)
+
     @user.extend Authenticatable
   end
 

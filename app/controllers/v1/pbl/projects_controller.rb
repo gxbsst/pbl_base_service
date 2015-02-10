@@ -33,7 +33,8 @@ module V1
       end
 
       if params[:subject].present? || params[:technique].present?
-        query_hash = request.query_parameters.delete_if {|key, value| key != 'subject' || key != 'phase' || key != 'technique'}
+        keys = %w(subject technique)
+        query_hash = request.query_parameters.delete_if {|key, value| !keys.include?(key)}
         ids = Pbls::Searcher.where(query_hash).collect(&:project_id)
         @collections = @collections.where(id: ids)
       end

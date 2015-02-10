@@ -15,8 +15,8 @@ module V1
         @collections = @collections.where(["name LIKE ?",  "%#{params[:name]}%"])
       end
 
-      if params[:recommend].present?
-        keys = %w(recommend)
+      if params[:recommend].present? || params[:grade].present?
+        keys = %w(recommend grade)
         query_hash = request.query_parameters.delete_if {|key, value| !keys.include?(key)}
         @collections = @collections.where(query_hash)
       end
@@ -32,7 +32,7 @@ module V1
         @collections = @collections.where(id: project_ids)
       end
 
-      if params[:subject].present? || params[:phase].present? || params[:technique].present?
+      if params[:subject].present? || params[:technique].present?
         query_hash = request.query_parameters.delete_if {|key, value| key != 'subject' || key != 'phase' || key != 'technique'}
         ids = Pbls::Searcher.where(query_hash).collect(&:project_id)
         @collections = @collections.where(id: ids)

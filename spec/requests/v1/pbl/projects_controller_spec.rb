@@ -116,7 +116,7 @@ describe V1::Pbl::ProjectsController, type: :request do
       let!(:standard) { create :curriculum_standard, phase_id: phase.id}
       let!(:standard_item) { create :curriculum_item, standard_id: standard.id}
 
-      let!(:project)  { create :pbl_project, name: 'name3', user_id: user.id }
+      let!(:project)  { create :pbl_project, name: 'name3', user_id: user.id, grade: 1 }
       let!(:pbl_standard_item) { create :pbl_standard_item, project_id: project.id, standard_item_id: standard_item.id}
       let!(:pbl_technique) { create :pbl_technique, project_id: project.id, technique_id: technique.id}
 
@@ -130,9 +130,9 @@ describe V1::Pbl::ProjectsController, type: :request do
         it { expect(assigns(:collections).count).to eq(1)}
       end
 
-      context 'with phase' do
+      context 'with grade' do
         before(:each) do
-          get "/pbl/projects/", {phase: '一年级'}, accept
+          get "/pbl/projects/", {grade: 1}, accept
           @json = parse_json(response.body)
         end
 
